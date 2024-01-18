@@ -1,31 +1,26 @@
-﻿using GoalGetters.Interfaces;
-using GoalGetters.Models;
-using Microsoft.AspNetCore.Http;
+﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GoalGetters.Controllers
 {
     public class ProfileController : Controller
     {
-        public ProfileController()
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly ApiService<Player> _apiServicePlayer;
+        private readonly ApiService<Team> _apiServiceTeam;
+
+        public ProfileController(IHttpClientFactory clientFactory, ApiService<Player> apiServicePlayer, ApiService<Team> apiServiceTeam)
         {
-           
+            _clientFactory = clientFactory;
+            _apiServicePlayer = apiServicePlayer;
+            _apiServiceTeam = apiServiceTeam;
         }
 
         public async Task<IActionResult> Index(string searchName)
         {
             if (!string.IsNullOrEmpty(searchName))
             {
-                PlayerTeamViewModel viewModel = new PlayerTeamViewModel();
-
-                ApiService<Player> apiServicePlayer = new ApiService<Player>(new HttpClient());
-                viewModel.Players = await apiServicePlayer.GetByName(searchName);
-
-                ApiService<Team> apiServiceTeam = new ApiService<Team>(new HttpClient());
-                viewModel.Teams = await apiServiceTeam.GetByName(searchName);
-                
+                var viewModel = await SearchPlayerTeam(searchName);
                 return View(viewModel);
             }
 
@@ -99,6 +94,29 @@ namespace GoalGetters.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<PlayerTeamViewModel> SearchPlayerTeam(string searchName)
+        {
+            PlayerTeamViewModel viewModel = new PlayerTeamViewModel();
+
+            // Fetch players and teams in parallel
+            Task<IEnumerable<Player>> getPlayersTask = _apiServicePlayer.GetByName(searchName);
+            Task<IEnumerable<Team>> getTeamsTask = _apiServiceTeam.GetByName(searchName);
+            await Task.WhenAll(getPlayersTask, getTeamsTask);
+
+            viewModel.Players = getPlayersTask.Result;
+            viewModel.Teams = getTeamsTask.Result;
+
+            if (viewModel.Players != null)
+            {
+                foreach (var player in viewModel.Players)
+                {
+                    var team = await _apiServiceTeam.GetById(player.IdTeam);
+                    player.TeamName = team.Name;
+                }
+            }
+            return viewModel;
         }
     }
 }
