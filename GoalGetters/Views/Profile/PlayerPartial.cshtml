@@ -1,0 +1,53 @@
+﻿@model IEnumerable<GoalGetters.Models.Player>
+
+@* <p>
+    <a asp-action="Create">Create New</a>
+</p> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TeamName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birth) (@Html.DisplayNameFor(model => model.Age))
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var player in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => player.TeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => player.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => player.Country)
+            </td>
+            <td>
+                @player.Birth.ToString("dd/MM/yyyy") (@player.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => player.Height)
+            </td>
+           @*  <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td> *@
+        </tr>
+}
+    </tbody>
+</table>

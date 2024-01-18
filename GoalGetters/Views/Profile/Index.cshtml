@@ -1,0 +1,24 @@
+﻿@model GoalGetters.Models.PlayerTeamViewModel
+
+@if (Model != null)
+{
+    @if (Model.Players != null)
+    {
+        <div>
+            <h2>Jogadores</h2>
+
+            @Html.Partial("PlayerPartial", Model.Players)
+
+        </div>
+    }
+
+    @if (Model.Teams != null)
+    {
+        <div>
+            <h2>Times</h2>
+
+            @Html.Partial("TeamPartial", Model.Teams)
+
+        </div>
+    }
+}
