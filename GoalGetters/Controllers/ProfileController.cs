@@ -1,5 +1,8 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Numerics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GoalGetters.Controllers
 {
@@ -28,13 +31,13 @@ namespace GoalGetters.Controllers
         }
 
         // GET: PlayerController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DetailsPlayer(int id)
         {
             return View();
         }
 
         // GET: PlayerController/Create
-        public ActionResult Create()
+        public ActionResult CreatePlayer()
         {
             return View();
         }
@@ -42,7 +45,7 @@ namespace GoalGetters.Controllers
         // POST: PlayerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult CreatePlayer(IFormCollection collection)
         {
             try
             {
@@ -55,28 +58,70 @@ namespace GoalGetters.Controllers
         }
 
         // GET: PlayerController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditPlayer(int id)
         {
-            return View();
+            var player = await _apiServicePlayer.GetById(id);
+            return View(player);
         }
 
         // POST: PlayerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditPlayer(int id, IFormCollection collection)
         {
             try
             {
+                // Extrai os valores do formulário
+                string name = collection["name"];
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+                }
+
+                if (!int.TryParse(collection["idteam"], out int idteam))
+                {
+                    throw new ArgumentException("Invalid team ID.", nameof(idteam));
+                }
+
+                string city = collection["city"];
+                if (string.IsNullOrEmpty(city))
+                {
+                    throw new ArgumentException("City cannot be null or empty.", nameof(city));
+                }
+
+                string country = collection["country"];
+                if (string.IsNullOrEmpty(country))
+                {
+                    throw new ArgumentException("Country cannot be null or empty.", nameof(country));
+                }
+
+                if (!DateTime.TryParse(collection["birth"], out DateTime birth))
+                {
+                    throw new ArgumentException("Invalid birth date.", nameof(birth));
+                }
+
+                string height = collection["height"];
+                if (string.IsNullOrEmpty(height))
+                {
+                    throw new ArgumentException("Height cannot be null or empty.", nameof(height));
+                }
+
+                // Atualiza o jogador
+                Player updatedPlayer = await _apiServicePlayer.UpdatePlayer(id, name, idteam, city, country, birth, height);
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                // Retorna a View com a mensagem de erro
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
 
+
         // GET: PlayerController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult DeletePlayer(int id)
         {
             return View();
         }
@@ -84,7 +129,7 @@ namespace GoalGetters.Controllers
         // POST: PlayerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeletePlayer(int id, IFormCollection collection)
         {
             try
             {

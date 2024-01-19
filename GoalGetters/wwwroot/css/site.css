@@ -18,5 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    padding-top: 90px;
+}
+
+.navbar-custom {
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px
 }

@@ -42,11 +42,11 @@
             <td>
                 @Html.DisplayFor(modelItem => player.Height)
             </td>
-           @*  <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td> *@
+            <td>
+                @Html.ActionLink("Edit", "EditPlayer", new { id = player.Id }) |
+                @Html.ActionLink("Details", "DetailsPlayer", new { id = player.Id }) |
+                @Html.ActionLink("Delete", "DeletePlayer", new { id = player.Id })
+            </td>
         </tr>
 }
     </tbody>
