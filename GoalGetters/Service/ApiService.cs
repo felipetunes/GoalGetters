@@ -28,8 +28,8 @@ public class ApiService<T> : IApiService<T>
         }
         else
         {
-            // Handle the error
-            throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
+            // Return default value of T
+            return default(T);
         }
     }
 
@@ -49,16 +49,31 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
-    public async Task<T> UpdatePlayer(int id, string name, int idteam, string city, string country, DateTime birth, string height)
+    public async Task<T> UpdateEntity<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null)
     {
         // Verifique se os argumentos são válidos
-        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country) || string.IsNullOrEmpty(height))
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
         {
-            throw new ArgumentException("Name, city, country, and height must not be null or empty.");
+            throw new ArgumentException("Name, city and country must not be null or empty.");
         }
 
         // Constrói a URL
-        string url = $"http://localhost:8080/api/v1/player/update?id={id}&name={name}&idteam={idteam}&city={city}&country={country}&birth={birth.ToString("yyyy-MM-dd")}&height={height}";
+        string url = $"http://localhost:8080/api/v1/{typeof(T).Name.ToLower()}/update?id={id}&name={name}&city={city}&country={country}";
+
+        if (idteam.HasValue)
+        {
+            url += $"&idteam={idteam.Value}";
+        }
+
+        if (birth.HasValue)
+        {
+            url += $"&birth={birth.Value.ToString("yyyy-MM-dd")}";
+        }
+
+        if (!string.IsNullOrEmpty(height))
+        {
+            url += $"&height={height}";
+        }
 
         // Envia a solicitação PUT
         HttpResponseMessage response = await _client.PutAsync(url, null);
@@ -71,7 +86,7 @@ public class ApiService<T> : IApiService<T>
         {
             // Handle the error
             var error = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException($"Error updating player: {response.StatusCode} - {error}");
+            throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
         }
     }
 }

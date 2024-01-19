@@ -24,11 +24,11 @@
             <td>
                 @Html.DisplayFor(modelItem => team.Country)
             </td>
-           @*  <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td> *@
+             <td>
+                @Html.ActionLink("Edit", "EditTeam", new { id=team.Id }) |
+                    @Html.ActionLink("Details", "DetailsTeam", new { id = team.Id }) |
+                    @Html.ActionLink("Delete", "DeleteTeam", new { id = team.Id })
+            </td> 
         </tr>
 }
     </tbody>

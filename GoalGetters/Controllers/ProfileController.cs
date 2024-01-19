@@ -64,6 +64,13 @@ namespace GoalGetters.Controllers
             return View(player);
         }
 
+        // GET: PlayerController/Edit/5
+        public async Task<ActionResult> EditTeam(int id)
+        {
+            var team = await _apiServiceTeam.GetById(id);
+            return View(team);
+        }
+
         // POST: PlayerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,7 +114,46 @@ namespace GoalGetters.Controllers
                 }
 
                 // Atualiza o jogador
-                Player updatedPlayer = await _apiServicePlayer.UpdatePlayer(id, name, idteam, city, country, birth, height);
+                Player updatedPlayer = await _apiServicePlayer.UpdateEntity<Player>(id, name, city, country, idteam, birth, height);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Retorna a View com a mensagem de erro
+                ViewBag.ErrorMessage = ex.Message;
+                return View();
+            }
+        }
+
+        // POST: ProfileController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditTeam(int id, IFormCollection collection)
+        {
+            try
+            {
+                // Extrai os valores do formulário
+                string name = collection["name"];
+                if (string.IsNullOrEmpty(name))
+                {
+                    throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+                }
+
+                string city = collection["city"];
+                if (string.IsNullOrEmpty(city))
+                {
+                    throw new ArgumentException("City cannot be null or empty.", nameof(city));
+                }
+
+                string country = collection["country"];
+                if (string.IsNullOrEmpty(country))
+                {
+                    throw new ArgumentException("Country cannot be null or empty.", nameof(country));
+                }
+
+                // Atualiza o time
+                Team updatedPlayer = await _apiServiceTeam.UpdateEntity<Team>(id, name, city, country);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -158,7 +204,10 @@ namespace GoalGetters.Controllers
                 foreach (var player in viewModel.Players)
                 {
                     var team = await _apiServiceTeam.GetById(player.IdTeam);
-                    player.TeamName = team.Name;
+                    if (team != null)
+                    {
+                        player.TeamName = team.Name;
+                    }
                 }
             }
             return viewModel;
