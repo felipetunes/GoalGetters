@@ -17,6 +17,15 @@ public class ApiService<T> : IApiService<T>
         _client = client;
     }
 
+    async public Task<HttpResponseMessage> Delete(int id, string entity)
+    {
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:5000/api/v1/{entity}/delete/{id}");
+
+            var response = await _client.SendAsync(request);
+
+            return response;
+    }
+
     public async Task<T> GetById(int id)
     {
         string url = $"http://localhost:8080/api/v1/{typeof(T).Name.ToLower()}/getbyid/{id}";
@@ -49,7 +58,7 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
-    public async Task<T> UpdateEntity<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null)
+    public async Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null)
     {
         // Verifique se os argumentos são válidos
         if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))

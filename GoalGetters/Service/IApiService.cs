@@ -7,7 +7,7 @@ namespace GoalGetters.Service
     {
         Task<IEnumerable<T>> GetByName(string name);
         Task<T> GetById(int name);
-        Task<T> UpdateEntity<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null);
-
+        Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null);
+        Task<HttpResponseMessage> Delete(int id, string entity);
     }
 }

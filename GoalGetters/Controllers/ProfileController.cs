@@ -1,5 +1,6 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Collections.Generic;
 using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -23,17 +24,25 @@ namespace GoalGetters.Controllers
         {
             if (!string.IsNullOrEmpty(searchName))
             {
-                var viewModel = await SearchPlayerTeam(searchName);
-                return View(viewModel);
+                var profile = await SearchProfile(searchName);
+                return View(profile);
             }
 
             return View(new PlayerTeamViewModel());
         }
 
         // GET: PlayerController/Details/5
-        public ActionResult DetailsPlayer(int id)
+        public async Task<ActionResult> DetailsPlayer(int id)
         {
-            return View();
+            var player = await _apiServicePlayer.GetById(id);
+            return View(player);
+        }
+
+        // GET: ProfileController/Details/5
+        public async Task<ActionResult> DetailsTeam(int id)
+        {
+            var team = await _apiServiceTeam.GetById(id);
+            return View(team);
         }
 
         // GET: PlayerController/Create
@@ -57,79 +66,53 @@ namespace GoalGetters.Controllers
             }
         }
 
-        // GET: PlayerController/Edit/5
-        public async Task<ActionResult> EditPlayer(int id)
+        // GET: EntityController/Edit/5
+        public async Task<ActionResult> EditPlayer(string entity, int id)
         {
             var player = await _apiServicePlayer.GetById(id);
             return View(player);
+
         }
 
-        // GET: PlayerController/Edit/5
-        public async Task<ActionResult> EditTeam(int id)
+        // GET: EntityController/Edit/5
+        public async Task<ActionResult> EditTeam(string entity, int id)
         {
-            var team = await _apiServiceTeam.GetById(id);
-            return View(team);
+                var team = await _apiServiceTeam.GetById(id);
+                return View(team);
         }
 
-        // POST: PlayerController/Edit/5
+        // POST: EntityController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditPlayer(int id, IFormCollection collection)
+        public ActionResult EditPlayer(int id, string entity, IFormCollection collection)
         {
             try
             {
-                // Extrai os valores do formulário
-                string name = collection["name"];
-                if (string.IsNullOrEmpty(name))
-                {
-                    throw new ArgumentException("Name cannot be null or empty.", nameof(name));
-                }
-
-                if (!int.TryParse(collection["idteam"], out int idteam))
-                {
-                    throw new ArgumentException("Invalid team ID.", nameof(idteam));
-                }
-
-                string city = collection["city"];
-                if (string.IsNullOrEmpty(city))
-                {
-                    throw new ArgumentException("City cannot be null or empty.", nameof(city));
-                }
-
-                string country = collection["country"];
-                if (string.IsNullOrEmpty(country))
-                {
-                    throw new ArgumentException("Country cannot be null or empty.", nameof(country));
-                }
-
-                if (!DateTime.TryParse(collection["birth"], out DateTime birth))
-                {
-                    throw new ArgumentException("Invalid birth date.", nameof(birth));
-                }
-
-                string height = collection["height"];
-                if (string.IsNullOrEmpty(height))
-                {
-                    throw new ArgumentException("Height cannot be null or empty.", nameof(height));
-                }
-
-                // Atualiza o jogador
-                Player updatedPlayer = await _apiServicePlayer.UpdateEntity<Player>(id, name, city, country, idteam, birth, height);
-
-                return RedirectToAction(nameof(Index));
+                Edit(id, entity, collection);
+                return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                // Retorna a View com a mensagem de erro
-                ViewBag.ErrorMessage = ex.Message;
-                return View();
+                return NotFound();
             }
         }
 
-        // POST: ProfileController/Edit/5
+        // POST: EntityController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditTeam(int id, IFormCollection collection)
+        public ActionResult EditTeam(int id, string entity, IFormCollection collection)
+        {
+            try
+            {
+                Edit(id, entity, collection);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+        public async Task<ActionResult> Edit(int id, string entity, IFormCollection collection)
         {
             try
             {
@@ -152,10 +135,38 @@ namespace GoalGetters.Controllers
                     throw new ArgumentException("Country cannot be null or empty.", nameof(country));
                 }
 
-                // Atualiza o time
-                Team updatedPlayer = await _apiServiceTeam.UpdateEntity<Team>(id, name, city, country);
+                if (entity == "player")
+                {
+                    if (!int.TryParse(collection["idteam"], out int idteam))
+                    {
+                        throw new ArgumentException("Invalid team ID.", nameof(idteam));
+                    }
 
-                return RedirectToAction(nameof(Index));
+                    if (!DateTime.TryParse(collection["birth"], out DateTime birth))
+                    {
+                        throw new ArgumentException("Invalid birth date.", nameof(birth));
+                    }
+
+                    string height = collection["height"];
+                    if (string.IsNullOrEmpty(height))
+                    {
+                        throw new ArgumentException("Height cannot be null or empty.", nameof(height));
+                    }
+
+                    // Atualiza o jogador
+                    Player updatedPlayer = await _apiServicePlayer.Update<Player>(id, name, city, country, idteam, birth, height);
+                }
+                else if (entity == "team")
+                {
+                    // Atualiza o time
+                    Team updatedTeam = await _apiServiceTeam.Update<Team>(id, name, city, country);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -163,11 +174,12 @@ namespace GoalGetters.Controllers
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
+
         }
 
 
         // GET: PlayerController/Delete/5
-        public ActionResult DeletePlayer(int id)
+        public ActionResult Delete(int id)
         {
             return View();
         }
@@ -175,10 +187,18 @@ namespace GoalGetters.Controllers
         // POST: PlayerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeletePlayer(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, string entity, IFormCollection collection)
         {
             try
             {
+                if (entity == "player")
+                {
+                    await _apiServicePlayer.Delete(5, "player");
+                }
+                else if(entity == "team")
+                {
+                    await _apiServiceTeam.Delete(5, "team");
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -187,7 +207,7 @@ namespace GoalGetters.Controllers
             }
         }
 
-        public async Task<PlayerTeamViewModel> SearchPlayerTeam(string searchName)
+        public async Task<PlayerTeamViewModel> SearchProfile(string searchName)
         {
             PlayerTeamViewModel viewModel = new PlayerTeamViewModel();
 

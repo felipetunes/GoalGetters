@@ -25,7 +25,7 @@
                 @Html.DisplayFor(modelItem => team.Country)
             </td>
              <td>
-                @Html.ActionLink("Edit", "EditTeam", new { id=team.Id }) |
+                @Html.ActionLink("Edit", "EditTeam", new { id=team.Id , entity="player"}) |
                     @Html.ActionLink("Details", "DetailsTeam", new { id = team.Id }) |
                     @Html.ActionLink("Delete", "DeleteTeam", new { id = team.Id })
             </td> 

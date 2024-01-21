@@ -19,6 +19,8 @@
     <div class="col-md-4">
         <form asp-action="EditPlayer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="entity" value="player" />
+                <input type="hidden" name="id" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
                     @Html.DisplayFor(model => model.Id)
