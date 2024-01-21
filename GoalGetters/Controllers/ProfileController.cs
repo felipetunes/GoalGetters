@@ -193,11 +193,11 @@ namespace GoalGetters.Controllers
             {
                 if (entity == "player")
                 {
-                    await _apiServicePlayer.Delete(5, "player");
+                    await _apiServicePlayer.Delete(id, "player");
                 }
                 else if(entity == "team")
                 {
-                    await _apiServiceTeam.Delete(5, "team");
+                    await _apiServiceTeam.Delete(id, "team");
                 }
                 return RedirectToAction(nameof(Index));
             }
