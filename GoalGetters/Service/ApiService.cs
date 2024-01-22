@@ -19,11 +19,23 @@ public class ApiService<T> : IApiService<T>
 
     async public Task<HttpResponseMessage> Delete(int id, string entity)
     {
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:5000/api/v1/{entity}/delete/{id}");
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:8080/api/v1/{entity}/delete/{id}");
 
             var response = await _client.SendAsync(request);
 
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
+            }
+
             return response;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
     public async Task<T> GetById(int id)

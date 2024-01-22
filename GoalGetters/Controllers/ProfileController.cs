@@ -179,26 +179,28 @@ namespace GoalGetters.Controllers
 
 
         // GET: PlayerController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeletePlayer(int id)
         {
-            return View();
+            var player = await _apiServicePlayer.GetById(id);
+            return View(player);
+        }
+
+        // GET: PlayerController/Delete/5
+        public async Task<ActionResult> DeleteTeam(int id)
+        {
+            var team = await _apiServiceTeam.GetById(id);
+            return View(team);
         }
 
         // POST: PlayerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, string entity, IFormCollection collection)
+        public async Task<ActionResult> DeletePlayer(int id, IFormCollection collection)
         {
             try
             {
-                if (entity == "player")
-                {
-                    await _apiServicePlayer.Delete(id, "player");
-                }
-                else if(entity == "team")
-                {
-                    await _apiServiceTeam.Delete(id, "team");
-                }
+                await _apiServicePlayer.Delete(id, "player");
+
                 return RedirectToAction(nameof(Index));
             }
             catch
