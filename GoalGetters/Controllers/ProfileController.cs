@@ -24,6 +24,8 @@ namespace GoalGetters.Controllers
         {
             if (!string.IsNullOrEmpty(searchName))
             {
+                HttpContext.Session.SetString("SearchName", searchName); // Salva o searchName na sessão
+
                 var profile = await SearchProfile(searchName);
                 return View(profile);
             }
@@ -176,7 +178,6 @@ namespace GoalGetters.Controllers
             }
 
         }
-
 
         // GET: PlayerController/Delete/5
         public async Task<ActionResult> DeletePlayer(int id)

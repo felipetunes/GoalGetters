@@ -11,8 +11,14 @@ namespace GoalGetters
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+
             builder.Services.AddScoped<ApiService<Player>>();
             builder.Services.AddScoped<ApiService<Team>>();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
             var app = builder.Build();
 
@@ -26,6 +32,7 @@ namespace GoalGetters
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

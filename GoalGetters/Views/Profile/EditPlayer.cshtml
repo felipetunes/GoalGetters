@@ -63,7 +63,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")">Voltar à lista</a>
 </div>
 
 @section Scripts {

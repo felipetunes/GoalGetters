@@ -21,4 +21,9 @@
 
         </div>
     }
+
+    @if (Model.Teams == null && Model.Players == null)
+    {
+        <h4>Nenhum registro encontrado</h4>
+    }
 }

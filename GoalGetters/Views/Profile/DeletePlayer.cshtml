@@ -76,7 +76,7 @@
     
     <form asp-action="DeletePlayer">
         <input type="submit" value="Deletar" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+            <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")">Voltar à lista</a>
     </form>
 </div>
 </body>
