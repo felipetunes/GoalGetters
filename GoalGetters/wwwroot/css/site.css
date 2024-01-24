@@ -93,3 +93,13 @@ body {
 .fa-search:hover, select:focus, .fa-search:focus {
     color:aqua !important;
 }
+
+.btn-primary {
+    color:aqua;
+    background-color: #0d1117;
+}
+
+.btn-danger {
+    color: red;
+    background-color: #0d1117;
+}

@@ -25,7 +25,7 @@
                     <img src="~/img/teams/@(team.Name.ToLower().Replace(" ", "")).png" alt="Logo do time" width="30px" height="30px" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => team.Name)
+                    <a asp-action="DetailsTeam" asp-route-id="@team.Id">@Html.DisplayFor(modelItem => team.Name)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => team.Country)
