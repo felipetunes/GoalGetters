@@ -5,7 +5,7 @@
     @if (Model.Players != null)
     {
         <div>
-            <h2>Jogadores</h2>
+            <h2 class="text-white">Jogadores</h2>
 
             @Html.Partial("PlayerPartial", Model.Players)
 
@@ -15,7 +15,7 @@
     @if (Model.Teams != null)
     {
         <div>
-            <h2>Times</h2>
+            <h2 class="text-white">Times</h2>
 
             @Html.Partial("TeamPartial", Model.Teams)
 
@@ -24,6 +24,6 @@
 
     @if (Model.Teams == null && Model.Players == null)
     {
-        <h4>Nenhum registro encontrado</h4>
+        <h4 class="text-white">Nenhum registro encontrado</h4>
     }
 }

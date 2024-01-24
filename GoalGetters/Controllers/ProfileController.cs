@@ -37,6 +37,8 @@ namespace GoalGetters.Controllers
         public async Task<ActionResult> DetailsPlayer(int id)
         {
             var player = await _apiServicePlayer.GetById(id);
+            var team = await _apiServiceTeam.GetById(player.IdTeam);
+            player.TeamName = team.Name;
             return View(player);
         }
 
@@ -45,6 +47,27 @@ namespace GoalGetters.Controllers
         {
             var team = await _apiServiceTeam.GetById(id);
             return View(team);
+        }
+
+        // GET: PlayerController/Create
+        public ActionResult CreateTeam()
+        {
+            return View();
+        }
+
+        // POST: PlayerController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateTeam(IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: PlayerController/Create

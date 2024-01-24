@@ -14,9 +14,9 @@
 <body>
 
 <div>
-    <h4>Team</h4>
+        <h4 class="text-white">Team</h4>
     <hr />
-    <dl class="row">
+        <dl class="row text-white">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
@@ -42,7 +42,7 @@
             @Html.DisplayFor(model => model.Country)
         </dd>
         <dd class="col-sm-10">
-                <img src="~/img/@Model.Logotipo" alt="Logo do Palmeiras" width="30px" height="30px" />
+            <img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo" width="30px" height="30px" />
         </dd>
     </dl>
 </div>

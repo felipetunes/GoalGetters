@@ -9,7 +9,22 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem black, 0 0 0 0.25rem #258cfb;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-text-fill-color: aqua;
+    -webkit-box-shadow: 0 0 0px 1000px #222122 inset;
 }
 
 html {
@@ -19,11 +34,62 @@ html {
 
 body {
     padding-top: 90px;
-    background: #060624
+    background-color: #0d1117;
 }
 
 .navbar-custom {
     padding: 20px;
     padding-left: 40px;
-    padding-right: 40px
+    padding-right: 40px;
+    background-color: transparent !important;
+}
+
+.navbar-brand {
+    color:aqua;
+}
+
+.searchIco {
+    color: #d609fc;
+    border-radius: 0px 10px 10px 0px;
+    border-width: 1px;
+    border-color: #d609fc;
+    border-style: solid;
+    background-color: #0d1117;
+    opacity:90%;
+}
+
+.searchBar {
+    border-radius: 10px 0px 0px 10px !important;
+    border-radius: 0px 10px 10px 0px;
+    border-width: 1px;
+    border-color: #d609fc;
+    border-style: solid;
+    background-color: #222122;
+    color:aqua;
+    opacity:90%;
+}
+
+.searchIco:focus, .searchIco:hover {
+    color: aqua;
+    border-radius: 0px 10px 10px 0px;
+    border-width: 1px;
+    border-color: #d609fc;
+    border-style: solid;
+    background-color: #d609fc;
+}
+
+.searchBar:focus, .searchBar:active, .searchBar:visited {
+    border-radius: 10px 0px 0px 10px !important;
+    border-radius: 0px 10px 10px 0px;
+    border-width: 1px;
+    border-color: #d609fc;
+    border-style: solid;
+    background-color: #222122;
+    outline: none !important;
+    color: aqua;
+    box-shadow: 0 0 0 0;
+}
+
+.fa-search:hover, select:focus, .fa-search:focus {
+    color:aqua !important;
 }

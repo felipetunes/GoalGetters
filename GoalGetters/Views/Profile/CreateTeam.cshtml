@@ -1,28 +1,19 @@
 ﻿@model GoalGetters.Models.Team
 
 @{
+    ViewData["Title"] = "CreateTeam";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
 <h4 class="text-white">Team</h4>
 <hr />
 <div class="row text-white">
     <div class="col-md-4">
-        <form asp-action="EditTeam">
+        <form asp-action="CreateTeam">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" name="entity" value="team" />
-                <input type="hidden" name="id" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -39,22 +30,17 @@
                 <input asp-for="Country" class="form-control" />
                 <span asp-validation-for="Country" class="text-danger"></span>
             </div>
-            <div class="col-sm-10 m-3">
-                    <img src="~/img/teams/@(Model.Name.ToLower().Replace(" ", "")).png" alt="Logo do Palmeiras" width="30px" height="30px" />
-            </div>
-            <div class="form-group mt-3 mb-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-        <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")">Voltar à lista</a>
+<div class="mt-3">
+    <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>

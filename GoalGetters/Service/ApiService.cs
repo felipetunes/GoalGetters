@@ -11,6 +11,7 @@ using System.Xml.Linq;
 public class ApiService<T> : IApiService<T>
 {
     private readonly HttpClient _client;
+    const string urlApi = "http://localhost:8080/api/v1/";
 
     public ApiService(HttpClient client)
     {
@@ -21,7 +22,7 @@ public class ApiService<T> : IApiService<T>
     {
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:8080/api/v1/{entity}/delete/{id}");
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{urlApi}{entity}/delete/{id}");
 
             var response = await _client.SendAsync(request);
 
@@ -40,7 +41,7 @@ public class ApiService<T> : IApiService<T>
 
     public async Task<T> GetById(int id)
     {
-        string url = $"http://localhost:8080/api/v1/{typeof(T).Name.ToLower()}/getbyid/{id}";
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/getbyid/{id}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {
@@ -56,7 +57,7 @@ public class ApiService<T> : IApiService<T>
 
     public async Task<IEnumerable<T>> GetByName(string name)
     {
-        string url = $"http://localhost:8080/api/v1/{typeof(T).Name.ToLower()}/getbyname/{Uri.EscapeDataString(name)}";
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/getbyname/{Uri.EscapeDataString(name)}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {
@@ -70,6 +71,17 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
+    public async Task<string> InsertPlayer(Player player)
+    {
+
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/insert";
+        HttpResponseMessage response = await _client.PostAsJsonAsync(url, player);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsStringAsync();
+    }
+
     public async Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null)
     {
         // Verifique se os argumentos são válidos
@@ -79,7 +91,7 @@ public class ApiService<T> : IApiService<T>
         }
 
         // Constrói a URL
-        string url = $"http://localhost:8080/api/v1/{typeof(T).Name.ToLower()}/update?id={id}&name={name}&city={city}&country={country}";
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/update?id={id}&name={name}&city={city}&country={country}";
 
         if (idteam.HasValue)
         {

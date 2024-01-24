@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<GoalGetters.Models.Team>
 
-@* <p>
-    <a asp-action="Create">Create New</a>
-</p> *@
-<table class="table">
+<p>
+    <a asp-action="CreateTeam" class="btn btn-primary">Create New</a>
+</p>
+<table class="table text-white">
     <thead>
         <tr>
+            <th>
+
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -19,15 +22,17 @@
 @foreach (var team in Model) {
         <tr>
             <td>
+                    <img src="~/img/teams/@(team.Name.ToLower().Replace(" ", "")).png" alt="Logo do time" width="30px" height="30px" />
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => team.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => team.Country)
             </td>
              <td>
-                @Html.ActionLink("Edit", "EditTeam", new { id=team.Id , entity="player"}) |
-                    @Html.ActionLink("Details", "DetailsTeam", new { id = team.Id }) |
-                    @Html.ActionLink("Delete", "DeleteTeam", new { id = team.Id })
+                    @Html.ActionLink("Edit", "EditTeam", new { id = team.Id, entity = "player" }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "DeleteTeam", new { id = team.Id }, new { @class = "btn btn-danger" })
             </td> 
         </tr>
 }

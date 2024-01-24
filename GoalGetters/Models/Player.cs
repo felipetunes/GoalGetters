@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace GoalGetters.Models
 {
@@ -6,12 +7,19 @@ namespace GoalGetters.Models
     {
         public int Id { get; set; }
         public int IdTeam { get; set; }
+        [Display(Name = "Nome")]
         public string Name { get; set; }
+        [Display(Name = "Cidade")]
         public string City { get; set; }
+        [Display(Name = "País")]
         public string Country { get; set; }
+        [Display(Name = "Nascimento")]
         public DateTime Birth { get; set; }
+        [Display(Name = "Altura")]
         public string? Height { get; set; }
+        [Display(Name = "Time")]
         public string? TeamName { get; set; }
+        [Display(Name = "Idade")]
         public int Age
         {
             get
