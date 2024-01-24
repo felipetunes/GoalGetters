@@ -23,8 +23,46 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <!-- Novo item de menu com dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="teamDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Brasileirão
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="teamDropdown">
+                                <div class="container p-3" style="width:300px !important">
+                                    <div class="row">
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 71 })"><img src="~/img/teams/athléticoparanaense.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 67 })"><img src="~/img/teams/atléticomineiro.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 69 })"><img src="~/img/teams/botafogo.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 64 })"><img src="~/img/teams/corinthians.png" width="30" height="30" /></a></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 68 })"><img src="~/img/teams/cruzeiro.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 1 })"><img src="~/img/teams/flamengo.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 61 })"><img src="~/img/teams/fluminense.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 65 })"><img src="~/img/teams/gremio.png" width="30" height="30" /></a></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 66 })"><img src="~/img/teams/internacional.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 2 })"><img src="~/img/teams/palmeiras.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 62 })"><img src="~/img/teams/saopaulo.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 98 })"><img src="~/img/teams/redbullbragantino.png" width="30" height="30" /></a></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 84 })"><img src="~/img/teams/criciúma.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 70 })"><img src="~/img/teams/vascodagama.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 78 })"><img src="~/img/teams/fortaleza.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 104 })"><img src="~/img/teams/cuiabá.png" width="30" height="30" /></a></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 74 })"><img src="~/img/teams/vitória.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 107 })"><img src="~/img/teams/atléticogoianiense.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 73 })"><img src="~/img/teams/bahia.png" width="30" height="30" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 106 })"><img src="~/img/teams/juventude.png" width="30" height="30" /></a></div>
+                                    </div>
+                                </div>
+                                <!-- Adicione mais times conforme necessário -->
+                            </ul>
                         </li>
                     </ul>
                     <form asp-controller="Profile" asp-action="Index" class="d-flex">
@@ -34,6 +72,7 @@
                 </div>
             </div>
         </nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
