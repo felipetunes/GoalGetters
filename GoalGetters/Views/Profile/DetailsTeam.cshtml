@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    ViewData["Title"] = "Detalhes do Time";
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -14,7 +18,7 @@
 <body>
     <div class="m-4">
         <h4 class="text-white"> @Html.DisplayFor(model => model.Name)</h4>
-        <div class="container text-white" style="background-color:rgba(105, 105, 105, 0.1); padding:30px; border-radius:20px">
+        <div class="container text-white" style="background-color:rgba(105, 105, 105, 0.2); padding:30px; border-radius:10px; box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);">
             <div class="row">
                 <div class="col">
                     <img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo" width="100px" height="100px" />

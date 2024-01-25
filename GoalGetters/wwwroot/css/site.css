@@ -84,7 +84,7 @@ body {
     border-width: 1px;
     border-color: #d609fc;
     border-style: solid;
-    background-color: #222122;
+    background-color: rgba(14, 17, 22, 0.98);
     outline: none !important;
     color: aqua;
     box-shadow: 0 0 0 0;
@@ -102,4 +102,10 @@ body {
 .btn-danger {
     color: red;
     background-color: #0d1117;
+}
+
+.logoTeams {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
 }
