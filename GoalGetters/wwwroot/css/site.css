@@ -33,7 +33,6 @@ html {
 }
 
 body {
-    padding-top: 90px;
     background-color: #0d1117;
 }
 
@@ -104,8 +103,35 @@ body {
     background-color: #0d1117;
 }
 
-.logoTeams {
+.logo-teams {
     width: 30px;
     height: 30px;
     object-fit: cover;
+}
+
+.dropdown-menu {
+    background-color: rgba(14, 17, 22, 0.98);
+    box-shadow: -1px 3px 31px 11px rgba(255,205,205,0.02);
+}
+
+.team-details {
+    background-color: rgba(105, 105, 105, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
+}
+
+.team-logo {
+    width: 100px;
+    height: 100px;
+}
+
+.list {
+    display: flex;
+    flex-direction:column; /* Muda a direção para horizontal */
+    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se não houver espaço suficiente */
+}
+
+.list-item {
+    padding: 10px;
 }

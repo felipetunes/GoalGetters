@@ -46,6 +46,11 @@ namespace GoalGetters.Controllers
         public async Task<ActionResult> DetailsTeam(int id)
         {
             var team = await _apiServiceTeam.GetById(id);
+            team.Players = await _apiServiceTeam.GetPlayersByTeamId(id);
+            foreach (var player in team.Players)
+            {
+                player.TeamName = team.Name;
+            }
             return View(team);
         }
 

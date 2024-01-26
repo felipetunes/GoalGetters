@@ -71,6 +71,20 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
+    public async Task<List<Player>> GetPlayersByTeamId(int teamId)
+    {
+        var response = await _client.GetAsync($"{urlApi}player/getbyidteam/{teamId}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Erro ao obter jogadores: {response.ReasonPhrase}");
+        }
+
+        var json = await response.Content.ReadAsStringAsync();
+        var players = JsonConvert.DeserializeObject<List<Player>>(json);
+        return players;
+    }
+
     public async Task<string> InsertPlayer(Player player)
     {
 

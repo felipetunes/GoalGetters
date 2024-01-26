@@ -11,5 +11,6 @@ namespace GoalGetters.Models
         public string City { get; set; }
         [Display(Name = "País")]
         public string Country { get; set; }
+        public List<Player> Players { get; set; }
     }
 }
