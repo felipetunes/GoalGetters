@@ -6,7 +6,7 @@ using System.Diagnostics.Metrics;
 using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
-
+using X.PagedList;
 
 public class ApiService<T> : IApiService<T>
 {
@@ -55,13 +55,13 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
-    public async Task<IEnumerable<T>> GetByName(string name)
+    public async Task<List<T>> GetByName(string name)
     {
         string url = $"{urlApi}{typeof(T).Name.ToLower()}/getbyname/{Uri.EscapeDataString(name)}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {
-            var data = await response.Content.ReadAsAsync<IEnumerable<T>>();
+            var data = await response.Content.ReadAsAsync<List<T>>();
             return data;
         }
         else

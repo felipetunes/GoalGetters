@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using X.PagedList;
+using X.PagedList.Mvc.Core;
 
 namespace GoalGetters.Controllers
 {
@@ -20,7 +23,7 @@ namespace GoalGetters.Controllers
             _apiServiceTeam = apiServiceTeam;
         }
 
-        public async Task<IActionResult> Index(string searchName)
+        public async Task<IActionResult> Index(string searchName = "")
         {
             if (!string.IsNullOrEmpty(searchName))
             {
@@ -43,10 +46,11 @@ namespace GoalGetters.Controllers
         }
 
         // GET: ProfileController/Details/5
-        public async Task<ActionResult> DetailsTeam(int id)
+        public async Task<ActionResult> DetailsTeam(int id, int page = 10)
         {
             var team = await _apiServiceTeam.GetById(id);
-            team.Players = await _apiServiceTeam.GetPlayersByTeamId(id);
+            var pl = await _apiServiceTeam.GetPlayersByTeamId(id);
+            team.Players = pl.ToPagedList(1,10);
             foreach (var player in team.Players)
             {
                 player.TeamName = team.Name;
@@ -243,12 +247,15 @@ namespace GoalGetters.Controllers
             PlayerTeamViewModel viewModel = new PlayerTeamViewModel();
 
             // Fetch players and teams in parallel
-            Task<IEnumerable<Player>> getPlayersTask = _apiServicePlayer.GetByName(searchName);
-            Task<IEnumerable<Team>> getTeamsTask = _apiServiceTeam.GetByName(searchName);
-            await Task.WhenAll(getPlayersTask, getTeamsTask);
+            Task<List<Player>> getPlayersListTask = _apiServicePlayer.GetByName(searchName);
+            Task<List<Team>> getTeamsListTask = _apiServiceTeam.GetByName(searchName);
+            await Task.WhenAll(getPlayersListTask, getTeamsListTask);
 
-            viewModel.Players = getPlayersTask.Result;
-            viewModel.Teams = getTeamsTask.Result;
+            IPagedList<Player> getPlayersTask = getPlayersListTask.Result.ToPagedList();
+            IPagedList<Team> getTeamsTask = getTeamsListTask.Result.ToPagedList();
+
+            viewModel.Players = getPlayersTask;
+            viewModel.Teams = getTeamsTask;
 
             if (viewModel.Players != null)
             {

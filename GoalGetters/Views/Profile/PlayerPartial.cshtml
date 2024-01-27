@@ -1,4 +1,7 @@
-﻿@model IEnumerable<GoalGetters.Models.Player>
+﻿@model IPagedList<GoalGetters.Models.Player>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 <p>
     <a asp-action="CreateTeam" class="btn btn-primary">Create New</a>
@@ -10,19 +13,19 @@
                
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TeamName)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TeamName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Country)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Birth) (@Html.DisplayNameFor(model => model.Age))
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Birth) (@Html.DisplayNameFor(model => model.FirstOrDefault().Age))
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Height)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Height)
             </th>
             <th></th>
         </tr>
@@ -31,10 +34,10 @@
 @foreach (var player in Model) {
         <tr>
             <td>
-                <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
+                    <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
             </td>
             <td>
-                <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>
+                    <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>
             </td>
             <td>
                 <a asp-action="DetailsPlayer" asp-route-id="@player.Id">@Html.DisplayFor(modelItem => player.Name)</a>
@@ -43,7 +46,7 @@
                 @Html.DisplayFor(modelItem => player.Country)
             </td>
             <td>
-                @player.Birth.ToString("dd/MM/yyyy") (@player.Age)
+                    @player.Birth.ToString("dd/MM/yyyy") (@player.Age)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => player.Height)
@@ -53,6 +56,7 @@
                 @Html.ActionLink("Delete", "DeletePlayer", new { id = player.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
-}
+        }
+
     </tbody>
 </table>

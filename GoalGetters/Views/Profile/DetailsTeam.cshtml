@@ -1,4 +1,7 @@
 ﻿@model GoalGetters.Models.Team
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,9 +26,21 @@
         </div>
     </div>
 
-   <div class="container text-white team-details mt-3">
-       @Html.Partial("PlayerPartial", Model.Players)
-   </div>
+    @if (Model.Players.Count != 0)
+    {
+        <div class="container text-white team-details mt-3">
+            @Html.Partial("PlayerPartial", Model.Players)
+            <div>
+                @Html.PagedListPager((IPagedList)Model.Players, page => Url.Action("DetailsTeam", new { page }),
+                                  new PagedListRenderOptions
+        {
+            PageClasses = new string[] { "page-link", "dark-mode" },
+            UlElementClasses = new string[] { "pagination", "dark-mode", "border-dark" },
+            LiElementClasses = new string[] { "page-item", "dark-mode" }
+        })
+            </div>
+        </div>
+    }
 
     <div class="mt-3">
         @Html.ActionLink("Editar", "EditTeam", new { entity = "Player", id = Model.Id }, new { @class = "btn btn-primary" })

@@ -1,8 +1,10 @@
-﻿namespace GoalGetters.Models
+﻿using X.PagedList;
+
+namespace GoalGetters.Models
 {
     public class PlayerTeamViewModel
     {
-        public IEnumerable<Player> Players { get; set; }
-        public IEnumerable<Team> Teams { get; set; }
+        public IPagedList<Player> Players { get; set; }
+        public IPagedList<Team> Teams { get; set; }
     }
 }

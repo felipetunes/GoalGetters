@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using X.PagedList;
 
 namespace GoalGetters.Models
 {
@@ -11,6 +12,6 @@ namespace GoalGetters.Models
         public string City { get; set; }
         [Display(Name = "País")]
         public string Country { get; set; }
-        public List<Player> Players { get; set; }
+        public IPagedList<Player> Players { get; set; }
     }
 }
