@@ -2,9 +2,15 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 
+
+<p>
+    <a asp-action="CreatePlayer" class="btn btn-primary">Adicionar Jogador</a>
+    <a asp-action="CreateTeam" class="btn btn-primary">Adicionar Time</a>
+</p>
+
 @if (Model != null)
 {
-    @if (Model.Players != null)
+    @if (Model.Players.Count > 0)
     {
         <div>
             <h2 class="text-white">Jogadores</h2>
@@ -14,7 +20,7 @@
         </div>
     }
 
-    @if (Model.Teams != null)
+    @if (Model.Teams.Count > 0)
     {
         <div>
             <h2 class="text-white">Times</h2>
@@ -24,7 +30,7 @@
         </div>
     }
 
-    @if (Model.Teams == null && Model.Players == null)
+    @if (Model.Teams.Count == 0 && Model.Players.Count == 0)
     {
         <h4 class="text-white">Nenhum registro encontrado</h4>
     }
