@@ -17,6 +17,8 @@ namespace GoalGetters.Models
         public DateTime Birth { get; set; }
         [Display(Name = "Altura")]
         public string? Height { get; set; }
+        [Display(Name = "Posição")]
+        public string? Position { get; set; }
         [Display(Name = "Time")]
         public string? TeamName { get; set; }
         [Display(Name = "Idade")]

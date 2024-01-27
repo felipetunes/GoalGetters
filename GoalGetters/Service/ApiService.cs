@@ -96,7 +96,7 @@ public class ApiService<T> : IApiService<T>
         return await response.Content.ReadAsStringAsync();
     }
 
-    public async Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null)
+    public async Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null, string position = null)
     {
         // Verifique se os argumentos são válidos
         if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
@@ -120,6 +120,11 @@ public class ApiService<T> : IApiService<T>
         if (!string.IsNullOrEmpty(height))
         {
             url += $"&height={height}";
+        }
+
+        if (!string.IsNullOrEmpty(position))
+        {
+            url += $"&position={position}";
         }
 
         // Envia a solicitação PUT

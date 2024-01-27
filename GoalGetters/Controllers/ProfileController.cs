@@ -46,11 +46,11 @@ namespace GoalGetters.Controllers
         }
 
         // GET: ProfileController/Details/5
-        public async Task<ActionResult> DetailsTeam(int id, int page = 10)
+        public async Task<ActionResult> DetailsTeam(int id, int page)
         {
             var team = await _apiServiceTeam.GetById(id);
             var pl = await _apiServiceTeam.GetPlayersByTeamId(id);
-            team.Players = pl.ToPagedList(1,10);
+            team.Players = pl.ToPagedList(page,10);
             foreach (var player in team.Players)
             {
                 player.TeamName = team.Name;
@@ -187,8 +187,14 @@ namespace GoalGetters.Controllers
                         throw new ArgumentException("Height cannot be null or empty.", nameof(height));
                     }
 
+                    string position = collection["position"];
+                    if (string.IsNullOrEmpty(position))
+                    {
+                        throw new ArgumentException("Position cannot be null or empty.", nameof(position));
+                    }
+
                     // Atualiza o jogador
-                    Player updatedPlayer = await _apiServicePlayer.Update<Player>(id, name, city, country, idteam, birth, height);
+                    Player updatedPlayer = await _apiServicePlayer.Update<Player>(id, name, city, country, idteam, birth, height, position);
                 }
                 else if (entity == "team")
                 {

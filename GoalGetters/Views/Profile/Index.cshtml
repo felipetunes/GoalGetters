@@ -10,28 +10,34 @@
 
 @if (Model != null)
 {
-    @if (Model.Players.Count > 0)
+    @if (Model.Players != null)
     {
-        <div>
-            <h2 class="text-white">Jogadores</h2>
+        @if (Model.Players.Count > 0)
+        {
+            <div>
+                <h2 class="text-white">Jogadores</h2>
 
-            @Html.Partial("PlayerPartial", Model.Players)
+                @Html.Partial("PlayerPartial", Model.Players)
 
-        </div>
+            </div>
+        }
     }
 
-    @if (Model.Teams.Count > 0)
+    @if (Model.Players != null)
     {
-        <div>
-            <h2 class="text-white">Times</h2>
+        @if (Model.Teams.Count > 0)
+        {
+            <div>
+                <h2 class="text-white">Times</h2>
 
-            @Html.Partial("TeamPartial", Model.Teams)
+                @Html.Partial("TeamPartial", Model.Teams)
 
-        </div>
+            </div>
+        }
     }
 
-    @if (Model.Teams.Count == 0 && Model.Players.Count == 0)
+    @if (Model.Teams == null && Model.Players == null)
     {
-        <h4 class="text-white">Nenhum registro encontrado</h4>
+            <h4 class="text-white">Nenhum registro encontrado</h4>
     }
 }
