@@ -13,5 +13,6 @@ namespace GoalGetters.Models
         [Display(Name = "País")]
         public string Country { get; set; }
         public IPagedList<Player> Players { get; set; }
+        public string Color1 { get; set; }
     }
 }

@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GoalGetters.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 navbar-custom">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 navbar-dark navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GoalGetters</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,7 +31,7 @@
                             <ul class="dropdown-menu" aria-labelledby="teamDropdown">
                                 <div class="container p-3" style="width:300px; margin-left:17px; background-color:transparent">
                                     <div class="row">
-                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 71, page = 1 })"><img src="~/img/teams/athléticoparanaense.png" class="logo-teams" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 71, page = 1 })"><img src="~/img/teams/athléticoparanaense.png" class="logo-teams" style="object-fit:contain !important" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 67, page = 1 })"><img src="~/img/teams/atléticomineiro.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 69, page = 1 })"><img src="~/img/teams/botafogo.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 64, page = 1 })"><img src="~/img/teams/corinthians.svg" class="logo-teams" /></a></div>
@@ -40,16 +40,16 @@
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 68, page = 1 })"><img src="~/img/teams/cruzeiro.svg" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 1, page = 1 })"><img src="~/img/teams/flamengo.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 61, page = 1 })"><img src="~/img/teams/fluminense.png" class="logo-teams" style="object-fit:contain !important" /></a></div>
-                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 65, page = 1 })"><img src="~/img/teams/gremio.png" class="logo-teams" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 65, page = 1 })"><img src="~/img/teams/grêmio.png" class="logo-teams" /></a></div>
                                     </div>
                                     <div class="row">
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 66, page = 1 })"><img src="~/img/teams/internacional.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 2, page = 1 })"><img src="~/img/teams/palmeiras.svg" class="logo-teams" /></a></div>
-                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 62, page = 1 })"><img src="~/img/teams/saopaulo.png" class="logo-teams" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 62, page = 1 })"><img src="~/img/teams/sãopaulo.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 98, page = 1 })"><img src="~/img/teams/redbullbragantino.png" class="logo-teams" /></a></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 84, page = 1 })"><img src="~/img/teams/criciúma.png" class="logo-teams" /></a></div>
+                                        <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 84, page = 1 })"><img src="~/img/teams/criciúma.png" class="logo-teams" style="object-fit:contain !important" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 70, page = 1 })"><img src="~/img/teams/vascodagama.png" class="logo-teams" style="object-fit:contain !important"></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 78, page = 1 })"><img src="~/img/teams/fortaleza.png" class="logo-teams" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 104, page = 1 })"><img src="~/img/teams/cuiabá.svg" class="logo-teams" style="object-fit:contain !important" /></a></div>

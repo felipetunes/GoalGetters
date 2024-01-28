@@ -4,62 +4,38 @@
 @using X.PagedList.Web.Common;
 
 <table class="table text-white">
-    <thead>
-        <tr>
-            <th>
-               
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().TeamName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Birth) (@Html.DisplayNameFor(model => model.FirstOrDefault().Age))
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Height)
-            </th>
-             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Position)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
 @foreach (var player in Model) {
         <tr>
+            @if (ViewContext.RouteData.Values["action"].ToString() == "Index")
+            {
             <td>
-                    <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
+                <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
             </td>
             <td>
-                    <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>
+                <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>   
             </td>
+            }
             <td>
                 <a asp-action="DetailsPlayer" asp-route-id="@player.Id">@Html.DisplayFor(modelItem => player.Name)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => player.Country)
+                <img src="~/img/country/@(player.Country.ToLower().Replace(" ", "")).png" alt="Logo" width="22px" height="17px" />
             </td>
             <td>
-                    @player.Birth.ToString("dd/MM/yyyy") (@player.Age)
+                    @player.Age Anos
             </td>
             <td>
-                @Html.DisplayFor(modelItem => player.Height)
+                @Html.DisplayFor(modelItem => player.Height) m
             </td>
                 <td>
                     @Html.DisplayFor(modelItem => player.Position)
                 </td>
             <td>
-                @Html.ActionLink("Edit", "EditPlayer", new { id = player.Id, entity = "player" }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "DeletePlayer", new { id = player.Id }, new { @class = "btn btn-danger" })
+                <a href="@Url.Action("EditPlayer")"><i class="fas fa-edit" style="color:#ADD8E6"></i> </a>
+                <a href="@Url.Action("DeletePlayer")"><i class="fas fa-trash" style="margin-left:10px; color:#FA8072"></i> </a>
             </td>
         </tr>
         }
-
     </tbody>
 </table>

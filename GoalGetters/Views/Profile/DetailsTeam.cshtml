@@ -6,11 +6,19 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Detalhes do Time";
+    var teamColor = Model.Color1;
 }
+
+<style>
+    .colorButton {
+        background-color: @teamColor !important; /* Substitua por sua cor desejada */
+        color: 'black' !important;
+    }
+</style>
 
 <div class="m-4">
     <h4 class="text-white"> @Html.DisplayFor(model => model.Name)</h4>
-    <div class="container text-white team-details">
+    <div class="container text-white team-details" style="border: 2px solid @teamColor;">
         <div class="row">
             <div class="col">
                 <img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo do time" class="team-logo" />
@@ -28,16 +36,17 @@
 
     @if (Model.Players.Count != 0)
     {
-        <div class="container text-white team-details mt-3">
+        <div class="container text-white team-details mt-3" style="border: 2px solid @teamColor;">
+            <h5 class="text-white"> Elenco</h5>
             @Html.Partial("PlayerPartial", Model.Players)
             <div>
                 @Html.PagedListPager((IPagedList)Model.Players, page => Url.Action("DetailsTeam", new { page }),
                                   new PagedListRenderOptions
-        {
-            PageClasses = new string[] { "page-link", "dark-mode" },
-            UlElementClasses = new string[] { "pagination", "dark-mode", "border-dark" },
-            LiElementClasses = new string[] { "page-item", "dark-mode" }
-        })
+                {
+                PageClasses = new string[] { "page-link", "dark-mode", "colorButton" },
+                    UlElementClasses = new string[] { "pagination", "dark-mode", "border-dark" },
+                    LiElementClasses = new string[] { "page-item", "dark-mode" }
+                })
             </div>
         </div>
     }

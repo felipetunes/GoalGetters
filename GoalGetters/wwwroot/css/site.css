@@ -2,15 +2,36 @@ html {
   font-size: 14px;
 }
 
+a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Faz com que a cor do link seja a mesma do texto ao redor */
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
 }
 
+.table {
+    border: none;
+}
+
+table td, th {
+    border: none;
+}
+
+table tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 .dark-mode {
     background-color: #333;
     color: #fff;
+}
+
+.custom-navbar {
+    background-color: #6A057F;
 }
 
 .border-dark {
@@ -42,7 +63,7 @@ html {
 }
 
 body {
-    background-color: #0d1117;
+    background-color: #121214;
 }
 
 .navbar-custom {
@@ -57,33 +78,36 @@ body {
 }
 
 .searchIco {
-    color: #d609fc;
+    color: azure;
     border-radius: 0px 10px 10px 0px;
-    border-width: 1px;
-    border-color: #d609fc;
+    border-width: 0.5px;
+    border-color: azure;
     border-style: solid;
     background-color: #0d1117;
-    opacity:90%;
+    opacity: 70%;
 }
 
 .searchBar {
     border-radius: 10px 0px 0px 10px !important;
     border-radius: 0px 10px 10px 0px;
     border-width: 1px;
-    border-color: #d609fc;
+    border-color: azure;
     border-style: solid;
     background-color: #222122;
-    color:aqua;
-    opacity:90%;
+    color: aqua;
+    opacity: 90%;
+}
+
+.searchBar:hover {
+    border-color: #d609fc;
 }
 
 .searchIco:focus, .searchIco:hover {
     color: aqua;
     border-radius: 0px 10px 10px 0px;
     border-width: 1px;
-    border-color: #d609fc;
+    border-color:darkorchid ;
     border-style: solid;
-    background-color: #d609fc;
 }
 
 .searchBar:focus, .searchBar:active, .searchBar:visited {
@@ -92,7 +116,7 @@ body {
     border-width: 1px;
     border-color: #d609fc;
     border-style: solid;
-    background-color: rgba(14, 17, 22, 0.98);
+    background-color: #09090a;
     outline: none !important;
     color: aqua;
     box-shadow: 0 0 0 0;
@@ -103,8 +127,9 @@ body {
 }
 
 .btn-primary {
-    color:aqua;
+    color:azure;
     background-color: #0d1117;
+    border-color:azure;
 }
 
 .btn-danger {
@@ -119,15 +144,9 @@ body {
 }
 
 .dropdown-menu {
-    background-color: rgba(14, 17, 22, 0.98);
+    background-color: #09090a; 
     box-shadow: -1px 3px 31px 11px rgba(255,205,205,0.02);
-}
-
-.team-details {
-    background-color: rgba(105, 105, 105, 0.2);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
+    border-radius:10px;
 }
 
 .team-logo {
@@ -167,4 +186,11 @@ body {
 .form-hor {
     display: flex;
     align-items: center;
+}
+
+.team-details {
+    background-color: rgba(105, 105, 105, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
 }
