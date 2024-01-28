@@ -24,7 +24,7 @@ namespace GoalGetters.Helper
             [Display(Name = "Atacante")]
             Forward,
 
-            [Display(Name = "Centro Avante")]
+            [Display(Name = "Centroavante")]
             Striker
         }
     }
