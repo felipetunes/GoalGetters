@@ -14,5 +14,7 @@ namespace GoalGetters.Models
         public string Country { get; set; }
         public IPagedList<Player> Players { get; set; }
         public string Color1 { get; set; }
+        public int PlayersCount { get; set; }
+        public string AverageWage { get; set; }
     }
 }

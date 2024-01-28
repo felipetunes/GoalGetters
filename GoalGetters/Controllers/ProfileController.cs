@@ -50,7 +50,15 @@ namespace GoalGetters.Controllers
         {
             var team = await _apiServiceTeam.GetById(id);
             var pl = await _apiServiceTeam.GetPlayersByTeamId(id);
-            team.Players = pl.ToPagedList(page,11);
+
+            // Ordenar a lista antes de paginar
+            var orderedPlayers = pl.OrderBy(p => p.Position);
+
+            team.PlayersCount = pl.Count();
+            team.AverageWage = pl.Average(p => p.Age).ToString("0.#");
+
+            team.Players = orderedPlayers.ToPagedList(page,11);
+          
             foreach (var player in team.Players)
             {
                 player.TeamName = team.Name;

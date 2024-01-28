@@ -31,10 +31,16 @@
                 Local:
                 @Html.DisplayFor(model => model.City) | @Html.DisplayFor(model => model.Country)
             </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.PlayersCount) Jogadores
+            </div>
+            <div class="col">
+                Média etária: @Html.DisplayFor(model => model.AverageWage)
+            </div>
         </div>
     </div>
 
-    @if (Model.Players.Count != 0)
+    @if (Model.Players != null)
     {
         <div class="container text-white team-details mt-3" style="border: 2px solid @teamColor;">
             <h5 class="text-white"> Elenco</h5>
