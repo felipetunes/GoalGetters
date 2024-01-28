@@ -16,7 +16,7 @@ namespace GoalGetters.Models
         [Display(Name = "Nascimento")]
         public DateTime Birth { get; set; }
         [Display(Name = "Altura")]
-        public string? Height { get; set; }
+        public float? Height { get; set; }
         [Display(Name = "Posição")]
         public Helper.Enums.Position? Position { get; set; }
 

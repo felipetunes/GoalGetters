@@ -144,3 +144,27 @@ body {
 .list-item {
     padding: 10px;
 }
+
+.form-group input[type="range"] {
+    width: 70%; /* Adjust as needed */
+    margin-right: 10px;
+    height: 25px;
+    background-color: #0d1117;
+    outline: none;
+    transition: opacity .2s;
+    border-radius: 12px; /* Rounded borders */
+}
+
+.form-group input[type="range"]::-webkit-slider-thumb {
+    width: 25px;
+    height: 25px;
+    background-color:darkorchid;
+    cursor: pointer;
+    appearance:auto;
+    border-radius: 50%; /* Circular slider thumb */
+}
+
+.form-hor {
+    display: flex;
+    align-items: center;
+}
