@@ -46,11 +46,11 @@ namespace GoalGetters.Controllers
         }
 
         // GET: ProfileController/Details/5
-        public async Task<ActionResult> DetailsTeam(int id, int page)
+        public async Task<ActionResult> DetailsTeam(int id, int page=1)
         {
             var team = await _apiServiceTeam.GetById(id);
             var pl = await _apiServiceTeam.GetPlayersByTeamId(id);
-            team.Players = pl.ToPagedList(page,10);
+            team.Players = pl.ToPagedList(page,11);
             foreach (var player in team.Players)
             {
                 player.TeamName = team.Name;
