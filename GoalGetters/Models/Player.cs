@@ -18,7 +18,8 @@ namespace GoalGetters.Models
         [Display(Name = "Altura")]
         public string? Height { get; set; }
         [Display(Name = "Posição")]
-        public string? Position { get; set; }
+        public Helper.Enums.Position? Position { get; set; }
+
         [Display(Name = "Time")]
         public string? TeamName { get; set; }
         [Display(Name = "Idade")]
