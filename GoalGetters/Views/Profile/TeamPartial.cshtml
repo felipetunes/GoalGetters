@@ -3,10 +3,10 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-<table class="table text-white">
+<table class="table text-white" style="font-size:14px; margin-bottom:20px">
     <thead>
-        <tr>
-            <th>
+        <tr class="text-muted">
+            <th style="width:100px">
 
             </th>
             <th>
@@ -28,11 +28,11 @@
                     <a asp-action="DetailsTeam" asp-route-id="@team.Id">@Html.DisplayFor(modelItem => team.Name)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => team.Country)
+                    <img src="~/img/country/@(team.Country.ToLower().Replace(" ", "")).png" alt="Logo" width="22px" height="17px" />
             </td>
              <td>
-                    @Html.ActionLink("Edit", "EditTeam", new { id = team.Id, entity = "player" }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "DeleteTeam", new { id = team.Id }, new { @class = "btn btn-danger" })
+                    <a href="@Url.Action("EditTeam", new { id = team.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a>
+                    <a href="@Url.Action("DeleteTeam", new { id = team.Id })"><i class="fas fa-trash" style="margin-left:10px; color:#FA8072"></i> </a>
             </td> 
         </tr>
 }

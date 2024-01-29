@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ISO3166" Version="1.0.4" />
+    <PackageReference Include="IsoNames" Version="1.1.0" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.3" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.0" />

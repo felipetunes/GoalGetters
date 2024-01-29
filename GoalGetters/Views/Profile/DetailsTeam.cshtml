@@ -5,7 +5,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Detalhes do Time";
+    ViewData["Title"] = Model.Name;
     var teamColor = Model.Color1;
 }
 
@@ -17,33 +17,27 @@
 </style>
 
 <div class="m-4">
-    <h4 class="text-white"> @Html.DisplayFor(model => model.Name)</h4>
+    <h4 class="text-white" style="font-weight: bold !important;"> @Html.DisplayFor(model => model.Name)</h4>
     <div class="container text-white team-details" style="border: 2px solid @teamColor;">
-        <div class="row">
-            <div class="col">
-                <img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo do time" class="team-logo" />
-            </div>
-            <div class="col">
-                @Html.DisplayNameFor(model => model.Id)
-                @Html.DisplayFor(model => model.Id)
-            </div>
-            <div class="col">
-                Local:
-                @Html.DisplayFor(model => model.City) | @Html.DisplayFor(model => model.Country)
-            </div>
-            <div class="col">
-                @Html.DisplayFor(model => model.PlayersCount) Jogadores
-            </div>
-            <div class="col">
-                Média etária: @Html.DisplayFor(model => model.AverageWage)
-            </div>
+        <div>
+            <section class="grid grid-template-areas-1">
+                <div class="item itemlocal">
+                    Local:
+                    @Html.DisplayFor(model => model.City) | @Html.DisplayFor(model => model.Country)
+                </div>
+                <div class="item itemstadium"></div>
+                <div class="item itemlogoteam"><img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo do time" class="team-logo" /></div>
+                <div class="item itemaverage"> Média etária: @Html.DisplayFor(model => model.AverageWage)</div>
+                <div class="item itemcountplayers"> Jogadores no Plantel: @Html.DisplayFor(model => model.PlayersCount) </div>
+                <div class="item itemedit"><a href="@Url.Action("EditTeam", new { id = Model.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a></div>
+            </section>
         </div>
     </div>
 
     @if (Model.Players != null)
     {
-        <div class="container text-white team-details mt-3" style="border: 2px solid @teamColor;">
-            <h5 class="text-white"> Elenco</h5>
+        <div class="container text-white team-details mt-3" style="border: 2px solid @teamColor; margin-bottom:80px">
+            <h5 class="text-white" style="font-weight: bold !important;"> Plantel </h5>
             @Html.Partial("PlayerPartial", Model.Players)
             <div>
                 @Html.PagedListPager((IPagedList)Model.Players, page => Url.Action("DetailsTeam", new { page }),
@@ -56,9 +50,4 @@
             </div>
         </div>
     }
-
-    <div class="mt-3">
-        @Html.ActionLink("Editar", "EditTeam", new { entity = "Player", id = Model.Id }, new { @class = "btn btn-primary" })
-        <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")" class="btn btn-secondary">Voltar à lista</a>
-    </div>
 </div>

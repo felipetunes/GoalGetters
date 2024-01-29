@@ -15,7 +15,7 @@
 <body>
 
 
-<h4 class="text-white">Player</h4>
+    <h4 class="text-white" style="font-weight: bold !important;">Player</h4>
 <hr />
     <div class="row text-white">
         <div class="col-md-4">
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Country" class="control-label"></label>
-                    <input asp-for="Country" class="form-control" required />
+                    @Html.DropDownList("Country", ViewBag.CountryList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="Country" class="text-danger"></span>
             </div>
             <div class="form-group">

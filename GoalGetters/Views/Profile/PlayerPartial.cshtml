@@ -3,39 +3,62 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
-<table class="table text-white">
-    <tbody>
-@foreach (var player in Model) {
-        <tr>
-            @if (ViewContext.RouteData.Values["action"].ToString() == "Index")
-            {
-            <td>
-                <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
-            </td>
-            <td>
-                <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>   
-            </td>
-            }
-            <td>
-                <a asp-action="DetailsPlayer" asp-route-id="@player.Id">@Html.DisplayFor(modelItem => player.Name)</a>
-            </td>
-            <td>
-                <img src="~/img/country/@(player.Country.ToLower().Replace(" ", "")).png" alt="Logo" width="22px" height="17px" />
-            </td>
-            <td>
-                    @player.Age Anos
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => player.Height) m
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => player.Position)
-                </td>
-            <td>
-                <a href="@Url.Action("EditPlayer")"><i class="fas fa-edit" style="color:#ADD8E6"></i> </a>
-                <a href="@Url.Action("DeletePlayer")"><i class="fas fa-trash" style="margin-left:10px; color:#FA8072"></i> </a>
-            </td>
+<table class="table text-white" style="font-size:14px;">
+    <thead>
+        <tr class="text-muted">
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().TeamName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Country)
+            </th>
+            <th>
+                Idade
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Height)
+            </th>
+            <th></th>
         </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model) {
+            <tr>
+                @if (ViewContext.RouteData.Values["action"].ToString() == "Index")
+                {
+                <td>
+                    <img src="~/img/teams/@(player.TeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="30px" height="30px" />
+                </td>
+                <td>
+                    <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>   
+                </td>
+                }
+                <td>
+                    <a asp-action="DetailsPlayer" asp-route-id="@player.Id">@Html.DisplayFor(modelItem => player.Name)</a>
+                </td>
+                <td>
+                    <img src="~/img/country/@(player.Country.ToLower().Replace(" ", "")).png" alt="Logo" width="22px" height="17px" />
+                </td>
+                <td>
+                        @player.Age Anos
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => player.Height) m
+                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => player.Position)
+                    </td>
+                <td>
+                    <a href="@Url.Action("EditPlayer", new { id = player.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a>
+                    <a href="@Url.Action("DeletePlayer", new { id = player.Id })"><i class="fas fa-trash" style="margin-left:10px; color:#FA8072"></i> </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

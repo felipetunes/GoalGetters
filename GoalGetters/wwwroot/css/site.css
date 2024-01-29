@@ -1,3 +1,47 @@
+:root {
+    --color1roxo: #6805F2;
+    --color2roxo: #7630D9;
+    --color3limao: #93F205;
+    --color4verde: #558C03;
+    --color5preto: #0D0D0D;
+    --color6background: #121214;
+}
+
+.grid {
+    display: grid;
+}
+
+.grid-template-areas-1 {
+    grid-template-areas:
+        "itemlogoteam itemlocal itemlocal itemstadium"
+        "itemlogoteam itemcountplayers itemaverage itemedit";
+}
+
+.itemstadium {
+    grid-area: itemstadium;
+}
+
+.itemlocal {
+    grid-area: itemlocal;
+}
+
+.itemlogoteam {
+    grid-area: itemlogoteam;
+}
+
+.itemaverage {
+    grid-area: itemaverage;
+}
+
+.itemedit {
+    grid-area: itemedit;
+}
+
+.itemcountplayers {
+    grid-area: itemcountplayers;
+}
+
+
 html {
   font-size: 14px;
 }
@@ -53,8 +97,8 @@ select:-webkit-autofill:focus,
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-    -webkit-text-fill-color: aqua;
-    -webkit-box-shadow: 0 0 0px 1000px #222122 inset;
+    -webkit-text-fill-color: var(--color3limao);
+    -webkit-box-shadow: 0 0 0px 1000px var(--color5preto) inset;
 }
 
 html {
@@ -62,19 +106,30 @@ html {
   min-height: 100%;
 }
 
+.logoedit {
+    display: inline-block;
+    font-family: 'Days One', sans-serif;
+    font-weight: bolder;
+    font-size: 26px;
+    background: linear-gradient(to right, var(--color3limao) 37%, azure 37%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 body {
-    background-color: #121214;
+    background-color: var(--color6background);
+    font-family: 'Open Sans', sans-serif;
 }
 
 .navbar-custom {
     padding: 20px;
     padding-left: 40px;
     padding-right: 40px;
-    background-color: transparent !important;
+    background-color: var(--color5preto) !important;
 }
 
 .navbar-brand {
-    color:aqua;
+    color:var(--color3limao);
 }
 
 .searchIco {
@@ -94,19 +149,19 @@ body {
     border-color: azure;
     border-style: solid;
     background-color: #222122;
-    color: aqua;
+    color: azure;
     opacity: 90%;
 }
 
 .searchBar:hover {
-    border-color: #d609fc;
+    border-color: var(--color3limao);
 }
 
 .searchIco:focus, .searchIco:hover {
-    color: aqua;
+    color: var(--color3limao);
     border-radius: 0px 10px 10px 0px;
     border-width: 1px;
-    border-color:darkorchid ;
+    border-color: var(--color3limao);
     border-style: solid;
 }
 
@@ -114,23 +169,29 @@ body {
     border-radius: 10px 0px 0px 10px !important;
     border-radius: 0px 10px 10px 0px;
     border-width: 1px;
-    border-color: #d609fc;
+    border-color: var(--color3limao);
     border-style: solid;
-    background-color: #09090a;
+    background-color: var(--color5preto);
     outline: none !important;
-    color: aqua;
+    color: var(--color3limao);
     box-shadow: 0 0 0 0;
 }
 
 .fa-search:hover, select:focus, .fa-search:focus {
-    color:aqua !important;
+    color:var(--color3limao) !important;
 }
 
 .btn-primary {
-    color:azure;
-    background-color: #0d1117;
-    border-color:azure;
+    color: azure;
+    background-color: var(--color6background);
+    border-color: azure;
 }
+
+    .btn-primary:hover {
+        color: var(--color1roxo);
+        background-color: var(--color6background);
+        border-color: var(--color1roxo);
+    }
 
 .btn-danger {
     color: red;
@@ -193,4 +254,10 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
+}
+
+.footer {
+    margin-top:50px !important;
+    background-color:var(--color5preto);
+    opacity:0.5
 }

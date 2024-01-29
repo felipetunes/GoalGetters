@@ -14,11 +14,11 @@
     {
         @if (Model.Players.Count > 0)
         {
-            <div>
+            <div style="Margin-bottom:20px">
                 <h2 class="text-white">Jogadores</h2>
-
-                @Html.Partial("PlayerPartial", Model.Players)
-
+                <div class="container text-white team-details mt-3" style="border: 2px solid">
+                    @Html.Partial("PlayerPartial", Model.Players)
+                </div>
             </div>
         }
     }
@@ -27,11 +27,11 @@
     {
         @if (Model.Teams.Count > 0)
         {
-            <div>
+            <div style="Margin-bottom:90px">
                 <h2 class="text-white">Times</h2>
-
-                @Html.Partial("TeamPartial", Model.Teams)
-
+                <div class="container text-white team-details mt-3" style="border: 2px solid">
+                    @Html.Partial("TeamPartial", Model.Teams)
+                </div>
             </div>
         }
     }

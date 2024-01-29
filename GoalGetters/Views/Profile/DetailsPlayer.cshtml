@@ -5,11 +5,11 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Detalhes do Jogador";
+    ViewData["Title"] = Model.Name;
 }
 
 <div class="m-4">
-    <h4 class="text-white">Player</h4>
+    <h4 class="text-white" style="font-weight: bold !important;">Player</h4>
         <hr />
         <dl class="row text-white">
             <dt class="col-sm-2">
