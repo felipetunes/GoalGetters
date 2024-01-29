@@ -27,5 +27,31 @@ namespace GoalGetters.Helper
             [Display(Name = "Centroavante")]
             Striker
         }
+        public enum Competition
+        {
+            [Display(Name = "Copa do Mundo")]
+            CopaDoMundo,
+
+            [Display(Name = "Champions League")]
+            ChampionsLeague,
+
+            [Display(Name = "Premier League")]
+            PremierLeague,
+
+            [Display(Name = "La Liga")]
+            LaLiga,
+
+            [Display(Name = "Série A")]
+            SerieA,
+
+            [Display(Name = "Bundesliga")]
+            Bundesliga,
+
+            [Display(Name = "Copa Libertadores da América")]
+            CopaLibertadoresDaAmérica,
+
+            [Display(Name = "Campeonato Brasileiro")]
+            CampeonatoBrasileiro
+        }
     }
 }

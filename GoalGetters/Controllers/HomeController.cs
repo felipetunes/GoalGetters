@@ -1,6 +1,8 @@
 using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using static GoalGetters.Helper.Enums;
 
 namespace GoalGetters.Controllers
 {
@@ -15,6 +17,10 @@ namespace GoalGetters.Controllers
 
         public IActionResult Index()
         {
+            var competitions = Enum.GetNames(typeof(Helper.Enums.Competition));
+
+            ViewBag.CompetitionList = new SelectList(competitions);
+
             return View();
         }
 
