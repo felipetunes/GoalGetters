@@ -5,6 +5,7 @@
     --color4verde: #558C03;
     --color5preto: #0D0D0D;
     --color6background: #121214;
+    --color7gray: rgba(105, 105, 105, 0.2);
 }
 
 .grid {
@@ -187,11 +188,11 @@ body {
     border-color: azure;
 }
 
-    .btn-primary:hover {
-        color: var(--color1roxo);
-        background-color: var(--color6background);
-        border-color: var(--color1roxo);
-    }
+.btn-primary:hover {
+    color: var(--color1roxo);
+    background-color: var(--color6background);
+    border-color: var(--color1roxo);
+}
 
 .btn-danger {
     color: red;
@@ -249,8 +250,17 @@ body {
     align-items: center;
 }
 
-.team-details {
-    background-color: rgba(105, 105, 105, 0.2);
+.loginbutton {
+    background-color:var(--color2roxo); width:100%; border-style:hidden;
+}
+
+    .loginbutton:hover {
+        background-color: var(--color1roxo);
+        box-shadow: 3px 3px 5px 0px var(--color5preto);
+    }
+
+.bgdetails {
+    background-color: var(--color7gray);
     padding: 30px;
     border-radius: 10px;
     box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
