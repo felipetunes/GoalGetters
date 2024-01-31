@@ -14,7 +14,9 @@ namespace GoalGetters.Models
         public string Country { get; set; }
         public IPagedList<Player> Players { get; set; }
         public string Color1 { get; set; }
+        [Display(Name = "Jogadores no plantel")]
         public int PlayersCount { get; set; }
-        public string AverageWage { get; set; }
+        [Display(Name = "Média etária")]
+        public string AverageAge { get; set; }
     }
 }

@@ -141,5 +141,22 @@ public class ApiService<T> : IApiService<T>
             throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
         }
     }
+
+    public async Task<List<T>> GetAll<T>(string endpoint)
+    {
+        string url = $"{urlApi}{endpoint}";
+        HttpResponseMessage response = await _client.GetAsync(url);
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadAsAsync<List<T>>();
+            return data;
+        }
+        else
+        {
+            // Return default value of List<T>
+            return default(List<T>);
+        }
+    }
+
 }
 

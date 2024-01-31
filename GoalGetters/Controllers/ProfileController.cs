@@ -59,7 +59,7 @@ namespace GoalGetters.Controllers
                 var orderedPlayers = pl.OrderBy(p => p.Position);
 
                 team.PlayersCount = pl.Count();
-                team.AverageWage = pl.Average(p => p.Age).ToString("0.#");
+                team.AverageAge = pl.Average(p => p.Age).ToString("0.#");
                 team.Players = orderedPlayers.ToPagedList(page, 11);
 
                 foreach (var player in team.Players)

@@ -18,7 +18,7 @@
 
 <div class="m-4">
     <h4 class="text-white" style="font-weight: bold !important;"> @Html.DisplayFor(model => model.Name)</h4>
-    <div class="container text-white team-details" style="border: 2px solid @teamColor;">
+    <div class="container text-white bgdetails" style="border: 2px solid @teamColor;">
         <div>
             <section class="grid grid-template-areas-1">
                 <div class="item itemlocal">
@@ -27,8 +27,8 @@
                 </div>
                 <div class="item itemstadium"></div>
                 <div class="item itemlogoteam"><img src="~/img/teams/@(Model.Name.ToLower().Replace(" ","")).png" alt="Logo do time" class="team-logo" /></div>
-                <div class="item itemaverage"> Média etária: @Html.DisplayFor(model => model.AverageWage)</div>
-                <div class="item itemcountplayers"> Jogadores no Plantel: @Html.DisplayFor(model => model.PlayersCount) </div>
+                <div class="item itemaverage"> @Html.DisplayNameFor(model => model.AverageAge): @Html.DisplayFor(model => model.AverageAge)</div>
+                <div class="item itemcountplayers"> @Html.DisplayNameFor(model => model.PlayersCount) : @Html.DisplayFor(model => model.PlayersCount) </div>
                 <div class="item itemedit"><a href="@Url.Action("EditTeam", new { id = Model.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a></div>
             </section>
         </div>
@@ -36,7 +36,7 @@
 
     @if (Model.Players != null)
     {
-        <div class="container text-white team-details mt-3" style="border: 2px solid @teamColor; margin-bottom:80px">
+        <div class="container text-white bgdetails mt-3" style="border: 2px solid @teamColor; margin-bottom:80px">
             <h5 class="text-white" style="font-weight: bold !important;"> Plantel </h5>
             @Html.Partial("PlayerPartial", Model.Players)
             <div>

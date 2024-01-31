@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GoalGetters.Models.Live>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ao Vivo</h1>
+
+<p>
+    <a asp-action="Create">Criar novo jogo</a>
+</p>
+<table class="table text-white">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeTeamName)
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitingTeamName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ElapsedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusMatch)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Championship)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateMatch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stadium)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeTeamName)
+            </td>
+            <td>
+                X
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitingTeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ElapsedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusMatch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Championship)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateMatch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stadium)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
