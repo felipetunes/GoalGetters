@@ -6,11 +6,11 @@ namespace GoalGetters.Models
     {
         public int Id { get; set; }
         [Display(Name = "Mandante")]
-        public int TeamId1 { get; set; }
+        public int IdTeam1 { get; set; }
         [Display(Name = "Visitante")]
-        public int TeamId2 { get; set; }
+        public int IdTeam2 { get; set; }
         [Display(Name = "Campeonato")]
-        public string Championship { get; set; }
+        public int IdChampionship { get; set; }
         [Display(Name = "Data da partida")]
         public DateTime DateMatch { get; set; }
         [Display(Name = "Estádio")]
@@ -24,8 +24,8 @@ namespace GoalGetters.Models
         [Display(Name = "Status")]
         public string StatusMatch { get; internal set; }
         [Display(Name = "Gols")]
-        public string TeamPoints1 { get; internal set; }
+        public int TeamPoints1 { get; internal set; }
         [Display(Name = "Gols")]
-        public string TeamPoints2 { get; internal set; }
+        public int TeamPoints2 { get; internal set; }
     }
 }

@@ -27,7 +27,7 @@ namespace GoalGetters.Helper
             [Display(Name = "Centroavante")]
             Striker
         }
-        public enum Competition
+        public enum Championship
         {
             [Display(Name = "Copa do Mundo")]
             CopaDoMundo,
@@ -51,7 +51,10 @@ namespace GoalGetters.Helper
             CopaLibertadoresDaAmérica,
 
             [Display(Name = "Campeonato Brasileiro")]
-            CampeonatoBrasileiro
+            CampeonatoBrasileiro,
+
+            [Display(Name = "Paulista A1")]
+            PaulistaA1,
         }
     }
 }

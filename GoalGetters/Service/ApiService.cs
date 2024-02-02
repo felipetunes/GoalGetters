@@ -85,13 +85,21 @@ public class ApiService<T> : IApiService<T>
         return players;
     }
 
-    public async Task<string> InsertPlayer(Player player)
+    public async Task<string> Insert<T>(T obj)
     {
-
         string url = $"{urlApi}{typeof(T).Name.ToLower()}/insert";
-        HttpResponseMessage response = await _client.PostAsJsonAsync(url, player);
+        HttpResponseMessage response = await _client.PostAsJsonAsync(url, obj);
 
-        response.EnsureSuccessStatusCode();
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            // Handle the error
+            var error = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
+        }
 
         return await response.Content.ReadAsStringAsync();
     }

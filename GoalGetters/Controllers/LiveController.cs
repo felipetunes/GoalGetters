@@ -32,10 +32,10 @@ namespace GoalGetters.Controllers
 
             foreach (var live in lives)
             {
-                var team1 = await _apiServiceTeam.GetById(live.TeamId1);
+                var team1 = await _apiServiceTeam.GetById(live.IdTeam1);
                 live.HomeTeamName = team1.Name;
 
-                var team2 = await _apiServiceTeam.GetById(live.TeamId2);
+                var team2 = await _apiServiceTeam.GetById(live.IdTeam2);
                 live.VisitingTeamName = team2.Name;
 
                 // Calcula o tempo de jogo e o status da partida
@@ -63,17 +63,36 @@ namespace GoalGetters.Controllers
         // POST: LiveController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
+                var team1 = await _apiServiceTeam.GetByName(collection["hometeamname"]);
+                var team2 = await _apiServiceTeam.GetByName(collection["visitingteamname"]);
+
+                // Cria um novo objeto Live a partir dos dados do formulário
+                Live live = new Live
+                {
+                    IdTeam1 =  team1.FirstOrDefault().Id,
+                    IdTeam2 = team2.FirstOrDefault().Id,
+                    IdChampionship = int.Parse(collection["idchampionship"]),
+                    DateMatch = DateTime.Parse(collection["datematch"]),
+                    Stadium = collection["stadium"],
+                    TeamPoints1 = int.Parse(collection["teampoints1"]),
+                    TeamPoints2 = int.Parse(collection["teampoints2"])
+                };
+
+                await _apiServiceTeam.Insert(live);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                // Se algo der errado, retorna para a mesma View para o usuário corrigir os dados
                 return View();
             }
         }
+
 
         // GET: LiveController/Edit/5
         public ActionResult Edit(int id)

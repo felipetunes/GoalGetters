@@ -11,5 +11,6 @@ namespace GoalGetters.Service
         Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null, string position = null);
         Task<HttpResponseMessage> Delete(int id, string entity);
         Task<List<T>> GetAll<T>(string endpoint);
+        Task<string> Insert<T>(T obj);
     }
 }
