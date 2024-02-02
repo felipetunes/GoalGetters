@@ -1,6 +1,7 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Numerics;
 
 namespace GoalGetters.Controllers
@@ -21,22 +22,19 @@ namespace GoalGetters.Controllers
         // GET: LiveController
         public async Task<IActionResult> Index()
         {
-            // Chama a API para obter todas as partidas ao vivo de hoje
-            var lives = await _apiServiceLive.GetAll<Live>("live/getalltoday");
-
-            // Obtém a hora atual
+            var lives = await _apiServiceLive.GetAll<Live>("getalltoday");
             var now = DateTime.Now;
 
             // Filtra as partidas ao vivo para incluir apenas aquelas que estão ocorrendo dentro de 90 minutos após o DateMatch
             lives = lives.Where(live => live.DateMatch <= now && live.DateMatch.AddMinutes(105) >= now).ToList();
 
+            // Obtenha todos os detalhes da equipe de uma vez e armazene-os em um dicionário
+            var teamDetails = await GetTeamDetails(lives);
+
             foreach (var live in lives)
             {
-                var team1 = await _apiServiceTeam.GetById(live.IdTeam1);
-                live.HomeTeamName = team1.Name;
-
-                var team2 = await _apiServiceTeam.GetById(live.IdTeam2);
-                live.VisitingTeamName = team2.Name;
+                live.HomeTeamName = teamDetails[live.IdTeam1].Name;
+                live.VisitingTeamName = teamDetails[live.IdTeam2].Name;
 
                 // Calcula o tempo de jogo e o status da partida
                 var (elapsedTime, statusMatch) = CalculatePlayingTimeAndStatus(live.DateMatch, DateTime.Now);
@@ -47,6 +45,13 @@ namespace GoalGetters.Controllers
             return View(lives);
         }
 
+        private async Task<Dictionary<int, Team>> GetTeamDetails(List<Live> lives)
+        {
+            var teamIds = lives.SelectMany(live => new[] { live.IdTeam1, live.IdTeam2 }).Distinct();
+            var teamTasks = teamIds.Select(id => _apiServiceTeam.GetById(id));
+            var teams = await Task.WhenAll(teamTasks);
+            return teams.ToDictionary(team => team.Id, team => team);
+        }
 
         // GET: LiveController/Details/5
         public ActionResult Details(int id)
@@ -55,7 +60,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: LiveController/Create
-        public ActionResult Create()
+        public ActionResult CreateLive()
         {
             return View();
         }
@@ -63,7 +68,7 @@ namespace GoalGetters.Controllers
         // POST: LiveController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection)
+        public async Task<ActionResult> CreateLive(IFormCollection collection)
         {
             try
             {
@@ -82,7 +87,7 @@ namespace GoalGetters.Controllers
                     TeamPoints2 = int.Parse(collection["teampoints2"])
                 };
 
-                await _apiServiceTeam.Insert(live);
+                await _apiServiceLive.Insert(live);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -94,16 +99,21 @@ namespace GoalGetters.Controllers
         }
 
 
-        // GET: LiveController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: LiveController/EditLive/5
+        public async Task<ActionResult> EditLive(int id)
         {
-            return View();
+            var live = await _apiServiceLive.GetById(id);
+
+            var competitions = Enum.GetNames(typeof(Helper.Enums.Championship));
+            ViewBag.CompetitionList = new SelectList(competitions);
+
+            return View(live);
         }
 
-        // POST: LiveController/Edit/5
+        // POST: LiveController/EditLive/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditLive(int id, IFormCollection collection)
         {
             try
             {
@@ -115,13 +125,13 @@ namespace GoalGetters.Controllers
             }
         }
 
-        // GET: LiveController/Delete/5
+        // GET: LiveController/DeleteLive/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: LiveController/Delete/5
+        // POST: LiveController/DeleteLive/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

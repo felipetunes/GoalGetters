@@ -152,7 +152,7 @@ public class ApiService<T> : IApiService<T>
 
     public async Task<List<T>> GetAll<T>(string endpoint)
     {
-        string url = $"{urlApi}{endpoint}";
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/{endpoint}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {

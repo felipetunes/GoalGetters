@@ -1,0 +1,65 @@
+﻿@model GoalGetters.Models.Live
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Live</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 text-white">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdChampionship" class="control-label"></label>
+                <select asp-for="IdChampionship" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Championship>()" class="form-control"></select>
+                <span asp-validation-for="IdChampionship" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomeTeamName" class="control-label"></label>
+                <select id="homeTeamSelect" asp-for="HomeTeamName" class="form-control">
+                    <!-- As opções serão preenchidas aqui -->
+                </select>
+                <span asp-validation-for="HomeTeamName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VisitingTeamName" class="control-label"></label>
+                <select id="visitingTeamSelect" asp-for="VisitingTeamName" class="form-control">
+                    <!-- As opções serão preenchidas aqui -->
+                </select>
+                <span asp-validation-for="VisitingTeamName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateMatch" class="control-label"></label>
+                <input asp-for="DateMatch" class="form-control" />
+                <span asp-validation-for="DateMatch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stadium" class="control-label"></label>
+                <input asp-for="Stadium" class="form-control" />
+                <span asp-validation-for="Stadium" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamPoints1" class="control-label"></label>
+                <input asp-for="TeamPoints1" class="form-control" value="0" />
+                <span asp-validation-for="TeamPoints1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamPoints2" class="control-label"></label>
+                <input asp-for="TeamPoints2" class="form-control" value="0" />
+                <span asp-validation-for="TeamPoints2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

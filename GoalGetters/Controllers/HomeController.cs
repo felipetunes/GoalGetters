@@ -18,7 +18,6 @@ namespace GoalGetters.Controllers
         public IActionResult Index()
         {
             var competitions = Enum.GetNames(typeof(Helper.Enums.Championship));
-
             ViewBag.CompetitionList = new SelectList(competitions);
 
             return View();

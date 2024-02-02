@@ -29,32 +29,40 @@ namespace GoalGetters.Helper
         }
         public enum Championship
         {
+            [Display(Name = "Campeonato Brasileiro")]
+            CampeonatoBrasileiro = 1,
+
             [Display(Name = "Copa do Mundo")]
-            CopaDoMundo,
+            CopaDoMundo = 2,
 
             [Display(Name = "Champions League")]
-            ChampionsLeague,
+            ChampionsLeague = 3,
 
             [Display(Name = "Premier League")]
-            PremierLeague,
+            PremierLeague = 4,
 
             [Display(Name = "La Liga")]
-            LaLiga,
+            LaLiga = 5,
 
             [Display(Name = "Série A")]
-            SerieA,
+            SerieA = 6,
 
             [Display(Name = "Bundesliga")]
-            Bundesliga,
+            Bundesliga = 7,
 
             [Display(Name = "Copa Libertadores da América")]
-            CopaLibertadoresDaAmérica,
-
-            [Display(Name = "Campeonato Brasileiro")]
-            CampeonatoBrasileiro,
+            CopaLibertadoresDaAmérica = 8,
 
             [Display(Name = "Paulista A1")]
-            PaulistaA1,
+            PaulistaA1 = 9
         }
+
+//#ToDo
+//        public enum Stadium
+//        {
+//            [Display(Name = "Allianz Parque")]
+//            Allianz Parque = 1,
+
+//        }
     }
 }

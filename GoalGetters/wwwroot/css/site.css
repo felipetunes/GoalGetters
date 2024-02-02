@@ -123,6 +123,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+input {
+    background-color: var(--color6background);
+}
+
 .navbar-custom {
     padding: 20px;
     padding-left: 40px;
