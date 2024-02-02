@@ -122,7 +122,7 @@ public class ApiService<T> : IApiService<T>
 
         if (birth.HasValue)
         {
-            url += $"&birth={birth.Value.ToString("yyyy-MM-dd")}";
+            url += $"&birth={birth.Value.ToString("dd/MM/yyyy")}";
         }
 
         if (!string.IsNullOrEmpty(height))

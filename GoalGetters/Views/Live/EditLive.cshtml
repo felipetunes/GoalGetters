@@ -14,17 +14,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdChampionship" class="control-label"></label>
-                @Html.DropDownList("Country", ViewBag.CompetitionList as SelectList, new { @class = "form-control", id = "IdChampionship" })
+                <select asp-for="IdChampionship" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Championship>()" class="form-control"></select>
                 <span asp-validation-for="IdChampionship" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateMatch" class="control-label"></label>
-                <input asp-for="DateMatch" class="form-control" />
+                <input asp-for="DateMatch" type="date" class="form-control" asp-format="{0:yyyy-MM-dd}" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="DateMatch" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Stadium" class="control-label"></label>
-                <input asp-for="Stadium" class="form-control" />
+                <select asp-for="IdChampionship" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Stadium>().OrderBy(x => x.Text)" class="form-control"></select>
                 <span asp-validation-for="Stadium" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TeamPoints2" class="control-label"></label>
-                <input asp-for="TeamPoints2" class="form-control" value="0" />
+                <input asp-for="TeamPoints2" class="form-control" value="0"/>
                 <span asp-validation-for="TeamPoints2" class="text-danger"></span>
             </div>
             <div class="form-group">

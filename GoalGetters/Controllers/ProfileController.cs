@@ -118,7 +118,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: EntityController/Edit/5
-        public async Task<ActionResult> EditPlayer(string entity, int id)
+        public async Task<ActionResult> EditPlayer(int id)
         {
             var player = await _apiServicePlayer.GetById(id);
 
@@ -130,7 +130,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: EntityController/Edit/5
-        public async Task<ActionResult> EditTeam(string entity, int id)
+        public async Task<ActionResult> EditTeam(int id)
         {
             var team = await _apiServiceTeam.GetById(id);
 

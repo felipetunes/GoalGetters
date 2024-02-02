@@ -1,20 +1,4 @@
-﻿
-var heightRange = document.getElementById('heightRange');
-var heightValue = document.getElementById('heightValue');
-
-//// Se o valor inicial de heightRange for nulo, defina-o como 1.70
-//if (heightRange.value === "") {
-//    heightRange.value = "1.70";
-//}
-
-//// Atualize heightValue para refletir o valor atual de heightRange
-//heightValue.innerText = heightRange.value;
-
-function updateHeightValue(val) {
-    heightValue.innerText = val;
-}
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     var $homeTeamSelect = $('#homeTeamSelect');
     var $visitingTeamSelect = $('#visitingTeamSelect');
 
@@ -42,6 +26,7 @@ $(document).ready(function () {
                 $homeTeamSelect.find('option').prop('disabled', false);
                 $homeTeamSelect.find('option[value=' + selected + ']').prop('disabled', true);
             }).change(); // Dispara o evento change imediatamente
+            
         });
     }
 
@@ -49,4 +34,21 @@ $(document).ready(function () {
         var idChampionship = $(this).val(); // Obtenha o valor do campo IdChampionship
         updateTeams(idChampionship);
     }).change(); // Dispara o evento change imediatamente
+
 });
+
+
+var heightRange = document.getElementById('heightRange');
+var heightValue = document.getElementById('heightValue');
+
+// Se o valor inicial de heightRange for nulo, defina-o como 1.70
+if (heightRange.value === "") {
+    heightRange.value = "1.70";
+}
+
+// Atualize heightValue para refletir o valor atual de heightRange
+heightValue.innerText = heightRange.value;
+
+function updateHeightValue(val) {
+    heightValue.innerText = val;
+}
