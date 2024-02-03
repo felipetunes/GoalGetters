@@ -5,17 +5,7 @@
     ViewData["Title"] = "Edição de Jogador";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
-
-    <h4 class="text-white" style="font-weight: bold !important;">Player</h4>
+<h4 class="text-white" style="font-weight: bold !important;">Player</h4>
 <hr />
     <div class="row text-white">
         <div class="col-md-4">
@@ -29,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdTeam" class="control-label"></label>
-                    <input asp-for="IdTeam" class="form-control" required />
+                <input asp-for="IdTeam" id="idTeamField" class="form-control" required />
                 <span asp-validation-for="IdTeam" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,6 +55,11 @@
                 <select asp-for="Position" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Position>()" class="form-control" required></select>
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Abrir Modal
+            </button>
+
                 <div class="form-group mt-3 mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -79,5 +74,26 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Título do Modal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Conteúdo do modal...</p>
+                <select id="teamList"></select>  <!-- Aqui é onde a lista de times será exibida -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="saveChoice">Salvar escolha e voltar para a página inicial</button>
+            </div>
+        </div>
+    </div>
+</div>
+

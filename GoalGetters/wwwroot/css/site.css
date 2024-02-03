@@ -276,3 +276,12 @@ input {
     background-color:var(--color5preto);
     opacity:0.5
 }
+
+.modal-content {
+    background-color: var(--color6background);
+    color:azure;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Preto com 50% de transparência */
+}

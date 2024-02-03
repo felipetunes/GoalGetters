@@ -34,9 +34,38 @@
         var idChampionship = $(this).val(); // Obtenha o valor do campo IdChampionship
         updateTeams(idChampionship);
     }).change(); // Dispara o evento change imediatamente
-
 });
 
+$(document).ready(function () {
+    // Buscar dados da API quando o modal é aberto
+    $('#myModal').on('shown.bs.modal', function () {
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/team/getall',  // Substitua pelo URL da sua API
+            type: 'GET',
+            success: function (data) {
+                // Processar os dados retornados pela API
+                var teams = data;  // Substitua pelo nome correto do campo de dados
+                var teamList = $('#teamList');  // Substitua pelo ID do elemento onde você quer mostrar a lista de times
+                teamList.empty();
+                for (var i = 0; i < teams.length; i++) {
+                    teamList.append('<option value="' + teams[i].id + '">' + teams[i].name + '</option>');  // Substitua 'id' e 'name' pelos campos corretos do objeto team
+                }
+            },
+            error: function () {
+                console.log('Erro ao buscar dados da API');
+            }
+        });
+    });
+
+    // Atualizar o campo 'IdTeam' com o ID do time selecionado e fechar o modal quando o botão 'saveChoice' for clicado
+    $('#saveChoice').click(function () {
+        var selectedTeamId = $('#teamList').val();
+        $('#idTeamField').val(selectedTeamId);
+        $('#myModal').modal('hide');
+    });
+});
+
+    
 
 var heightRange = document.getElementById('heightRange');
 var heightValue = document.getElementById('heightValue');
