@@ -22,6 +22,10 @@ namespace GoalGetters.Models
 
         [Display(Name = "Time")]
         public string? TeamName { get; set; }
+        [Display(Name = "Número")]
+        public int? ShirtNumber { get; set; }
+        [Display(Name = "Foto")]
+        public string? ImagePath { get; set; }
         [Display(Name = "Idade")]
         public int Age
         {

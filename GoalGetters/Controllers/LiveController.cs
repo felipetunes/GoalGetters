@@ -157,11 +157,11 @@ namespace GoalGetters.Controllers
             }
             else if (elapsedTime >= 60)
             {
-                statusMatch = "Segundo tempo";
+                statusMatch = "2ª tempo";
             }
             else
             {
-                statusMatch = "Primeiro tempo";
+                statusMatch = "1ª tempo";
             }
 
             return (elapsedTime, statusMatch);

@@ -6,11 +6,17 @@
 <table class="table text-white" style="font-size:14px;">
     <thead>
         <tr class="text-muted">
+            @if (ViewContext.RouteData.Values["action"].ToString() == "Index")
+            {
             <th>
-
+               
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().TeamName)
+            </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.First().ShirtNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().Name)
@@ -24,7 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.First().Height)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Position)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -39,6 +47,9 @@
                     <a asp-action="DetailsTeam" asp-route-id="@player.IdTeam">@Html.DisplayFor(modelItem => player.TeamName)</a>   
                 </td>
                 }
+                <td>
+                    @Html.DisplayFor(modelItem => player.ShirtNumber)
+                </td>
                 <td>
                     <a asp-action="DetailsPlayer" asp-route-id="@player.Id">@Html.DisplayFor(modelItem => player.Name)</a>
                 </td>

@@ -259,16 +259,21 @@ input {
     background-color:var(--color2roxo); width:100%; border-style:hidden;
 }
 
-    .loginbutton:hover {
-        background-color: var(--color1roxo);
-        box-shadow: 3px 3px 5px 0px var(--color5preto);
-    }
+.loginbutton:hover {
+    background-color: var(--color1roxo);
+    box-shadow: 3px 3px 5px 0px var(--color5preto);
+}
 
 .bgdetails {
     background-color: var(--color7gray);
     padding: 30px;
     border-radius: 10px;
     box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
+
+    border-radius: 16px;
+    backdrop-filter: blur(3.9px);
+    -webkit-backdrop-filter: blur(3.9px);
+    border: 1px solid rgba(255, 255, 255, 0.48);
 }
 
 .footer {
@@ -280,8 +285,27 @@ input {
 .modal-content {
     background-color: var(--color6background);
     color:azure;
+    border-radius:20px;
+    padding:35px;
 }
 
 .modal-backdrop {
     background-color: rgba(0, 0, 0, 0.5) !important; /* Preto com 50% de transparência */
+}
+
+.searchModal {
+    margin-bottom:-58px;
+    margin-left:-17px;
+    padding:10px;
+    position:inherit;
+}
+
+.control-label{
+    font-size:12px;
+}
+
+.time_match {
+    color: rgba(105, 105, 105);
+    margin-bottom:2px;
+    font-size: 13px;
 }

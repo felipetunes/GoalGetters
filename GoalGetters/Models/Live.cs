@@ -5,9 +5,9 @@ namespace GoalGetters.Models
     public class Live
     {
         public int Id { get; set; }
-        [Display(Name = "Mandante")]
+       
         public int IdTeam1 { get; set; }
-        [Display(Name = "Visitante")]
+        
         public int IdTeam2 { get; set; }
         [Display(Name = "Campeonato")]
         public int IdChampionship { get; set; }

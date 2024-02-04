@@ -31,27 +31,27 @@ namespace GoalGetters.Helper
         public enum Championship
         {
             [Display(Name = "Campeonato Brasileiro | Série A")]
-            CampeonatoBrasileiro = 1,
+            CampeonatoBrasileiroA = 1,
             [Display(Name = "Campeonato Brasileiro | Série B")]
-            CopaDoMundo = 2,
+            CampeonatoBrasileiroB = 2,
             [Display(Name = "Champions League")]
             ChampionsLeague = 3,
             [Display(Name = "Premier League")]
             PremierLeague = 4,
             [Display(Name = "La Liga")]
             LaLiga = 5,
-            [Display(Name = "Copa do Mundo")]
-            CopaMundo = 6,
+            [Display(Name = "Serie A")]
+            SerieA = 6,
             [Display(Name = "Bundesliga")]
             Bundesliga = 7,
             [Display(Name = "Copa Libertadores da América")]
             CopaLibertadoresDaAmérica = 8,
             [Display(Name = "Paulista A1")]
             PaulistaA1 = 9,
-            [Display(Name = "Ligue 1")]
-            Ligue1 = 10,
+            [Display(Name = "Supercopa")]
+            SupercopaBrasil = 10,
             [Display(Name = "Série A")]
-            SerieA = 11,
+            CopaMundo = 11,
             [Display(Name = "Liga Portugal")]
             LigaPortugal = 12,
             [Display(Name = "Eredivisie")]
@@ -61,11 +61,9 @@ namespace GoalGetters.Helper
             [Display(Name = "Superliga")]
             Superliga = 15,
             [Display(Name = "K League")]
-            KLeague = 14,
+            KLeague = 16,
             [Display(Name = "Major League Soccer")]
-            MajorLeagueSoccer = 15,
-            [Display(Name = "Supercopa do Brasil")]
-            SupercopaBrasil = 16,
+            MajorLeagueSoccer = 17,
         }
 
         public enum Stadium

@@ -17,50 +17,62 @@
                 <label asp-for="Id" class="control-label"></label>
                     @Html.DisplayFor(model => model.Id)
             </div>
-            <div class="form-group">
-                <label asp-for="IdTeam" class="control-label"></label>
-                <input asp-for="IdTeam" id="idTeamField" class="form-control" required />
-                <span asp-validation-for="IdTeam" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="IdTeam" class="control-label text-muted"></label>
+                        <input asp-for="IdTeam" id="idTeamField" class="form-control" style="width:100px !important" required />
+                        <span asp-validation-for="IdTeam" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary fas fa-search searchModal" data-toggle="modal" data-target="#myModal"/>
+                </div>
+                <div class="col">
+                    
+                </div>
             </div>
+
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label text-muted"></label>
                     <input asp-for="Name" class="form-control" required />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
+                <label asp-for="City" class="control-label text-muted"></label>
                     <input asp-for="City" class="form-control" required />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Country" class="control-label"></label>
+                <label asp-for="Country" class="control-label text-muted"></label>
                     @Html.DropDownList("Country", ViewBag.CountryList as SelectList, new { @class = "form-control" })
                 <span asp-validation-for="Country" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Birth" class="control-label"></label>
+                <label asp-for="Birth" class="control-label text-muted"></label>
                     <input asp-for="Birth" type="date" class="form-control" required />
                 <span asp-validation-for="Birth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
-                <div class=" form-hor">
-                    <input asp-for="Height" type="range" min="1.50" max="2.10" step="0.01" id="heightRange" oninput="updateHeightValue(this.value)" class="form-control" required/>
-                    <span id="heightValue"></span> m
-                    <span asp-validation-for="Height" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Position" class="control-label"></label>
+                <label asp-for="Position" class="control-label text-muted"></label>
                 <select asp-for="Position" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Position>()" class="form-control" required></select>
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Abrir Modal
-            </button>
-
-                <div class="form-group mt-3 mb-3">
+            <div class="form-group">
+                <label asp-for="ShirtNumber" class="control-label text-muted"></label>
+                <input asp-for="ShirtNumber" class="form-control" />
+                <span asp-validation-for="ShirtNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="control-label text-muted"></label>
+                <div class=" form-hor">
+                    <input asp-for="Height" type="range" min="1.50" max="2.10" step="0.01" id="heightRange" oninput="updateHeightValue(this.value)" class="form-control" required />
+                    <span id="heightValue" style="width:40px"></span> m
+                    <span asp-validation-for="Height" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mt-3 mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -68,32 +80,30 @@
 </div>
 
 <div>
-        <a asp-action="Index" asp-route-searchName="@{Context.Session.GetString("SearchName");}">Voltar à lista</a>
+    <a asp-action="Index" asp-route-searchName="@{Context.Session.GetString("SearchName");}">Voltar à lista</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
 
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Título do Modal</h5>
+                <h5 class="modal-title">Time</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Conteúdo do modal...</p>
+                <p>Selecione o novo time</p>
                 <select id="teamList"></select>  <!-- Aqui é onde a lista de times será exibida -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="saveChoice">Salvar escolha e voltar para a página inicial</button>
+                <button type="button" class="btn btn-primary close" data-dismiss="modal" id="saveChoice">Salvar</button>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
