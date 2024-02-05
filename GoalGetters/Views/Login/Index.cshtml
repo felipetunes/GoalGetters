@@ -9,12 +9,12 @@
             <div class="card-body">
                 <form asp-action="Login" method="post">
                     <div class="form-group">
-                        <input asp-for="Username" class="form-control" style="background-color:var(--color7gray); color:azure" placeholder="Username" />
+                        <input asp-for="Username" class="form-control" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Username" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <input asp-for="Password" class="form-control mt-3" style="background-color:var(--color7gray); color:azure" placeholder="Password" />
+                        <input asp-for="Password" class="form-control mt-3" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Password" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <button type="button" class="btn btn-success btn-lg btn-block mt-3 mb-3 loginbutton">Entrar</button>

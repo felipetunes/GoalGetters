@@ -84,6 +84,8 @@
                         <input type="text" class="form-control searchBar mr-sm-2 flex-grow-1" typeof="search" value="@Context.Session.GetString("SearchName")" name="searchName" placeholder="Procurar jogador, clube..." aria-label="Procurar jogador ou clube" aria-describedby="basic-addon2">
                         <button class="btn searchIco my-2 my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
                     </form>
+                    <button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> <a asp-controller="Login" asp-action="Index">ENTRAR</a></button>
+                    <button type="button" class="bt buttonLog"><span>REGISTRAR</span></button>
                 </div>
             </div>
         </nav>
