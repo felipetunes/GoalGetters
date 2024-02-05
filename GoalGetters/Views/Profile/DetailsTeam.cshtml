@@ -30,6 +30,7 @@
                 <div class="item itemaverage"> @Html.DisplayNameFor(model => model.AverageAge): @Html.DisplayFor(model => model.AverageAge)</div>
                 <div class="item itemcountplayers"> @Html.DisplayNameFor(model => model.PlayersCount) : @Html.DisplayFor(model => model.PlayersCount) </div>
                 <div class="item itemedit"><a href="@Url.Action("EditTeam", new { id = Model.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a></div>
+                <div class="item itemedit"><a href="@Url.Action("DeleteTeam", new { id = Model.Id })"><i class="fas fa-trash" style="margin-left:30px; color:#FA8072"></i></a></div>
             </section>
         </div>
     </div>

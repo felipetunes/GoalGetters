@@ -1,25 +1,27 @@
-﻿@model LoginViewModel
+﻿@model User
 
-<form asp-action="Login" method="post">
-    <container class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top:-100px;">
-        <div class="card text-white bg-dark bgdetails w-25 p-4" style="min-width:300px">
-            <div class="card-header text-center">
-                <h2>Login</h2>
-            </div>
-            <div class="card-body">
-                <form asp-action="Login" method="post">
-                    <div class="form-group">
-                        <input asp-for="Username" class="form-control" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Username" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
-                    </div>
+@{
+    ViewData["Title"] = "Faça o Login";
+}
 
-                    <div class="form-group">
-                        <input asp-for="Password" class="form-control mt-3" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Password" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <button type="button" class="btn btn-success btn-lg btn-block mt-3 mb-3 loginbutton">Entrar</button>
-                </form>
-            </div>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top:-100px;">
+    <div class="card text-white bg-dark bgdetails w-25 p-4" style="min-width:300px">
+        <div class="card-header text-center">
+            <h2>Login</h2>
         </div>
-    </container>
-</form>
+        <div class="card-body">
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <input asp-for="Username" class="form-control" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="Password" class="form-control mt-3" style="background-color:var(--color7gray); color:azure; border-radius:1rem !important" placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button type="submit" value="Login" class="btn btn-block mt-3 mb-3 loginbutton border-button"><span>ENTRAR</span></button>
+            </form>
+        </div>
+    </div>
+</div>

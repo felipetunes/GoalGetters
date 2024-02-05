@@ -1,4 +1,5 @@
 ﻿using GoalGetters.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using System.Numerics;
 
 namespace GoalGetters.Controllers
 {
+    [Authorize]
     public class LiveController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;

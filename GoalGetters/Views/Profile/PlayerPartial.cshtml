@@ -3,6 +3,10 @@
 @using X.PagedList.Mvc.Core;
 @using X.PagedList.Web.Common;
 
+@{
+    var username = Context.Session.GetString("User");
+}
+
 <table class="table text-white" style="font-size:14px;">
     <thead>
         <tr class="text-muted">
@@ -62,13 +66,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => player.Height) m
                 </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => player.Position)
-                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => player.Position)
+                </td>
+                @if(username == "Admin")
+                {
                 <td>
                     <a href="@Url.Action("EditPlayer", new { id = player.Id })"><i class="fas fa-edit" style="color:#ADD8E6"></i></a>
                     <a href="@Url.Action("DeletePlayer", new { id = player.Id })"><i class="fas fa-trash" style="margin-left:10px; color:#FA8072"></i> </a>
                 </td>
+                }
             </tr>
         }
     </tbody>

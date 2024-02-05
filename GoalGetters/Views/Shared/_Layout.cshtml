@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var username = Context.Session.GetString("User");
+}
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -25,10 +29,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <!-- Página Home -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         <!-- Dropdown de times do Brasileirão -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="teamDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,12 +70,13 @@
                                 <!-- Adicione mais times conforme necessário -->
                             </ul>
                         </li>
-                        <!-- Página Jogos -->
+                        <!-- Página de Campeonatos -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Competições
                             </a>
                         </li>
+                        <!-- Página Jogos ao Vivo -->
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Live" asp-action="Index">Ao Vivo</a>
                         </li>
@@ -84,8 +85,15 @@
                         <input type="text" class="form-control searchBar mr-sm-2 flex-grow-1" typeof="search" value="@Context.Session.GetString("SearchName")" name="searchName" placeholder="Procurar jogador, clube..." aria-label="Procurar jogador ou clube" aria-describedby="basic-addon2">
                         <button class="btn searchIco my-2 my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
                     </form>
-                    <button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> <a asp-controller="Login" asp-action="Index">ENTRAR</a></button>
-                    <button type="button" class="bt buttonLog"><span>REGISTRAR</span></button>
+                    @if (string.IsNullOrEmpty(username))
+                    {
+                    <a asp-controller="Login" asp-action="Index"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> ENTRAR</button></a>
+                    <a asp-controller="Login" asp-action="Register"><button type="button" class="bt buttonLog"><span>REGISTRAR</span></button></a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Login" asp-action="Logout"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"><i class="fas fa-sign-out-alt"></i> SAIR</button></a>
+                    }
                 </div>
             </div>
         </nav>

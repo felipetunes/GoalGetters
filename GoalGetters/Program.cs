@@ -1,4 +1,5 @@
 using GoalGetters.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace GoalGetters
 {
@@ -15,6 +16,7 @@ namespace GoalGetters
             builder.Services.AddScoped<ApiService<Player>>();
             builder.Services.AddScoped<ApiService<Team>>();
             builder.Services.AddScoped<ApiService<Live>>();
+            builder.Services.AddScoped<ApiService<User>>();
 
             builder.Services.AddSession(options =>
             {
@@ -22,6 +24,12 @@ namespace GoalGetters
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(options =>
+              {
+                  options.LoginPath = "/Login";
+              });
 
             var app = builder.Build();
 
@@ -39,6 +47,7 @@ namespace GoalGetters
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

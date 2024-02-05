@@ -12,5 +12,6 @@ namespace GoalGetters.Service
         Task<HttpResponseMessage> Delete(int id, string entity);
         Task<List<T>> GetAll<T>(string endpoint);
         Task<string> Insert<T>(T obj);
+        Task<T> Login<T>(string username, string password);
     }
 }

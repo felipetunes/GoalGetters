@@ -71,6 +71,58 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
+    public async Task<List<T>> Register(string username, string password)
+    {
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/register";
+
+        // Cria um objeto com os dados do usuário
+        var userData = new { Username = username, Password = password };
+
+        // Converte o objeto para JSON
+        var json = JsonConvert.SerializeObject(userData);
+
+        // Cria um novo StringContent que contém os dados do usuário como JSON
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = await _client.PostAsync(url, content);
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadAsAsync<List<T>>();
+            return data;
+        }
+        else
+        {
+            // Trata o erro
+            throw new Exception($"Error creating {typeof(T).Name.ToLower()}");
+        }
+    }
+
+    public async Task<T> Login<T>(string username, string password)
+    {
+        string url = $"{urlApi}{typeof(T).Name.ToLower()}/login";
+
+        // Cria um objeto com os dados de login
+        var loginData = new { Username = username, Password = password };
+
+        // Converte o objeto para JSON
+        var json = JsonConvert.SerializeObject(loginData);
+
+        // Cria um novo StringContent que contém os dados de login como JSON
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        HttpResponseMessage response = await _client.PostAsync(url, content);
+        if (response.IsSuccessStatusCode)
+        {
+            var data = await response.Content.ReadAsAsync<T>();
+            return data;
+        }
+        else
+        {
+            // Handle the error
+            throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
+        }
+    }
+
     public async Task<List<Player>> GetPlayersByTeamId(int teamId)
     {
         var response = await _client.GetAsync($"{urlApi}player/getbyidteam/{teamId}");
