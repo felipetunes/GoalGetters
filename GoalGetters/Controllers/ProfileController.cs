@@ -9,6 +9,7 @@ using X.PagedList;
 using X.PagedList.Mvc.Core;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoalGetters.Controllers
 {
@@ -118,6 +119,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: EntityController/Edit/5
+        [Authorize]
         public async Task<ActionResult> EditPlayer(int id)
         {
             var player = await _apiServicePlayer.GetById(id);
@@ -130,6 +132,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: EntityController/Edit/5
+        [Authorize]
         public async Task<ActionResult> EditTeam(int id)
         {
             var team = await _apiServiceTeam.GetById(id);
@@ -154,6 +157,7 @@ namespace GoalGetters.Controllers
         // POST: EntityController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult EditPlayer(int id, string entity, IFormCollection collection)
         {
             try
@@ -170,6 +174,7 @@ namespace GoalGetters.Controllers
         // POST: EntityController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult EditTeam(int id, string entity, IFormCollection collection)
         {
             try
@@ -182,6 +187,8 @@ namespace GoalGetters.Controllers
                 return NotFound();
             }
         }
+
+        [Authorize]
         public async Task<ActionResult> Edit(int id, string entity, IFormCollection collection)
         {
             try
@@ -254,6 +261,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: PlayerController/Delete/5
+        [Authorize]
         public async Task<ActionResult> DeletePlayer(int id)
         {
             var player = await _apiServicePlayer.GetById(id);
@@ -261,6 +269,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: PlayerController/Delete/5
+        [Authorize]
         public async Task<ActionResult> DeleteTeam(int id)
         {
             var team = await _apiServiceTeam.GetById(id);
@@ -270,6 +279,7 @@ namespace GoalGetters.Controllers
         // POST: PlayerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> DeletePlayer(int id, IFormCollection collection)
         {
             try

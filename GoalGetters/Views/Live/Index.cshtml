@@ -6,15 +6,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var username = Context.Session.GetString("User");
+}
+
 <head>
     <meta http-equiv="refresh" content="60">
 </head>
 
 <h4 class="text-white">Jogos ao vivo</h4>
 
+ @if (username == "Admin")
+{
 <p class="text-white">
     <a asp-action="CreateLive">Criar novo jogo</a>
 </p>
+}
 
 @foreach (var item in Model) {
     <container class="text-white d-flex justify-content-center align-items-center" style="padding-bottom:20px;">

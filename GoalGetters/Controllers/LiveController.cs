@@ -7,7 +7,6 @@ using System.Numerics;
 
 namespace GoalGetters.Controllers
 {
-    [Authorize]
     public class LiveController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -62,6 +61,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: LiveController/Create
+        [Authorize]
         public ActionResult CreateLive()
         {
             return View();
@@ -70,6 +70,7 @@ namespace GoalGetters.Controllers
         // POST: LiveController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> CreateLive(IFormCollection collection)
         {
             try
@@ -102,6 +103,7 @@ namespace GoalGetters.Controllers
 
 
         // GET: LiveController/EditLive/5
+        [Authorize]
         public async Task<ActionResult> EditLive(int id)
         {
             var live = await _apiServiceLive.GetById(id);
@@ -115,6 +117,7 @@ namespace GoalGetters.Controllers
         // POST: LiveController/EditLive/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult EditLive(int id, IFormCollection collection)
         {
             try
@@ -128,6 +131,7 @@ namespace GoalGetters.Controllers
         }
 
         // GET: LiveController/DeleteLive/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             return View();
@@ -136,6 +140,7 @@ namespace GoalGetters.Controllers
         // POST: LiveController/DeleteLive/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try

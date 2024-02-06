@@ -6,10 +6,17 @@
     ViewData["Title"] = "Resultado da busca";
 }
 
-<p>
-    <a asp-action="CreatePlayer" class="btn btn-primary">Adicionar Jogador</a>
-    <a asp-action="CreateTeam" class="btn btn-primary">Adicionar Time</a>
-</p>
+@{
+    var username = Context.Session.GetString("User");
+}
+
+ @if (username == "Admin")
+{
+    <p>
+        <a asp-action="CreatePlayer" class="btn btn-primary">Adicionar Jogador</a>
+        <a asp-action="CreateTeam" class="btn btn-primary">Adicionar Time</a>
+    </p>
+}
 
 @if (Model != null)
 {

@@ -8,6 +8,10 @@
     ViewData["Title"] = Model.Name;
 }
 
+@{
+    var username = Context.Session.GetString("User");
+}
+
 <div class="m-4">
     <h4 class="text-white" style="font-weight: bold !important;">Player</h4>
         <hr />
@@ -74,7 +78,10 @@
             </dd>
         </dl>
     <div>
-        @Html.ActionLink("Edit", "EditPlayer", new { entity = "Player", id = Model.Id }) |
+        @if (username == "Admin")
+        {
+            @Html.ActionLink("Edit", "EditPlayer", new { entity = "Player", id = Model.Id })
+        }
         <a asp-action="Index" asp-route-searchName="@Context.Session.GetString("SearchName")">Back to List</a>
     </div>
 </div>
