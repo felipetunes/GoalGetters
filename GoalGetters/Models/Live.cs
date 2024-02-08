@@ -20,7 +20,7 @@ namespace GoalGetters.Models
         [Display(Name = "Visitante")]
         public string VisitingTeamName { get; set; }
         [Display(Name = "Tempo")]
-        public int ElapsedTime { get; internal set; }
+        public int GameTime { get; internal set; }
         [Display(Name = "Status")]
         public string StatusMatch { get; internal set; }
         [Display(Name = "Gols")]

@@ -3,5 +3,8 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4 text-white">Welcome</h1>
+    <form asp-controller="Profile" asp-action="Index" class="d-flex">
+        <input type="text" class="form-control searchBar mr-sm-2 flex-grow-1" typeof="search" value="@Context.Session.GetString("SearchName")" name="searchName" placeholder="Procurar jogador, clube..." aria-label="Procurar jogador ou clube" aria-describedby="basic-addon2">
+        <button class="btn searchIco my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
+    </form>
 </div>

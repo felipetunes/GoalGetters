@@ -4,12 +4,34 @@
     --color3limao: #93F205;
     --color4verde: #558C03;
     --color5preto: #0D0D0D;
-    --color6background: #121214;
     --color7gray: rgba(105, 105, 105, 0.2);
+}
+
+.scoreboard {
+    background-color: rgba(105, 105, 105, 0.2);
+    border-radius: 5px;
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+    text-align: center;
 }
 
 .grid {
     display: grid;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
 
 .grid-template-areas-1 {
@@ -124,13 +146,12 @@ body {
 }
 
 input {
-    background-color: var(--color6background);
+    background-color: var(--color7gray);
 }
 
 .navbar-custom {
-    padding: 20px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
     background-color: var(--color5preto) !important;
 }
 
@@ -187,13 +208,13 @@ input {
 
 .btn-primary {
     color: azure;
-    background-color: var(--color6background);
+    background-color: var(--color7gray);
     border-color: azure;
 }
 
 .btn-primary:hover {
     color: var(--color1roxo);
-    background-color: var(--color6background);
+    background-color: var(--color7gray);
     border-color: var(--color1roxo);
 }
 
@@ -270,7 +291,7 @@ input {
 }
 
 .modal-content {
-    background-color: var(--color6background);
+    background-color: var(--color7gray);
     color:azure;
     border-radius:20px;
     padding:35px;
@@ -313,9 +334,9 @@ input {
     transition: background-image 2.6s linear;
 }
 
-    .loginbutton:hover {
-        background-image: linear-gradient(-180deg, var(--color7gray) 0%, var(--color7gray) 100%);
-    }
+.loginbutton:hover {
+    background-image: linear-gradient(-180deg, var(--color7gray) 0%, var(--color7gray) 100%);
+}
 
 .loginbutton span {
     color: azure;
@@ -394,4 +415,22 @@ input {
     background-image: linear-gradient(-270deg, var(--color3limao) 0%, #FFFFFF 20%, #FFFFFF 80%, var(--color3limao 100%);
 }
 
+.nav-container {
+    width:500px !important;
+    margin-left:17px;
+    background-color:transparent
+}
 
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+.searchBar, .searchIco {
+    height: 40px; /* Ajuste este valor conforme necessário */
+}

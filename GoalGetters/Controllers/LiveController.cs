@@ -39,7 +39,7 @@ namespace GoalGetters.Controllers
 
                 // Calcula o tempo de jogo e o status da partida
                 var (elapsedTime, statusMatch) = CalculatePlayingTimeAndStatus(live.DateMatch, DateTime.Now);
-                live.ElapsedTime = elapsedTime;
+                live.GameTime = elapsedTime;
                 live.StatusMatch = statusMatch;
             }
 
@@ -155,14 +155,14 @@ namespace GoalGetters.Controllers
 
         private (int, string) CalculatePlayingTimeAndStatus(DateTime inicioPartida, DateTime agora)
         {
-            int elapsedTime = (int)(agora - inicioPartida).TotalMinutes;
+            int gameTime = (int)(agora - inicioPartida).TotalMinutes;
             string statusMatch;
 
-            if (elapsedTime >= 45 && elapsedTime < 60)
+            if (gameTime >= 45 && gameTime < 60)
             {
                 statusMatch = "Intervalo";
             }
-            else if (elapsedTime >= 60)
+            else if (gameTime >= 60)
             {
                 statusMatch = "2ª tempo";
             }
@@ -171,7 +171,7 @@ namespace GoalGetters.Controllers
                 statusMatch = "1ª tempo";
             }
 
-            return (elapsedTime, statusMatch);
+            return (gameTime, statusMatch);
         }
     }
 }

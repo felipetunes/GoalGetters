@@ -16,11 +16,10 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 navbar-dark navbar-custom">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-custom fixed-top" style="z-index:100">
             <div class="container-fluid">
                 <a class="navbar-brand logoedit" asp-area="" asp-controller="Home" asp-action="Index">GoalGetters</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,7 +34,7 @@
                                 Times
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="teamDropdown">
-                                <div class="container p-3" style="width:300px; margin-left:17px; background-color:transparent">
+                                <div class="p-3" style="width:260px;">
                                     <div class="row">
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 71, page = 1 })"><img src="~/img/teams/athléticoparanaense.png" class="logo-teams" style="object-fit:contain !important" /></a></div>
                                         <div class="col m-1"><a href="@Url.Action("DetailsTeam", "Profile", new { id = 67, page = 1 })"><img src="~/img/teams/atléticomineiro.png" class="logo-teams" /></a></div>
@@ -70,46 +69,35 @@
                                 <!-- Adicione mais times conforme necessário -->
                             </ul>
                         </li>
-                        <!-- Página de Campeonatos -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Competições
-                            </a>
-                        </li>
-                        <!-- Página Jogos ao Vivo -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Live" asp-action="Index">Ao Vivo</a>
-                        </li>
                     </ul>
-                    <form asp-controller="Profile" asp-action="Index" class="d-flex">
-                        <input type="text" class="form-control searchBar mr-sm-2 flex-grow-1" typeof="search" value="@Context.Session.GetString("SearchName")" name="searchName" placeholder="Procurar jogador, clube..." aria-label="Procurar jogador ou clube" aria-describedby="basic-addon2">
-                        <button class="btn searchIco my-2 my-sm-0" type="submit"> <i class="fas fa-search"></i></button>
-                    </form>
                     @if (string.IsNullOrEmpty(username))
                     {
                     <a asp-controller="Login" asp-action="Index"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> ENTRAR</button></a>
                     <a asp-controller="Login" asp-action="Register"><button type="button" class="bt buttonLog"><span>REGISTRAR</span></button></a>
                     }
-                    else
-                    {
-                        <a asp-controller="Login" asp-action="Logout"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"><i class="fas fa-sign-out-alt"></i> SAIR</button></a>
-                    }
                 </div>
             </div>
         </nav>
-
+        <div style="z-index:80; position:fixed">
+            @Html.Partial("Sidebar")
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="page-container" style="display: flex; flex-direction: column; min-height: 100vh;">
+        <div class="content-wrap" style="flex: 1;">
+            <div class="container" style="z-index:0">
+                <main role="main" style="margin-left:6rem; padding-top:5rem">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+
+        <footer class="footer text-muted" style="position:relative;">
+            <div class="container text-center">
+                © 2024 - GoalGetters - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
 
-    <footer class="footer text-muted">
-        <div class="container text-center">
-            &copy; 2024 - GoalGetters - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>

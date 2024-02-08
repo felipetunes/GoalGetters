@@ -81,3 +81,7 @@ heightValue.innerText = heightRange.value;
 function updateHeightValue(val) {
     heightValue.innerText = val;
 }
+
+
+
+
