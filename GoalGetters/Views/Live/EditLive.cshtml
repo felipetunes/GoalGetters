@@ -13,9 +13,9 @@
         <form asp-action="EditLive" class="text-white">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdChampionship" class="control-label"></label>
-                <select asp-for="IdChampionship" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Championship>()" class="form-control"></select>
-                <span asp-validation-for="IdChampionship" class="text-danger"></span>
+                <label asp-for="Championship.Id" class="control-label"></label>
+                <select asp-for="Championship.Id" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Championship>()" class="form-control"></select>
+                <span asp-validation-for="Championship.Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateMatch" class="control-label"></label>
@@ -24,22 +24,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Stadium" class="control-label"></label>
-                <select asp-for="IdChampionship" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Stadium>().OrderBy(x => x.Text)" class="form-control"></select>
+                <select asp-for="Championship.Id" asp-items="Html.GetEnumSelectList<GoalGetters.Helper.Enums.Stadium>().OrderBy(x => x.Text)" class="form-control"></select>
                 <span asp-validation-for="Stadium" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HomeTeamName" class="control-label"></label>
-                <select id="homeTeamSelect" asp-for="HomeTeamName" class="form-control">
+                <label asp-for="HomeTeam.Name" class="control-label"></label>
+                <select id="homeTeamSelect" asp-for="HomeTeam.Name" class="form-control">
                     <!-- As opções serão preenchidas aqui -->
                 </select>
-                <span asp-validation-for="HomeTeamName" class="text-danger"></span>
+                <span asp-validation-for="HomeTeam.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VisitingTeamName" class="control-label"></label>
-                <select id="visitingTeamSelect" asp-for="VisitingTeamName" class="form-control">
+                <label asp-for="VisitingTeam.Name" class="control-label"></label>
+                <select id="visitingTeamSelect" asp-for="VisitingTeam.Name" class="form-control">
                     <!-- As opções serão preenchidas aqui -->
                 </select>
-                <span asp-validation-for="VisitingTeamName" class="text-danger"></span>
+                <span asp-validation-for="VisitingTeam.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TeamPoints1" class="control-label"></label>

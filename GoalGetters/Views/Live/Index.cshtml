@@ -14,7 +14,7 @@
     <meta http-equiv="refresh" content="60">
 </head>
 
-<h4 class="text-white">Jogos ao vivo</h4>
+<h5 class="text-white">Jogos ao vivo</h5>
 
  @if (username == "Admin")
 {
@@ -24,36 +24,41 @@
 }
 
 <div class="row">
-@foreach (var item in Model)
+@foreach (var live in Model)
 {
     <container class="text-white d-flex justify-content-center align-items-center mb-3 col">
-        <div class="bgdetails" style="width:25rem; height:15rem">
+        <div class="bgdetails" style="width:31rem; height:13.5rem; padding-top:-10px !important">
             <span style="font-size:13px; color: var(--color3limao);">
                 @{
-                    var championshipName = Html.DisplayName(Enum.GetName(typeof(Enums.Championship), item.IdChampionship));
+                    var championshipName = Html.DisplayName(Enum.GetName(typeof(Enums.Championship), live.Championship.Id));
                 }
                 <i class="bi bi-football"></i><p>@championshipName</p>
             </span>
             <div class="time_match" style="margin-bottom:10px;margin-top:-10px">
-                @Html.DisplayFor(modelItem => item.GameTime)'
-                @Html.DisplayFor(modelItem => item.StatusMatch)
+                @Html.DisplayFor(modelItem => live.GameTime)'
+                @Html.DisplayFor(modelItem => live.StatusMatch)
             </div>
             <div style="display: grid; grid-template-columns: 38px 1fr 1fr 0.2fr;">
                 <div sstyle="width:20px;display: flex;flex-direction:column; text-align:end; justify-self: end;">
-                    <div><img style="margin-bottom:3px" src="~/img/teams/@(item.HomeTeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="25px" height="25px" /></div>
-                    <div><img style="margin-bottom:3px" src="~/img/teams/@(item.VisitingTeamName.ToLower().Replace(" ", "")).png" alt="Logo" width="25px" height="25px" /></div>
+                    <div><img style="margin-bottom:3px" src="~/img/teams/@(live.HomeTeam.Name.ToLower().Replace(" ", "")).png" alt="Logo" width="25px" height="25px" /></div>
+                    <div><img style="margin-bottom:3px" src="~/img/teams/@(live.VisitingTeam.Name.ToLower().Replace(" ", "")).png" alt="Logo" width="25px" height="25px" /></div>
                 </div>
                 <div style="display: flex; flex-direction:column; text-align:initial; justify-self: initial;">
-                    <strong style="font-size:0.9rem; margin-top:4px">@Html.DisplayFor(modelItem => item.HomeTeamName) </strong>
-                    <strong style="font-size:0.9rem; margin-top:4px">@Html.DisplayFor(modelItem => item.VisitingTeamName)</strong>
+                    <strong style="font-size:0.9rem; margin-top:4px">@Html.DisplayFor(modelItem => live.HomeTeam.Name) </strong>
+                    <strong style="font-size:0.9rem; margin-top:4px">@Html.DisplayFor(modelItem => live.VisitingTeam.Name)</strong>
                 </div>
                 <div>
                 </div>
                 <div>
                     <div style="display: flex; flex-direction:column; font-size:0.9rem">
-                        <strong class="scoreboard">@Html.DisplayFor(modelItem => item.TeamPoints1)</strong>
-                        <strong class="scoreboard" style="margin-top:4px;">@Html.DisplayFor(modelItem => item.TeamPoints2)</strong>
+                        <strong class="scoreboard">@Html.DisplayFor(modelItem => live.TeamPoints1)</strong>
+                        <strong class="scoreboard" style="margin-top:4px;">@Html.DisplayFor(modelItem => live.TeamPoints2)</strong>
                     </div>
+                </div>
+                <div style="display: flex; flex-direction:row; font-size:0.9rem; margin:4px">
+                        <a href="@Url.Action("Action1", "Controller")" style="margin:4px; padding-left:30px; padding-right:30px; border-radius:16px" class="btn btn-primary">@live.HomeTeamOdds.ToString("F2")</a>
+                        <a href="@Url.Action("Action2", "Controller")" style="margin:4px; padding-left:30px; padding-right:30px; border-radius:16px" class="btn btn-primary">@live.VisitingTeamOdds.ToString("F2")</a>
+                        <a href="@Url.Action("Action3", "Controller")" style="margin:4px; padding-left:30px; padding-right:30px; border-radius:16px" class="btn btn-primary">@live.DrawOdds.ToString("F2")</a>
                 </div>
             </div>
         </div>

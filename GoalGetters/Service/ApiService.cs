@@ -2,11 +2,13 @@
 using GoalGetters.Service;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Diagnostics.Metrics;
 using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
 using X.PagedList;
+using static GoalGetters.Helper.Enums;
 
 public class ApiService<T> : IApiService<T>
 {
@@ -218,5 +220,30 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
+    internal async Task<Live> UpdateLive(Live match)
+    {
+        // Verifique se os argumentos são válidos
+        if (match.HomeTeam == null || match.VisitingTeam == null || match.Championship == null || string.IsNullOrEmpty(match.Stadium) || string.IsNullOrEmpty(match.StatusMatch))
+        {
+            throw new ArgumentException("HomeTeam, VisitingTeam, Championship, Stadium and StatusMatch must not be null or empty.");
+        }
+
+        // Constrói a URL
+        string url = $"{urlApi}live/update?id={match.Id}&homeTeam={match.HomeTeam}&visitingTeam={match.VisitingTeam}&championship={match.Championship}&dateMatch={match.DateMatch.ToString("dd/MM/yyyy")}&stadium={match.Stadium}&statusMatch={match.StatusMatch}&gameTime={match.GameTime}&teamPoints1={match.TeamPoints1}&teamPoints2={match.TeamPoints2}&homeTeamWins={match.HomeTeamWins}&visitingTeamWins={match.VisitingTeamWins}&draws={match.Draws}&homeTeamRecentPerformance={match.HomeTeamRecentPerformance}&visitingTeamRecentPerformance={match.VisitingTeamRecentPerformance}&homeTeamOdds={match.HomeTeamOdds}&visitingTeamOdds={match.VisitingTeamOdds}&drawOdds={match.DrawOdds}";
+
+        // Envia a solicitação PUT
+        HttpResponseMessage response = await _client.PutAsync(url, null);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadAsAsync<Live>();
+            return result;
+        }
+        else
+        {
+            // Handle the error
+            var error = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
+        }
+    }
 }
 

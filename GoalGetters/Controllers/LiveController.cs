@@ -1,4 +1,5 @@
-﻿using GoalGetters.Models;
+﻿using GoalGetters.Commons;
+using GoalGetters.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,32 +24,66 @@ namespace GoalGetters.Controllers
         // GET: LiveController
         public async Task<IActionResult> Index()
         {
-            var lives = await _apiServiceLive.GetAll<Live>("getalltoday");
+            try
+            {
+                var lives = await _apiServiceLive.GetAll<Live>("getalltoday");
+                if (lives == null)
+                {
+                    return View(new List<Live>());
+                }
+
+                var filteredLives = FilterLives(lives);
+                var teamDetails = await GetTeamDetails(filteredLives);
+                var processedLives = ProcessLives(filteredLives, teamDetails);
+
+                // Calcula as odds para cada partida ao vivo
+                Common common = new Common(_apiServiceLive);
+                foreach (var live in processedLives)
+                {
+                    await common.CalculateOdds(live);
+                }
+
+                return View(processedLives);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        private List<Live> FilterLives(List<Live> lives)
+        {
             var now = DateTime.Now;
+            return lives.Where(live => live.DateMatch <= now && live.DateMatch.AddMinutes(105) >= now).ToList();
+        }
 
-            // Filtra as partidas ao vivo para incluir apenas aquelas que estão ocorrendo dentro de 90 minutos após o DateMatch
-            lives = lives.Where(live => live.DateMatch <= now && live.DateMatch.AddMinutes(105) >= now).ToList();
-
-            // Obtenha todos os detalhes da equipe de uma vez e armazene-os em um dicionário
-            var teamDetails = await GetTeamDetails(lives);
-
+        private List<Live> ProcessLives(List<Live> lives, Dictionary<int, GoalGetters.Models.Team> teamDetails)
+        {
             foreach (var live in lives)
             {
-                live.HomeTeamName = teamDetails[live.IdTeam1].Name;
-                live.VisitingTeamName = teamDetails[live.IdTeam2].Name;
+                if (live.HomeTeam != null && teamDetails.ContainsKey(live.HomeTeam.Id))
+                {
+                    live.HomeTeam.Name = teamDetails[live.HomeTeam.Id].Name;
+                }
 
-                // Calcula o tempo de jogo e o status da partida
+                if (live.VisitingTeam != null && teamDetails.ContainsKey(live.VisitingTeam.Id))
+                {
+                    live.VisitingTeam.Name = teamDetails[live.VisitingTeam.Id].Name;
+                }
+
                 var (elapsedTime, statusMatch) = CalculatePlayingTimeAndStatus(live.DateMatch, DateTime.Now);
                 live.GameTime = elapsedTime;
                 live.StatusMatch = statusMatch;
             }
 
-            return View(lives);
+            return lives;
         }
 
         private async Task<Dictionary<int, Team>> GetTeamDetails(List<Live> lives)
         {
-            var teamIds = lives.SelectMany(live => new[] { live.IdTeam1, live.IdTeam2 }).Distinct();
+            var teamIds = lives.SelectMany(live => new[] { live.HomeTeam.Id, live.VisitingTeam.Id }).Distinct();
             var teamTasks = teamIds.Select(id => _apiServiceTeam.GetById(id));
             var teams = await Task.WhenAll(teamTasks);
             return teams.ToDictionary(team => team.Id, team => team);
@@ -81,9 +116,9 @@ namespace GoalGetters.Controllers
                 // Cria um novo objeto Live a partir dos dados do formulário
                 Live live = new Live
                 {
-                    IdTeam1 =  team1.FirstOrDefault().Id,
-                    IdTeam2 = team2.FirstOrDefault().Id,
-                    IdChampionship = int.Parse(collection["idchampionship"]),
+                    HomeTeam = team1.FirstOrDefault(),
+                    VisitingTeam = team2.FirstOrDefault(),
+                    Championship = new Championship { Id = Convert.ToInt32(collection["idchampionship"]) },
                     DateMatch = DateTime.Parse(collection["datematch"]),
                     Stadium = collection["stadium"],
                     TeamPoints1 = int.Parse(collection["teampoints1"]),
