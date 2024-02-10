@@ -169,6 +169,22 @@ input {
     opacity: 70%;
 }
 
+.button-odds {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    width: 7rem;
+    border-style: none;
+    color: azure;
+    background-color: var(--color7gray);
+}
+
+.button-odds:hover {
+    color: azure;
+    background-color: rgba(105, 105, 105, 0.1);
+}
+
 .searchBar {
     border-radius: 1rem 0px 0px 1rem !important;
     border-width: 0.5px;
@@ -434,3 +450,4 @@ input {
 .searchBar, .searchIco {
     height: 40px; /* Ajuste este valor conforme necessário */
 }
+

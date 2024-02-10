@@ -1,5 +1,7 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace GoalGetters.Commons
 {
@@ -43,19 +45,32 @@ namespace GoalGetters.Commons
 
                 if (homeWinProbability != 0)
                 {
-                    match.HomeTeamOdds = 1 / (homeWinProbability * (1 - houseEdge));
+                    decimal homeOdds = 1 / (homeWinProbability * (1 - houseEdge));
+                    match.HomeTeamOdds = homeOdds > 0 ? homeOdds : 0;
                 }
 
                 if (visitingWinProbability != 0)
                 {
-                    match.VisitingTeamOdds = 1 / (visitingWinProbability * (1 - houseEdge));
+                    decimal visitingOdds = 1 / (visitingWinProbability * (1 - houseEdge));
+                    match.VisitingTeamOdds = visitingOdds > 0 ? visitingOdds : 0;
                 }
 
                 if (drawProbability != 0)
                 {
-                    match.DrawOdds = 1 / (drawProbability * (1 - houseEdge));
+                    decimal drawOdds = 1 / (drawProbability * (1 - houseEdge));
+                    match.DrawOdds = drawOdds > 0 ? drawOdds : 0;
                 }
             }
         }
+
+        public static string? GetDisplayName(Enum value)
+        {
+            return value.GetType()
+                        .GetMember(value.ToString())
+                        .First()
+                        .GetCustomAttribute<DisplayAttribute>()
+                        ?.GetName();
+        }
     }
 }
+
