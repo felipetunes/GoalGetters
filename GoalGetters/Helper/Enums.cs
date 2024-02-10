@@ -50,8 +50,6 @@ namespace GoalGetters.Helper
             PaulistaA1 = 9,
             [Display(Name = "Supercopa")]
             SupercopaBrasil = 10,
-            [Display(Name = "Série A")]
-            CopaMundo = 11,
             [Display(Name = "Liga Portugal")]
             LigaPortugal = 12,
             [Display(Name = "Eredivisie")]
@@ -63,7 +61,15 @@ namespace GoalGetters.Helper
             [Display(Name = "K League")]
             KLeague = 16,
             [Display(Name = "Major League Soccer")]
-            MajorLeagueSoccer = 17,
+            MajorLeague = 17,
+            [Display(Name = "Europa League")]
+            EuropaLeague = 18,
+            [Display(Name = "Saudi Pro League")]
+            SaudiProLeague = 19,
+            [Display(Name = "Copa Do Mundo")]
+            CopaMundo = 20,
+            [Display(Name = "Copa Do Brasil")]
+            CopaBrasil = 20,
         }
 
         public enum Stadium

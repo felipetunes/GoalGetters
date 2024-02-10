@@ -1,3 +1,4 @@
+/* Cores */
 :root {
     --color1roxo: #6805F2;
     --color2roxo: #7630D9;
@@ -7,8 +8,37 @@
     --color7gray: rgba(105, 105, 105, 0.2);
 }
 
+/* Configurações gerais */
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
+}
+
+body {
+    background-image: linear-gradient(135deg, #121214 0%, #0D0D0D 60%, #121214 80%);
+    font-family: 'Open Sans', sans-serif;
+}
+
+a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Faz com que a cor do link seja a mesma do texto ao redor */
+}
+
+/* Configurações para telas maiores */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+/* Configurações do scoreboard */
 .scoreboard {
-    background-color: rgba(105, 105, 105, 0.2);
+    background-color: var(--color7gray);
     border-radius: 1rem;
     width: 25px;
     height: 25px;
@@ -16,22 +46,9 @@
     text-align: center;
 }
 
+/* Configurações do grid */
 .grid {
     display: grid;
-}
-
-.bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-
-@media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-    }
 }
 
 .grid-template-areas-1 {
@@ -64,22 +81,7 @@
     grid-area: itemcountplayers;
 }
 
-
-html {
-  font-size: 14px;
-}
-
-a {
-    text-decoration: none; /* Remove o sublinhado */
-    color: inherit; /* Faz com que a cor do link seja a mesma do texto ao redor */
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
+/* Configurações da tabela */
 .table {
     border: none;
 }
@@ -92,44 +94,82 @@ table tr {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+/* Configurações do dark mode */
 .dark-mode {
     background-color: #333;
     color: #fff;
 }
-
-.custom-navbar {
-    background-color: #6A057F;
+.dark-mode:focus {
+    background-color: #333;
+    color: #fff;
 }
 
-.border-dark {
+/* Configurações da navbar */
+.navbar-custom {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: var(--color5preto) !important;
+}
+
+.navbar-brand {
+    color: var(--color3limao);
+}
+
+/* Configurações da barra de pesquisa */
+.searchBar {
+    border-radius: 1rem 0px 0px 1rem !important;
+    border-width: 0.5px;
+    border-color: azure;
+    border-style: solid;
+    background-color: #222122;
+    color: azure;
+    opacity: 90%;
+}
+
+.searchBar:hover {
+    border-color: var(--color3limao);
+}
+
+.searchIco {
+    color: azure;
+    border-radius: 0px 1rem 1rem 0px;
+    border-width: 0.5px;
+    border-color: azure;
+    border-style: solid;
+    background-color: #0d1117;
+    opacity: 70%;
+}
+
+.searchIco:focus, .searchIco:hover {
+    color: var(--color3limao);
+    border-radius: 0px 1rem 1rem 0px;
+    border-width: 1px;
+    border-color: var(--color3limao);
+    border-style: solid;
+}
+
+.searchBar:focus, .searchBar:active, .searchBar:visited {
+    border-radius: 1rem 0px 0px 1rem;
+}
+
+/* Configurações do botão */
+.button-odds {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 1rem;
+    width: 7rem;
+    border-style: none;
+    color: azure;
+    background-color: var(--color7gray);
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem black, 0 0 0 0.25rem #258cfb;
+.button-odds:hover {
+    color: azure;
+    background-color: rgba(105, 105, 105, 0.1);
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus,
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-    -webkit-text-fill-color: var(--color3limao);
-    -webkit-box-shadow: 0 0 0px 1000px var(--color5preto) inset;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Configurações do logo */
 .logoedit {
     display: inline-block;
     font-family: 'Days One', sans-serif;
@@ -245,10 +285,24 @@ input {
     object-fit: cover;
 }
 
+.img-championship{
+    width:7rem;
+    height:7rem;
+    margin-bottom:0.5rem;
+    margin-top:0.3rem;
+    padding:1.3rem;
+}
+
+.img-championship:hover {
+    background-color: var(--color7gray);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
 .dropdown-menu {
-    background-color: #09090a; 
+    background-color: #09090a;
     box-shadow: -1px 3px 31px 11px rgba(255,205,205,0.02);
-    border-radius:1rem;
+    border-radius: 1rem;
 }
 
 .team-logo {
