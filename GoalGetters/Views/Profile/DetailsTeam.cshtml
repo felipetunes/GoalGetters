@@ -22,7 +22,7 @@
 
 <div class="m-4">
     <h4 class="text-white" style="font-weight: bold !important;"> @Html.DisplayFor(model => model.Name)</h4>
-    <div class="container text-white bgdetails" style="border: 2px solid @teamColor;">
+    <div class="container text-white bgdetails">
         <div>
             <section class="grid grid-template-areas-1">
                 <div class="item itemlocal">
@@ -44,7 +44,7 @@
 
     @if (Model.Players != null)
     {
-        <div class="container text-white bgdetails mt-3" style="border: 2px solid @teamColor; margin-bottom:80px">
+        <div class="container text-white bgdetails mt-3" style="margin-bottom:80px">
             <h5 class="text-white" style="font-weight: bold !important;"> Plantel </h5>
             @Html.Partial("PlayerPartial", Model.Players)
             <div>

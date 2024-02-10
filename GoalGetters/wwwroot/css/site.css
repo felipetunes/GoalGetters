@@ -9,7 +9,7 @@
 
 .scoreboard {
     background-color: rgba(105, 105, 105, 0.2);
-    border-radius: 5px;
+    border-radius: 1rem;
     width: 25px;
     height: 25px;
     padding: 3px;
@@ -102,7 +102,7 @@ table tr {
 }
 
 .border-dark {
-    border-radius: 10px;
+    border-radius: 1rem;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -173,7 +173,7 @@ input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 1rem;
     width: 7rem;
     border-style: none;
     color: azure;
@@ -248,7 +248,7 @@ input {
 .dropdown-menu {
     background-color: #09090a; 
     box-shadow: -1px 3px 31px 11px rgba(255,205,205,0.02);
-    border-radius:10px;
+    border-radius:1rem;
 }
 
 .team-logo {
@@ -273,7 +273,7 @@ input {
     background-color: #0d1117;
     outline: none;
     transition: opacity .2s;
-    border-radius: 12px; /* Rounded borders */
+    border-radius: 1rem; /* Rounded borders */
 }
 
 .form-group input[type="range"]::-webkit-slider-thumb {
@@ -282,7 +282,7 @@ input {
     background-color:darkorchid;
     cursor: pointer;
     appearance:auto;
-    border-radius: 50%; /* Circular slider thumb */
+    border-radius: 1rem; /* Circular slider thumb */
 }
 
 .form-hor {
@@ -294,10 +294,10 @@ input {
     background-color: var(--color7gray);
     padding: 30px;
     box-shadow: -1px 3px 31px 31px rgba(255,255,255,0.02);
-    border-radius: 16px;
+    border-radius: 1rem;
     backdrop-filter: blur(3.9px);
     -webkit-backdrop-filter: blur(3.9px);
-    border: 0.2px solid rgba(255, 255, 255, 0.48);
+    border: 0.0px solid rgba(255, 255, 255, 0.48);
 }
 
 .footer {
@@ -309,7 +309,7 @@ input {
 .modal-content {
     background-color: var(--color7gray);
     color:azure;
-    border-radius:20px;
+    border-radius:1rem;
     padding:35px;
 }
 

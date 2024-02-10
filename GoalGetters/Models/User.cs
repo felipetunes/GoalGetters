@@ -1,15 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace GoalGetters.Models
 {
     public class User
     {
-        public int Id { get; set; }
-        [Required]
-        public string Username { get; set; }
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public int? Id { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+            [Required]
+            [JsonProperty("username")]
+            public string Username { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [JsonProperty("password")]
+            public string Password { get; set; }
+
+            [DataType(DataType.Upload)]
+            [Display(Name = "Sua foto")]
+            [JsonProperty("photo")]
+            public byte[] Photo { get; set; }
+
+            [Display(Name = "Lucro")]
+            [JsonProperty("cash")]
+            public double Cash { get; set; } // Alterado de decimal para double
     }
 }

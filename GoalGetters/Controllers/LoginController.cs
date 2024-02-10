@@ -35,24 +35,20 @@ namespace GoalGetters.Controllers
 
             if (userInDb != null)
             {
-                // Verifique a senha
-                if (BCrypt.Net.BCrypt.Verify(user.Password, userInDb.Password))
+                // Se as credenciais estiverem corretas, crie uma ClaimsIdentity
+                var claims = new List<Claim>
                 {
-                    // Se as credenciais estiverem corretas, crie uma ClaimsIdentity
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.Username),
-                        // Você pode incluir mais claims aqui conforme necessário
-                    };
+                    new Claim(ClaimTypes.Name, user.Username),
+                    // Você pode incluir mais claims aqui conforme necessário
+                };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    // Faça login no usuário
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                    HttpContext.Session.SetString("User", user.Username);
+                // Faça login no usuário
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                HttpContext.Session.SetString("User", user.Username);
 
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
 
             // Se chegarmos até aqui, algo falhou, redisplay form

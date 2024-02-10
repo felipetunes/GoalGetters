@@ -5,32 +5,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Register</h1>
-
-<h4>Login</h4>
+<h4 class="text-white">Registre-se</h4>
 <hr />
-<div class="row">
+<div class="row text-white bg-dark p-3" style="border-radius:1rem">
     <div class="col-md-4">
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <input asp-for="Username" class="form-control bg-dark text-white" style="border-radius:1rem" placeholder="Username" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control bg-dark text-white" style="border-radius:1rem" placeholder="Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <div class="form-group mb-3">
+                <label asp-for="Photo" class="control-label"></label>
+                <input asp-for="Photo" type="file" class="form-control bg-dark text-white" style="border-radius:1rem" id="inputGroupFile01">
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" value="Create" class="btn btn-block mt-3 mb-3 loginbutton border-button"><span>Registrar</span></button>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

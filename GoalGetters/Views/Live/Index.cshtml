@@ -51,11 +51,11 @@
 @if(Model.FirstOrDefault() == null)
 {
     <container>
-        <div class="bgdetails" style=" height:14.0rem; padding-top:3rem">
+        <div class="bg-dark" style=" height:14.0rem; padding-top:3rem; border-radius:1rem">
             <div style="display: flex; flex-direction:column; text-align:center; justify-self:center;">
-                <strong style="font-size:1rem; margin-top:4px;color:azure"> Nenhum jogo no momento,<br /> Por favor, volte mais tarde. </strong>
+                <strong style="font-size:1rem; margin-top:4px;color:azure"> Nenhum jogo no momento.<br /> Por favor, volte mais tarde. </strong>
             </div>
-            <div style="margin-top:10px;flex-direction:column; text-align:center; justify-self:center;">
+            <div style="margin-top:10px;flex-direction:column; text-align:center; justify-self:center; transform: rotate(-10deg);">
                 <svg class="bi" width="45" height="45" role="img" aria-label="Live" style="fill:#558C03;opacity:0.5">
                     <use xlink:href="#alert" />
                 </svg>
