@@ -69,7 +69,7 @@ namespace GoalGetters.Helper
             [Display(Name = "Copa Do Mundo")]
             CopaMundo = 20,
             [Display(Name = "Copa Do Brasil")]
-            CopaBrasil = 20,
+            CopaBrasil = 21,
         }
 
         public enum Stadium

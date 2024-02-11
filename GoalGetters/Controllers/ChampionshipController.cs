@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GoalGetters.Helper;
+using GoalGetters.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoalGetters.Controllers
@@ -6,9 +8,18 @@ namespace GoalGetters.Controllers
     public class ChampionshipController : Controller
     {
         // GET: ChampionshipController
-        public ActionResult Index()
+        public ActionResult Index(string searchChampionship = "")
         {
-            return View();
+            var championships = Enum.GetValues(typeof(Enums.Championship)).Cast<Enums.Championship>();
+
+            if (!string.IsNullOrEmpty(searchChampionship))
+            {
+                championships = championships.Where(champ => GoalGetters.Commons.Common.GetDisplayName(champ).ToLower().Contains(searchChampionship.ToLower()));
+            }
+
+            var logos = championships.OrderBy(champ => champ.ToString()).Select(champ => new ChampionshipLogo { ImageName = champ.ToString() + ".png", EnumValue = (int)champ }).ToList();
+
+            return View(logos);
         }
 
         // GET: ChampionshipController/Details/5
