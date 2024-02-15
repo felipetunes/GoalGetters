@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     var $homeTeamSelect = $('#homeTeamSelect');
     var $visitingTeamSelect = $('#visitingTeamSelect');
 
@@ -26,7 +26,7 @@
                 $homeTeamSelect.find('option').prop('disabled', false);
                 $homeTeamSelect.find('option[value=' + selected + ']').prop('disabled', true);
             }).change(); // Dispara o evento change imediatamente
-            
+
         });
     }
 
@@ -37,6 +37,86 @@
 });
 
 $(document).ready(function () {
+    $("#windowContent").hide();
+
+    $('.odds').click(function () {
+        var oddsValue = parseFloat($(this).find('.valueOdds').text().replace(',', '.'));
+        var oddsType = $(this).find('.typeOdds').text();
+
+        // Encontre o elemento pai que contém os elementos homeTeam e visitingTeam
+        var parentElement = $(this).closest('container');
+
+        // Obtenha os elementos homeTeam e visitingTeam dentro do elemento pai
+        var homeTeamElement = parentElement.find('.homeTeam')[0];
+        var visitingTeamElement = parentElement.find('.visitingTeam')[0];
+
+        // Obtenha o conteúdo de texto dos elementos
+        var liveHomeTeamName = homeTeamElement.textContent;
+        var liveVisitingTeamName = visitingTeamElement.textContent;
+
+        // Defina um valor padrão para amountInvested
+        var defaultAmountInvested = 20.00;
+
+        // Obtenha os elementos scoreboard dentro do elemento pai
+        var scoreboardElements = parentElement.find('.scoreboard');
+
+        // Obtenha o conteúdo de texto dos elementos
+        var teamPoints1 = $(scoreboardElements[0]).text();
+        var teamPoints2 = $(scoreboardElements[1]).text();
+
+    
+
+        // Construa a string de forma condicional
+        var teamString = '';
+        if (oddsType == 1) {
+            teamString = liveHomeTeamName;
+        } else if (oddsType == 2) {
+            teamString =  liveVisitingTeamName;
+        } else {
+            teamString = 'Empate';
+        }
+
+        // Atualiza o conteúdo da janela com as informações obtidas
+        $("#windowContent").html(
+            '<p>' + teamString + '</p>' +
+            '<p><span>' + liveHomeTeamName + '</span>' + ' vs ' + '<span>' + liveVisitingTeamName + '</span></p>' +
+            '<p>' + teamPoints1 + 'x' + teamPoints2 + '</p>' +
+            '<p><strong><span id="oddsValue">' + oddsValue + '</span></strong></p>' + 
+            '<div><input type="number" id="amountInvested" class="form-control" value="' + defaultAmountInvested.toFixed(2) + '" /></div>'
+        );
+
+        // Obtenha o valor do amountInvested e some com o oddsValue
+        var total = oddsValue * defaultAmountInvested;
+
+        // Formate o total para usar uma vírgula como separador decimal e duas casas decimais
+        total = total.toFixed(2).toString().replace('.', ',');
+
+        // Adicione o total à janela de conteúdo
+        $("#windowContent").append('<p><strong>Ganhos Possíveis:</strong> R$ ' + total + '</p>');
+
+        // Se a janela não estiver visível, exibe-a com uma animação de deslizamento
+        if (!$("#windowContent").is(':visible')) {
+            $("#windowContent").slideToggle(300);
+        }
+    });
+
+    $(document).on('input', '#amountInvested', function () {
+        var oddsValue = parseFloat($("#oddsValue").text().replace(',', '.'));
+        var amountInvested = parseFloat($(this).val().replace(',', '.'));
+        var total = oddsValue * amountInvested;
+        total = total.toFixed(2).toString().replace('.', ',');
+        $("#windowContent").find('p:contains("Total:")').html('<strong>Total:</strong> R$ ' + total);
+    });
+
+
+    $('#windowHeader').click(function () {
+        var oddsValue = $(this).find('.valueOdds').text();
+        if (oddsValue == '') {
+            $("#windowContent").html('<p><strong>Faça suas apostas</strong></p>');
+        }
+        $("#windowContent").slideToggle(300);
+    });
+
     // Buscar dados da API quando o modal é aberto
     $('#myModal').on('shown.bs.modal', function () {
         $.ajax({
@@ -65,23 +145,23 @@ $(document).ready(function () {
     });
 });
 
-    
 
 var heightRange = document.getElementById('heightRange');
 var heightValue = document.getElementById('heightValue');
 
-// Se o valor inicial de heightRange for nulo, defina-o como 1.70
-if (heightRange.value === "") {
-    heightRange.value = "1.70";
-}
+if (heightRange && heightValue) {
+    // Se o valor inicial de heightRange for nulo, defina-o como 1.70
+    if (heightRange.value === "") {
+        heightRange.value = "1.70";
+    }
 
-// Atualize heightValue para refletir o valor atual de heightRange
-heightValue.innerText = heightRange.value;
+    // Atualize heightValue para refletir o valor atual de heightRange
+    heightValue.innerText = heightRange.value;
+}
 
 function updateHeightValue(val) {
-    heightValue.innerText = val;
+    if (heightValue) {
+        heightValue.innerText = val;
+    }
 }
-
-
-
 

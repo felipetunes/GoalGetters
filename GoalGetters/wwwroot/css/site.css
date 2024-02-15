@@ -40,10 +40,13 @@ a {
 .scoreboard {
     background-color: var(--color7gray);
     border-radius: 1rem;
-    width: 25px;
+    width: 35px;
     height: 25px;
     padding: 3px;
     text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(105, 105, 105,0.5);
 }
 
 /* Configurações do grid */
@@ -383,8 +386,8 @@ input {
 }
 
 .time_match {
-    color: rgba(105, 105, 105);
-    margin-bottom:2px;
+    color: #558C03;
+    margin-bottom: 2px;
     font-size: 13px;
 }
 
