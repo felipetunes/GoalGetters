@@ -31,7 +31,7 @@
 
     #windowContent{
         background-color: #212122;
-        padding: 1.5rem;
+        padding: 0.3rem;
     }
 </style>
 
@@ -90,15 +90,15 @@
 }
 else
 {
-    <!-- Janela de apostas -->
-    <div id="floatingWindow">
-        <div id="windowHeader" data-toggle="collapse" data-target="#windowContent">
-            <strong>Boletim</strong>
-        </div>
-        <div id="windowContent" class="text-white">
-            <!-- Os elementos serão preenchidos dinamicamente pelo JavaScript -->
-        </div>
-    </div>  
+<!-- Janela de apostas -->
+<div id="floatingWindow">
+    <div id="windowHeader" data-toggle="collapse" data-target="#windowContent">
+        <strong>Boletim</strong>
+    </div>
+    <div id="windowContent" class="text-white">
+          
+    </div>
+</div>
 }
 
 <!-- Live Games Display -->
@@ -157,15 +157,15 @@ else
                 <!-- Odds -->
                 <div style="display: flex; flex-direction:row; font-size:0.9rem; margin:1rem;">
                     <div style="display: flex; flex-direction:row; font-size:0.9rem; margin:1rem;">
-                        <div class="row odds" id="OddsHome" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name">
+                            <div class="row odds" id="OddsHome" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
                              @if(@live.HomeTeamOdds > 1){
                                 <a style="margin-right:2.5rem; margin-left:2rem;" class="btn button-odds">
-                                    <span class="typeOdds" style="font-size:10px">1 </span>
+                                    <span class="typeOdds" style="font-size:10px">1</span>
                                     <span class="valueOdds">@live.HomeTeamOdds.ToString("F2")</span>
                                 </a>
                              }
                         </div>
-                        <div class="row odds" id="OddsDraw" data-live-id="@live.Id">
+                        <div class="row odds" id="OddsDraw" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
                             @if (@live.DrawOdds > 1)
                             {
                                 <a style="margin-right:2.5rem;" class="btn button-odds" >
@@ -174,11 +174,11 @@ else
                                 </a>
                             }
                         </div>
-                        <div class="row odds" id="OddsVisiting" data-live-id="@live.Id" data-live-visiting="@live.VisitingTeam.Name">
+                        <div class="row odds" id="OddsVisiting" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
                             @if (@live.VisitingTeamOdds > 1)
                             {
                                 <a class="btn button-odds">
-                                    <span class="typeOdds" style="font-size:10px">2 </span>
+                                    <span class="typeOdds" style="font-size:10px">2</span>
                                     <span class="valueOdds">@live.VisitingTeamOdds.ToString("F2")</span>
                                 </a>
                             }
@@ -196,4 +196,24 @@ else
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    $('#betButton').click(function() {
+        var betAmount = $('#betAmount').val(); // Supondo que o valor da aposta esteja em um campo de entrada com id 'betAmount'
+        var totalOdds = calculateTotalOdds(); // Supondo que você tenha uma função que calcula o total das odds
+
+        // Calcule os ganhos possíveis
+        var possibleWinnings = betAmount * totalOdds;
+        alert("funcionando")
+        // Chame a ação aqui, por exemplo, uma solicitação AJAX
+        $.ajax({
+            url: '/Bet/PlaceBet',
+            type: 'POST',
+            data: { BetAmount: betAmount, TotalOdds: totalOdds, PossibleWinnings: possibleWinnings },
+            success: function(response) {
+                // Manipule a resposta aqui
+            }
+        });
+    });
+</script>
 

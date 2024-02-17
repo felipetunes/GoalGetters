@@ -17,6 +17,7 @@ namespace GoalGetters
             builder.Services.AddScoped<ApiService<Team>>();
             builder.Services.AddScoped<ApiService<Live>>();
             builder.Services.AddScoped<ApiService<User>>();
+            builder.Services.AddScoped<ApiService<Bet>>();
 
             builder.Services.AddSession(options =>
             {

@@ -40,59 +40,37 @@ $(document).ready(function () {
     $("#windowContent").hide();
 
     $('.odds').click(function () {
-        var oddsValue = parseFloat($(this).find('.valueOdds').text().replace(',', '.'));
+        // Se existir, remova windowContent-0
+        $('#windowContent-0').remove();
+
+        var oddsValue = $(this).find('.valueOdds').text();
         var oddsType = $(this).find('.typeOdds').text();
+        var liveId = $(this).data('live-id');
+        var livehome = $(this).data('live-home');
+        var livevisiting = $(this).data('live-visiting');
+        var homeTeamOdds = document.getElementById('OddsHome').getElementsByClassName('valueOdds')[0].innerText;
+        var drawOdds = document.getElementById('OddsDraw').getElementsByClassName('valueOdds')[0].innerText;
+        var visitingTeamOdds = document.getElementById('OddsVisiting').getElementsByClassName('valueOdds')[0].innerText;
+        var betAmount = $('#betAmount').val();
 
-        // Encontre o elemento pai que contém os elementos homeTeam e visitingTeam
-        var parentElement = $(this).closest('container');
+        // Crie um novo ID para a windowContent baseado no liveId
+        var windowContentId = 'windowContent-' + liveId;
 
-        // Obtenha os elementos homeTeam e visitingTeam dentro do elemento pai
-        var homeTeamElement = parentElement.find('.homeTeam')[0];
-        var visitingTeamElement = parentElement.find('.visitingTeam')[0];
-
-        // Obtenha o conteúdo de texto dos elementos
-        var liveHomeTeamName = homeTeamElement.textContent;
-        var liveVisitingTeamName = visitingTeamElement.textContent;
-
-        // Defina um valor padrão para amountInvested
-        var defaultAmountInvested = 20.00;
-
-        // Obtenha os elementos scoreboard dentro do elemento pai
-        var scoreboardElements = parentElement.find('.scoreboard');
-
-        // Obtenha o conteúdo de texto dos elementos
-        var teamPoints1 = $(scoreboardElements[0]).text();
-        var teamPoints2 = $(scoreboardElements[1]).text();
-
-    
-
-        // Construa a string de forma condicional
-        var teamString = '';
-        if (oddsType == 1) {
-            teamString = liveHomeTeamName;
-        } else if (oddsType == 2) {
-            teamString =  liveVisitingTeamName;
-        } else {
-            teamString = 'Empate';
+        // Verifique se a windowContent já existe
+        if ($('#' + windowContentId).length === 0) {
+            // Se não existir, crie uma nova dentro de windowContent
+            // Use a função hide() para inicialmente esconder o novo windowContent
+            $('<div id="' + windowContentId + '" class="text-white"></div>').appendTo('#windowContent').css('height', '0').animate({ height: '122px', opacity: 1 }, "slow");
         }
 
-        // Atualiza o conteúdo da janela com as informações obtidas
-        $("#windowContent").html(
-            '<p>' + teamString + '</p>' +
-            '<p><span>' + liveHomeTeamName + '</span>' + ' vs ' + '<span>' + liveVisitingTeamName + '</span></p>' +
-            '<p>' + teamPoints1 + 'x' + teamPoints2 + '</p>' +
-            '<p><strong><span id="oddsValue">' + oddsValue + '</span></strong></p>' + 
-            '<div><input type="number" id="amountInvested" class="form-control" value="' + defaultAmountInvested.toFixed(2) + '" /></div>'
-        );
-
-        // Obtenha o valor do amountInvested e some com o oddsValue
-        var total = oddsValue * defaultAmountInvested;
-
-        // Formate o total para usar uma vírgula como separador decimal e duas casas decimais
-        total = total.toFixed(2).toString().replace('.', ',');
-
-        // Adicione o total à janela de conteúdo
-        $("#windowContent").append('<p><strong>Ganhos Possíveis:</strong> R$ ' + total + '</p>');
+        $.ajax({
+            url: '/Bet/UpdatePartialView',
+            type: 'POST',
+            data: { ChosenOdds: oddsValue, SelectedOutcome: oddsType, MatchId: liveId, HomeTeam: livehome, VisitingTeam: livevisiting, HomeTeamOdds: homeTeamOdds, DrawOdds: drawOdds, VisitingTeamOdds: visitingTeamOdds, BetAmount: betAmount },
+            success: function (partialViewHtml) {
+                $('#' + windowContentId).html(partialViewHtml);
+            }
+        });
 
         // Se a janela não estiver visível, exibe-a com uma animação de deslizamento
         if (!$("#windowContent").is(':visible')) {
@@ -100,22 +78,15 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on('input', '#amountInvested', function () {
-        var oddsValue = parseFloat($("#oddsValue").text().replace(',', '.'));
-        var amountInvested = parseFloat($(this).val().replace(',', '.'));
-        var total = oddsValue * amountInvested;
-        total = total.toFixed(2).toString().replace('.', ',');
-        $("#windowContent").find('p:contains("Total:")').html('<strong>Total:</strong> R$ ' + total);
-    });
-
-
     $('#windowHeader').click(function () {
-        var oddsValue = $(this).find('.valueOdds').text();
-        if (oddsValue == '') {
-            $("#windowContent").html('<p><strong>Faça suas apostas</strong></p>');
+        // Adicione windowContent-0 se ele não existir
+        if ($('#windowContent-0').length === 0) {
+            $('#windowContent').append('<div id="windowContent-0" class="text-white" style="margin:1rem">Faça as suas apostas!</div>');
         }
+
         $("#windowContent").slideToggle(300);
     });
+
 
     // Buscar dados da API quando o modal é aberto
     $('#myModal').on('shown.bs.modal', function () {

@@ -1,6 +1,8 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace GoalGetters.Controllers
 {
@@ -34,19 +36,17 @@ namespace GoalGetters.Controllers
             return View();
         }
 
-        // POST: BetController/Create
+        // POST: Bet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create([Bind("Id,TeamName,Points")] Bet bet)
         {
-            try
+            if (ModelState.IsValid)
             {
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(bet);
         }
 
         // GET: BetController/Edit/5
@@ -89,6 +89,32 @@ namespace GoalGetters.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePartialView(string ChosenOdds, string SelectedOutcome, string MatchId, string HomeTeam, string VisitingTeam, string homeTeamOdds, string drawOdds, string visitingTeamOdds, string betAmount)
+        {
+            Live match = new Live();
+            match.DrawOdds = Convert.ToDecimal(drawOdds);
+            match.HomeTeamOdds = Convert.ToDecimal(homeTeamOdds);
+            match.VisitingTeamOdds = Convert.ToDecimal(visitingTeamOdds);
+
+            var returnCash = CalculatePossibleReturn(SelectedOutcome, Convert.ToDecimal(betAmount), match);
+
+            var bet = new Bet
+            {
+                ChosenOdds = Convert.ToDecimal(ChosenOdds),
+                SelectedOutcome = SelectedOutcome,
+                MatchId = Convert.ToInt32(MatchId),
+                HomeTeam = HomeTeam,
+                VisitingTeam = VisitingTeam,
+                PossibleReturn = returnCash
+            };
+
+            // Crie uma nova lista de Bets para teste
+            var bets = new List<Bet> { bet };
+
+            return PartialView("BetBar", bets);
         }
 
         // Método para lidar com a aposta do usuário
@@ -136,11 +162,11 @@ namespace GoalGetters.Controllers
         {
             switch (selectedOutcome)
             {
-                case "HomeTeam":
+                case "1":
                     return betAmount * match.HomeTeamOdds;
-                case "VisitingTeam":
+                case "2":
                     return betAmount * match.VisitingTeamOdds;
-                case "Draw":
+                case "Empate":
                     return betAmount * match.DrawOdds;
                 default:
                     throw new ArgumentException("Resultado selecionado inválido.", nameof(selectedOutcome));
