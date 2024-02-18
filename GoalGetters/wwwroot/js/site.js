@@ -36,39 +36,51 @@
     }).change(); // Dispara o evento change imediatamente
 });
 
+
 $(document).ready(function () {
     $("#windowContent").hide();
-
+    updateTotalOdds()
     $('.odds').click(function () {
         // Se existir, remova windowContent-0
-        $('#windowContent-0').remove();
+        $('#betCellId-0').remove();
 
         var oddsValue = $(this).find('.valueOdds').text();
         var oddsType = $(this).find('.typeOdds').text();
+        var teamPoints1 = $(this).data('live-teampoints1');
+        var teamPoints2 = $(this).data('live-teampoints2');
         var liveId = $(this).data('live-id');
         var livehome = $(this).data('live-home');
         var livevisiting = $(this).data('live-visiting');
-        var homeTeamOdds = document.getElementById('OddsHome').getElementsByClassName('valueOdds')[0].innerText;
-        var drawOdds = document.getElementById('OddsDraw').getElementsByClassName('valueOdds')[0].innerText;
-        var visitingTeamOdds = document.getElementById('OddsVisiting').getElementsByClassName('valueOdds')[0].innerText;
-        var betAmount = $('#betAmount').val();
+        var betAmount = $('.betAmount').val();
+        var homeTeamOdds = getOdds('OddsHome');
+        var drawOdds = getOdds('OddsDraw');
+        var visitingTeamOdds = getOdds('OddsVisiting');
 
-        // Crie um novo ID para a windowContent baseado no liveId
-        var windowContentId = 'windowContent-' + liveId;
-
-        // Verifique se a windowContent já existe
-        if ($('#' + windowContentId).length === 0) {
-            // Se não existir, crie uma nova dentro de windowContent
-            // Use a função hide() para inicialmente esconder o novo windowContent
-            $('<div id="' + windowContentId + '" class="text-white"></div>').appendTo('#windowContent').css('height', '0').animate({ height: '122px', opacity: 1 }, "slow");
+        // Crie um novo ID para a betCell na WindowContent baseado no liveId
+        var betCellId = 'betCell-' + liveId;
+        // Verifique se a betCell já existe
+        if ($('#' + betCellId).length === 0) {
+            // Se não existir, crie uma nova dentro de betCell
+            $('<div id="' + betCellId + '" class="text-white"></div>').appendTo('#betCell').css('height', '0').animate({ height: '105px', opacity: 1 }, "slow");
         }
 
         $.ajax({
-            url: '/Bet/UpdatePartialView',
+            url: '/Bet/UpdateBetCell',
             type: 'POST',
-            data: { ChosenOdds: oddsValue, SelectedOutcome: oddsType, MatchId: liveId, HomeTeam: livehome, VisitingTeam: livevisiting, HomeTeamOdds: homeTeamOdds, DrawOdds: drawOdds, VisitingTeamOdds: visitingTeamOdds, BetAmount: betAmount },
+            data: { ChosenOdds: oddsValue, SelectedOutcome: oddsType, HomeTeam: livehome, VisitingTeam: livevisiting, TeamPoints1: teamPoints1, TeamPoints2: teamPoints2 },
             success: function (partialViewHtml) {
-                $('#' + windowContentId).html(partialViewHtml);
+                $('#' + betCellId).html(partialViewHtml);
+                updateTotalOdds();
+            }
+        });
+
+        $.ajax({
+            url: '/Bet/UpdateBetResult',
+            type: 'POST',
+            data: { ChosenOdds: oddsValue, SelectedOutcome: oddsType, HomeTeam: livehome, VisitingTeam: livevisiting, HomeTeamOdds: homeTeamOdds, DrawOdds: drawOdds, VisitingTeamOdds: visitingTeamOdds, BetAmount: betAmount },
+            success: function (partialViewHtml) {
+                $('#betResult').html(partialViewHtml);
+                updateTotalOdds();
             }
         });
 
@@ -78,16 +90,36 @@ $(document).ready(function () {
         }
     });
 
+    function getOdds(id) {
+        var element = document.getElementById(id);
+        return element && element.getElementsByClassName('valueOdds')[0] ? element.getElementsByClassName('valueOdds')[0].innerText : 0;
+    }
+
+    function updateTotalOdds() {
+        var totalOdds = 0;
+        $('.ChosenOdds').each(function () {
+            var oddsValue = $(this).text().replace(',', '.');
+            var numberValue = Number(oddsValue);
+            if (!isNaN(numberValue)) {
+                totalOdds += numberValue;
+            }
+        });
+        $('#OddTotal').text(totalOdds.toFixed(2).replace('.', ','));
+
+        if (totalOdds === 0) {
+            localStorage.removeItem('totalAmountInvested');
+        }
+    }
+   
     $('#windowHeader').click(function () {
         // Adicione windowContent-0 se ele não existir
-        if ($('#windowContent-0').length === 0) {
-            $('#windowContent').append('<div id="windowContent-0" class="text-white" style="margin:1rem">Faça as suas apostas!</div>');
+        if ($('#betCellId-0').length === 0) {
+            $('#betCell').append('<div id="betCellId-0" class="text-white" style="margin:1rem">Faça as suas apostas!</div>');
         }
 
         $("#windowContent").slideToggle(300);
     });
-
-
+    
     // Buscar dados da API quando o modal é aberto
     $('#myModal').on('shown.bs.modal', function () {
         $.ajax({
@@ -116,7 +148,6 @@ $(document).ready(function () {
     });
 });
 
-
 var heightRange = document.getElementById('heightRange');
 var heightValue = document.getElementById('heightValue');
 
@@ -135,4 +166,5 @@ function updateHeightValue(val) {
         heightValue.innerText = val;
     }
 }
+
 

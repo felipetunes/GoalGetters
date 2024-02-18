@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GoalGetters.Models.Bet>
+
+<div class="bgdetails" style="width:100%; padding:6px !important; padding-left:20px !important; margin-bottom:0.3rem; margin-top:0.3rem">
+    @foreach (var item in Model.Select((value, index) => new { Value = value, Index = index }))
+    {
+        <table class="text-white">
+            <tr style="border: none; font-size:12px;">
+                <td>
+                    <strong>
+                        @if (item.Value.SelectedOutcome == "1")
+                        {
+                            @Html.DisplayFor(modelItem => item.Value.Match.HomeTeam.Name)
+                        }
+                        else if (item.Value.SelectedOutcome == "2")
+                        {
+                            @Html.DisplayFor(modelItem => item.Value.Match.VisitingTeam.Name)
+                        }
+                        else
+                        {
+                            <span>Empate</span>
+                        }
+                    </strong>
+                </td>
+            </tr>
+            <tr style="border: none; font-size:11px">
+                <td style="white-space:nowrap">@Html.DisplayFor(modelItem => item.Value.Match.HomeTeam.Name) <span style="">vs.</span> @Html.DisplayFor(modelItem => item.Value.Match.VisitingTeam.Name)</td>
+            </tr>
+            <tr style="border: none; font-size:11px">
+                <td style="white-space:nowrap">@Html.DisplayFor(modelItem => item.Value.Match.TeamPoints1) <span style="">x</span> @Html.DisplayFor(modelItem => item.Value.Match.TeamPoints2)</td>
+            </tr>
+            <tr style="border: none;" class="row">
+                <th style="max-width:60px; width:60px"><strong style="max-width:10px; font-size:18px" id="ChosenOdds" class="ChosenOdds">@Html.DisplayFor(modelItem => item.Value.ChosenOdds)</strong></th>
+        </table>
+    }
+</div>

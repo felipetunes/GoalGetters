@@ -16,7 +16,7 @@ html {
 }
 
 body {
-    background-image: linear-gradient(135deg, #121214 0%, #0D0D0D 60%, #121214 80%);
+    background-image: linear-gradient(135deg, #D3D3D3 0%, #000000 60%, #32CD32 80%);
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -354,7 +354,7 @@ input {
     border-radius: 1rem;
     backdrop-filter: blur(3.9px);
     -webkit-backdrop-filter: blur(3.9px);
-    border: 0.0px solid rgba(255, 255, 255, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda fina */
 }
 
 .footer {

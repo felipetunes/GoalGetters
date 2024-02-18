@@ -1,0 +1,63 @@
+﻿@model GoalGetters.Models.Bet
+
+<div class="bgdetails" style="width:100%; padding:15px !important; margin-bottom:0.5rem; margin-top:0.5rem">
+
+        <table class="text-white">
+            <tr style="max-width:60px; width:60px; text-align: right;"><input asp-for="@Model.BetAmount" class="form-control dark-mode BetAmount" style="height:1.5rem; width:7rem;" /></tr>
+            <tr style="border: none; font-size:11px; text-transform:uppercase">
+                <th>Odd total</th>
+                <td style="font-weight:600; font-size:12px" id="OddTotal"></td>
+            </tr>
+            <tr style="border: none; font-size:11px; text-transform:uppercase">
+                <th>Valor Apostado</th>
+                <td style="font-weight:600; font-size:12px" id="totalAmountInvested">0,00</td>
+            </tr>
+            <tr style="border: none; font-size:11px; text-transform:uppercase">
+                <th>@Html.DisplayNameFor(model => model.PossibleReturn)</th>
+            <td style="font-weight:600; font-size:12px" id="PossibleReturn">
+                @if (Model.PossibleReturn != null)
+                {
+                    @Html.DisplayFor(model => model.PossibleReturn)
+                }
+                else
+                {
+                    @:0,00
+                }
+            </td>
+
+            </tr>
+        </table>
+
+    <button type="submit" value="PlaceBet" class="btn btn-block mt-3 loginbutton border-button"><span>Apostar</span></button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var totalAmountInvested = localStorage.getItem('totalAmountInvested');
+        if (totalAmountInvested) {
+            $('#totalAmountInvested').text(totalAmountInvested);
+            $('.BetAmount').val(totalAmountInvested);
+        }
+        // Quando o valor de BetAmount mudar, atualize totalAmountInvested e salve no localStorage
+        $('.BetAmount').on('input', function () {
+            var betAmount = $(this).val();
+            $('#totalAmountInvested').text(betAmount);
+            localStorage.setItem('totalAmountInvested', betAmount);
+        });
+
+        // Quando o valor de BetAmount ou OddTotal mudar, atualize PossibleReturn
+        $('.BetAmount, #OddTotal').on('input', function () {
+            var totalAmountInvested = Number($('#totalAmountInvested').text().replace(',', '.'));
+            var oddTotal = Number($('#OddTotal').text().replace(',', '.'));
+            var possibleReturn = totalAmountInvested * oddTotal;
+
+            if (!isNaN(possibleReturn)) {
+                $('#PossibleReturn').text(possibleReturn.toFixed(2).replace('.', ','));
+            }
+        });
+    });
+
+</script>
+

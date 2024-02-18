@@ -6,7 +6,7 @@ namespace GoalGetters.Models
     {
         public int Id { get; set; } // Identificador único para a aposta
 
-        public int MatchId { get; set; } // Identificador da partida na qual a aposta é feita
+        public Live Match { get; set; } // Identificador da partida na qual a aposta é feita
 
         public int UserId { get; set; } // Identificador do usuário que fez a aposta
 
@@ -17,7 +17,5 @@ namespace GoalGetters.Models
         public decimal PossibleReturn { get; set; } // O retorno possível se a aposta for bem-sucedida
         [Display(Name = "Odds Escolhida")]
         public decimal ChosenOdds { get; set; } // A odds escolhida no momento
-        public string HomeTeam { get; set; }
-        public string VisitingTeam { get; set; }
     }
 }

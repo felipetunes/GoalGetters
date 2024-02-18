@@ -21,18 +21,25 @@
 
     #windowHeader {
         width: 100%;
-        background-color: #93F205;
+        background-color: rgba(125,250,0, 0.6) !important;
         color: black;
         border-radius: 1rem 1rem 0 0;
-        padding: 10px;
+        padding: 8px;
         padding-left: 1.5rem;
         cursor: pointer;
+        backdrop-filter: blur(10px); /* Cria o efeito de vidro fosco */
+        -webkit-backdrop-filter: blur(10px); /* Para compatibilidade com o Safari */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Adiciona uma borda para realçar o efeito */
     }
 
-    #windowContent{
-        background-color: #212122;
-        padding: 0.3rem;
+   #windowContent{
+    padding: 0.3rem;
+    backdrop-filter: blur(10px); /* Cria o efeito de vidro fosco */
+    -webkit-backdrop-filter: blur(10px); /* Para compatibilidade com o Safari */
+    background-color: rgba(100,100,100, 0.4) !important; /* Adiciona uma borda para realçar o efeito */
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.5); /* Adiciona uma sombra preta pequena */
     }
+
 </style>
 
 <head>
@@ -93,10 +100,11 @@ else
 <!-- Janela de apostas -->
 <div id="floatingWindow">
     <div id="windowHeader" data-toggle="collapse" data-target="#windowContent">
-        <strong>Boletim</strong>
+        <strong class="text-white">Boletim</strong>
     </div>
     <div id="windowContent" class="text-white">
-          
+        <div id="betCell"></div>
+        <div id="betResult"></div>
     </div>
 </div>
 }
@@ -157,7 +165,7 @@ else
                 <!-- Odds -->
                 <div style="display: flex; flex-direction:row; font-size:0.9rem; margin:1rem;">
                     <div style="display: flex; flex-direction:row; font-size:0.9rem; margin:1rem;">
-                            <div class="row odds" id="OddsHome" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
+                            <div class="row odds" id="OddsHome" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name" data-live-teampoints1="@live.TeamPoints1" data-live-teampoints2="@live.TeamPoints2" data-live-visiting="@live.VisitingTeam.Name">
                              @if(@live.HomeTeamOdds > 1){
                                 <a style="margin-right:2.5rem; margin-left:2rem;" class="btn button-odds">
                                     <span class="typeOdds" style="font-size:10px">1</span>
@@ -165,7 +173,7 @@ else
                                 </a>
                              }
                         </div>
-                        <div class="row odds" id="OddsDraw" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
+                        <div class="row odds" id="OddsDraw" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name" data-live-teampoints1="@live.TeamPoints1" data-live-teampoints2="@live.TeamPoints2" data-live-visiting="@live.VisitingTeam.Name">
                             @if (@live.DrawOdds > 1)
                             {
                                 <a style="margin-right:2.5rem;" class="btn button-odds" >
@@ -174,7 +182,7 @@ else
                                 </a>
                             }
                         </div>
-                        <div class="row odds" id="OddsVisiting" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name")" data-live-visiting="@live.VisitingTeam.Name">
+                        <div class="row odds" id="OddsVisiting" data-live-id="@live.Id" data-live-home="@live.HomeTeam.Name" data-live-teampoints1="@live.TeamPoints1" data-live-teampoints2="@live.TeamPoints2" data-live-visiting="@live.VisitingTeam.Name">
                             @if (@live.VisitingTeamOdds > 1)
                             {
                                 <a class="btn button-odds">
@@ -196,24 +204,4 @@ else
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-<script>
-    $('#betButton').click(function() {
-        var betAmount = $('#betAmount').val(); // Supondo que o valor da aposta esteja em um campo de entrada com id 'betAmount'
-        var totalOdds = calculateTotalOdds(); // Supondo que você tenha uma função que calcula o total das odds
-
-        // Calcule os ganhos possíveis
-        var possibleWinnings = betAmount * totalOdds;
-        alert("funcionando")
-        // Chame a ação aqui, por exemplo, uma solicitação AJAX
-        $.ajax({
-            url: '/Bet/PlaceBet',
-            type: 'POST',
-            data: { BetAmount: betAmount, TotalOdds: totalOdds, PossibleWinnings: possibleWinnings },
-            success: function(response) {
-                // Manipule a resposta aqui
-            }
-        });
-    });
-</script>
 

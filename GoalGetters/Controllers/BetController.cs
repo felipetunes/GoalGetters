@@ -92,12 +92,43 @@ namespace GoalGetters.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdatePartialView(string ChosenOdds, string SelectedOutcome, string MatchId, string HomeTeam, string VisitingTeam, string homeTeamOdds, string drawOdds, string visitingTeamOdds, string betAmount)
+        public ActionResult UpdateBetCell(string ChosenOdds, string SelectedOutcome, string HomeTeam, string VisitingTeam, string teamPoints1, string teamPoints2)
         {
             Live match = new Live();
-            match.DrawOdds = Convert.ToDecimal(drawOdds);
-            match.HomeTeamOdds = Convert.ToDecimal(homeTeamOdds);
-            match.VisitingTeamOdds = Convert.ToDecimal(visitingTeamOdds);
+            match.HomeTeam = new Team();
+            match.VisitingTeam = new Team();
+
+            match.TeamPoints1 = Convert.ToInt32(teamPoints1);
+            match.TeamPoints2 = Convert.ToInt32(teamPoints2);
+            match.HomeTeam.Name = HomeTeam;
+            match.VisitingTeam.Name = VisitingTeam;
+
+            var bet = new Bet
+            {
+                ChosenOdds = Convert.ToDecimal(ChosenOdds),
+                SelectedOutcome = SelectedOutcome,
+                Match = match
+            };
+
+            // Crie uma nova lista de Bets para teste
+            var bets = new List<Bet> { bet };
+
+            return PartialView("BetCell", bets);
+        }
+
+        [HttpPost]
+                                                   
+        public ActionResult UpdateBetResult(string ChosenOdds, string SelectedOutcome, string HomeTeam, string VisitingTeam, string HomeTeamOdds, string DrawOdds, string VisitingTeamOdds, string betAmount)
+        {
+            Live match = new Live();
+            match.HomeTeam = new Team();
+            match.VisitingTeam = new Team();
+
+            match.DrawOdds = Convert.ToDecimal(DrawOdds);
+            match.HomeTeamOdds = Convert.ToDecimal(HomeTeamOdds);
+            match.VisitingTeamOdds = Convert.ToDecimal(VisitingTeamOdds);
+            match.HomeTeam.Name = HomeTeam;
+            match.VisitingTeam.Name = VisitingTeam;
 
             var returnCash = CalculatePossibleReturn(SelectedOutcome, Convert.ToDecimal(betAmount), match);
 
@@ -105,16 +136,11 @@ namespace GoalGetters.Controllers
             {
                 ChosenOdds = Convert.ToDecimal(ChosenOdds),
                 SelectedOutcome = SelectedOutcome,
-                MatchId = Convert.ToInt32(MatchId),
-                HomeTeam = HomeTeam,
-                VisitingTeam = VisitingTeam,
+                Match = match,
                 PossibleReturn = returnCash
             };
 
-            // Crie uma nova lista de Bets para teste
-            var bets = new List<Bet> { bet };
-
-            return PartialView("BetBar", bets);
+            return PartialView("BetResult", bet);
         }
 
         // Método para lidar com a aposta do usuário
@@ -145,7 +171,7 @@ namespace GoalGetters.Controllers
             // Cria uma nova aposta e salva no banco de dados
             var bet = new Bet
             {
-                MatchId = matchId,
+                Match = match,
                 SelectedOutcome = selectedOutcome,
                 BetAmount = betAmount,
                 PossibleReturn = possibleReturn
