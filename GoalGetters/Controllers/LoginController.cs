@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Policy;
 
 namespace GoalGetters.Controllers
 {
@@ -43,6 +44,11 @@ namespace GoalGetters.Controllers
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // Suponha que 'userPhoto' seja a foto do usuário que você obteve após o login
+                // Converta a foto do usuário para uma string Base64
+                var userPhotoBase64 = Convert.ToBase64String(userInDb.Photo);
+                HttpContext.Session.SetString("UserPhoto", userPhotoBase64);
 
                 // Faça login no usuário
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
@@ -85,8 +91,20 @@ namespace GoalGetters.Controllers
                 string username = collection["username"];
                 string password = collection["password"];
 
+                // Extrai a foto da Request.Form.Files
+                IFormFile photo = Request.Form.Files["photo"];
+                byte[] photoBytes = null;
+                if (photo != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await photo.CopyToAsync(memoryStream);
+                        photoBytes = memoryStream.ToArray();
+                    }
+                }
+
                 // Chama o método na sua service
-                await _apiServiceUser.Register(username, password);
+                await _apiServiceUser.Register(username, password, photoBytes);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -95,6 +113,7 @@ namespace GoalGetters.Controllers
                 return View();
             }
         }
+
 
         // GET: LoginController/Edit/5
         public ActionResult Edit(int id)

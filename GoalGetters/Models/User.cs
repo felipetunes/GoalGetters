@@ -20,10 +20,10 @@ namespace GoalGetters.Models
             [DataType(DataType.Upload)]
             [Display(Name = "Sua foto")]
             [JsonProperty("photo")]
-            public byte[] Photo { get; set; }
+            public byte[]? Photo { get; set; }
 
             [Display(Name = "Lucro")]
             [JsonProperty("cash")]
-            public double Cash { get; set; } // Alterado de decimal para double
+            public double? Cash { get; set; }
     }
 }

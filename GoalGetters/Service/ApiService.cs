@@ -73,18 +73,22 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
-    public async Task<List<T>> Register(string username, string password)
+    public async Task<List<T>> Register(string username, string password, byte[] photoBytes)
     {
         string url = $"{urlApi}{typeof(T).Name.ToLower()}/register";
 
-        // Cria um objeto com os dados do usuário
-        var userData = new { Username = username, Password = password };
+        // Cria um novo MultipartFormDataContent
+        using var content = new MultipartFormDataContent();
 
-        // Converte o objeto para JSON
-        var json = JsonConvert.SerializeObject(userData);
+        // Adiciona o nome de usuário e a senha ao conteúdo
+        content.Add(new StringContent(username), "username");
+        content.Add(new StringContent(password), "password");
 
-        // Cria um novo StringContent que contém os dados do usuário como JSON
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        // Adiciona a foto ao conteúdo
+        if (photoBytes != null)
+        {
+            content.Add(new ByteArrayContent(photoBytes), "photo", "photo.jpg");
+        }
 
         HttpResponseMessage response = await _client.PostAsync(url, content);
         if (response.IsSuccessStatusCode)
@@ -98,6 +102,7 @@ public class ApiService<T> : IApiService<T>
             throw new Exception($"Error creating {typeof(T).Name.ToLower()}");
         }
     }
+
 
     public async Task<T> Login<T>(string username, string password)
     {

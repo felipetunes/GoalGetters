@@ -12,6 +12,7 @@ namespace GoalGetters
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<ApiService<Player>>();
             builder.Services.AddScoped<ApiService<Team>>();

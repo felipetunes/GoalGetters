@@ -117,10 +117,15 @@
         {
             <div class="dropdown" style="margin-bottom:30px;">
                 <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                        @{
+                            var userPhotoBase64 = HttpContextAccessor.HttpContext.Session.GetString("UserPhoto");
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", userPhotoBase64);
+                        }
+
+                        <img src="@imgSrc" alt="mdo" width="24" height="24" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small shadow" sstyle="margin-left:3rem" aria-labelledby="dropdownUser3">
-                    <li><a class="dropdown-item" style="color:azure !important" href="#">New project...</a></li>
                     <li><a class="dropdown-item" style="color:azure !important" href="#">Settings</a></li>
                     <li><a class="dropdown-item" style="color:azure !important" href="#">Profile</a></li>
                     <li><hr class="dropdown-divider" style="color:azure !important"></li>
