@@ -120,7 +120,15 @@
                     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                         @{
                             var userPhotoBase64 = HttpContextAccessor.HttpContext.Session.GetString("UserPhoto");
-                            var imgSrc = String.Format("data:image/gif;base64,{0}", userPhotoBase64);
+                            var imgSrc = "";
+                            if (userPhotoBase64 != null)
+                            {
+                                imgSrc = String.Format("data:image/gif;base64,{0}", userPhotoBase64);
+                            }
+                            else
+                            {
+                                imgSrc = "/img/userdefault.jpg";
+                            }
                         }
 
                         <img src="@imgSrc" alt="mdo" width="24" height="24" class="rounded-circle">

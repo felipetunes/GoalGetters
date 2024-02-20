@@ -9,12 +9,15 @@ namespace GoalGetters.Models
         public int Id { get; set; }
 
         // Equipe da casa
+        [Display(Name = "Time Mandante")]
         public Team HomeTeam { get; set; }
 
         // Equipe visitante
+        [Display(Name = "Time Visitante")]
         public Team VisitingTeam { get; set; }
 
         // Campeonato da partida
+        [Display(Name = "Campeonato")]
         public Championship Championship { get; set; }
 
         // Data da partida
@@ -33,11 +36,11 @@ namespace GoalGetters.Models
         public int GameTime { get; set; }
 
         // Pontos da equipe da casa
-        [Display(Name = "Gols")]
+        [Display(Name = "Gols do Mandante")]
         public int TeamPoints1 { get; set; }
 
         // Pontos da equipe visitante
-        [Display(Name = "Gols")]
+        [Display(Name = "Gols do Visitante")]
         public int TeamPoints2 { get; set; }
 
         // Vitórias da equipe da casa

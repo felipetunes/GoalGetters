@@ -47,8 +47,11 @@ namespace GoalGetters.Controllers
 
                 // Suponha que 'userPhoto' seja a foto do usuário que você obteve após o login
                 // Converta a foto do usuário para uma string Base64
-                var userPhotoBase64 = Convert.ToBase64String(userInDb.Photo);
-                HttpContext.Session.SetString("UserPhoto", userPhotoBase64);
+                if (userInDb.Photo != null)
+                {
+                    var userPhotoBase64 = Convert.ToBase64String(userInDb.Photo);
+                    HttpContext.Session.SetString("UserPhoto", userPhotoBase64);
+                }
 
                 // Faça login no usuário
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
