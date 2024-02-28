@@ -2,7 +2,7 @@
 
 namespace GoalGetters.Models
 {
-    public class PlayerTeamViewModel
+    public class SearchViewModel
     {
         public IPagedList<Player> Players { get; set; }
         public IPagedList<Team> Teams { get; set; }

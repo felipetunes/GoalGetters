@@ -8,7 +8,7 @@ namespace GoalGetters.Models
 
         public Live Match { get; set; } // Identificador da partida na qual a aposta é feita
 
-        public int UserId { get; set; } // Identificador do usuário que fez a aposta
+        public User User { get; set; } // Identificador do usuário que fez a aposta
 
         public string SelectedOutcome { get; set; } // O resultado selecionado pelo usuário ("HomeTeam", "VisitingTeam" ou "Draw")
         [Display(Name = "Aposta")]

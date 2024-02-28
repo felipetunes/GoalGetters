@@ -72,8 +72,12 @@
                     </ul>
                     @if (string.IsNullOrEmpty(username))
                     {
-                    <a asp-controller="Login" asp-action="Index"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> ENTRAR</button></a>
-                    <a asp-controller="Login" asp-action="Register"><button type="button" class="bt buttonLog"><span>REGISTRAR</span></button></a>
+                        <a asp-controller="User" asp-action="Index"><button type="button" class="btn btn-link" style="margin-left:3rem; text-decoration:none; color:azure"> ENTRAR</button></a>
+                        <a asp-controller="User" asp-action="Register"><button type="button" class="bt buttonLog"><span>REGISTRAR</span></button></a>
+                    }
+                    else
+                    {
+                        <a asp-controller="User" asp-action="Deposit"><button type="button" class="bt buttonLog"><span>DEPOSITAR</span></button></a>
                     }
                 </div>
             </div>

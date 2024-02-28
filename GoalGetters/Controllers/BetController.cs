@@ -1,4 +1,5 @@
 ﻿using GoalGetters.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,14 @@ namespace GoalGetters.Controllers
         private readonly IHttpClientFactory _clientFactory;
         private readonly ApiService<Live> _apiServiceLive;
         private readonly ApiService<Bet> _apiServiceBet;
+        private readonly ApiService<User> _apiServiceUser;
 
-        public BetController(IHttpClientFactory clientFactory, ApiService<Live> apiServiceLive, ApiService<Bet> apiServiceBet)
+        public BetController(IHttpClientFactory clientFactory, ApiService<Live> apiServiceLive, ApiService<Bet> apiServiceBet, ApiService<User> apiServiceUser)
         {
             _clientFactory = clientFactory;
             _apiServiceLive = apiServiceLive;
             _apiServiceBet = apiServiceBet;
+            _apiServiceUser = apiServiceUser;
         }
         // GET: BetController
         public ActionResult Index()
@@ -36,18 +39,39 @@ namespace GoalGetters.Controllers
             return View();
         }
 
-        // POST: Bet/Create
+        // POST: BetController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,TeamName,Points")] Bet bet)
+        [Authorize]
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
+                // Get the match and user from the API using the provided names
+                Live match = await _apiServiceLive.GetById(Convert.ToInt32(collection["matchid"]));
+                var user = await _apiServiceUser.GetById(Convert.ToInt32(collection["userid"]));
+
+                // Create a new Bet object from the form data
+                Bet bet = new Bet
+                {
+                    Match = match,
+                    User = user,
+                    SelectedOutcome = collection["selectedoutcome"],
+                    BetAmount = decimal.Parse(collection["betamount"]),
+                    PossibleReturn = decimal.Parse(collection["possiblereturn"])
+                };
+
+                await _apiServiceBet.Create(bet);
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(bet);
+            catch
+            {
+                // If something goes wrong, return to the same View for the user to correct the data
+                return View();
+            }
         }
+
 
         // GET: BetController/Edit/5
         public ActionResult Edit(int id)
@@ -58,17 +82,36 @@ namespace GoalGetters.Controllers
         // POST: BetController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
+                // Get the bet, match, and user from the API using the provided ids
+                Bet bet = await _apiServiceBet.GetById(id);
+                Live match = await _apiServiceLive.GetById(Convert.ToInt32(collection["matchid"]));
+                var user = await _apiServiceUser.GetById(Convert.ToInt32(collection["userid"]));
+
+                // Update the bet object with the form data
+                bet.Match = match;
+                bet.User = user;
+                bet.SelectedOutcome = collection["selectedoutcome"];
+                bet.BetAmount = decimal.Parse(collection["betamount"]);
+                bet.PossibleReturn = decimal.Parse(collection["possiblereturn"]);
+
+                // Update the bet in the database
+                await _apiServiceBet.Update(bet);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                // If something goes wrong, return to the same View for the user to correct the data
                 return View();
             }
         }
+
+
 
         // GET: BetController/Delete/5
         public ActionResult Delete(int id)
@@ -177,7 +220,7 @@ namespace GoalGetters.Controllers
                 PossibleReturn = possibleReturn
             };
 
-            await _apiServiceBet.Insert(bet);
+            await _apiServiceBet.Create(bet);
 
             // Passa o retorno possível para a view
             ViewBag.PossibleReturn = possibleReturn;

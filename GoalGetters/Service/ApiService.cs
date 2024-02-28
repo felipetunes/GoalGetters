@@ -10,44 +10,54 @@ using System.Xml.Linq;
 using X.PagedList;
 using static GoalGetters.Helper.Enums;
 
-public class ApiService<T> : IApiService<T>
+public class ApiService<T> : IApiService<T> where T : class
 {
     private readonly HttpClient _client;
-    const string urlApi = "http://localhost:8080/api/v1/";
+    public static class ApiServiceConstants
+    {
+        public const string urlApi = "http://localhost:8080/api/v1/";
+    }
 
     public ApiService(HttpClient client)
     {
         _client = client;
     }
 
-    async public Task<HttpResponseMessage> Delete(int id, string entity)
+    protected HttpClient GetClient()
+    {
+        return _client;
+    }
+
+    public async Task<HttpResponseMessage> Delete(int id)
     {
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{urlApi}{entity}/delete/{id}");
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/delete/{id}");
 
             var response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
+                throw new Exception($"Error deleting {typeof(T).Name.ToLower()}");
             }
 
             return response;
         }
         catch (Exception ex)
         {
+            // Handle the exception
             return null;
         }
     }
 
     public async Task<T> GetById(int id)
     {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/getbyid/{id}";
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/getbyid/{id}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {
             var data = await response.Content.ReadAsAsync<T>();
+
             return data;
         }
         else
@@ -59,23 +69,34 @@ public class ApiService<T> : IApiService<T>
 
     public async Task<List<T>> GetByName(string name)
     {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/getbyname/{Uri.EscapeDataString(name)}";
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/getbyname/{Uri.EscapeDataString(name)}";
         HttpResponseMessage response = await _client.GetAsync(url);
+        List<T> data = null; // Declare data here so it can be accessed later
+
         if (response.IsSuccessStatusCode)
         {
-            var data = await response.Content.ReadAsAsync<List<T>>();
-            return data;
+            var content = await response.Content.ReadAsStringAsync();
+            try
+            {
+                data = JsonConvert.DeserializeObject<List<T>>(content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during deserialization: {ex.Message}");
+            }
         }
         else
         {
             // Handle the error
             throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
         }
+
+        return data;
     }
 
     public async Task<List<T>> Register(string username, string password, byte[] photoBytes)
     {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/register";
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/register";
 
         // Cria um novo MultipartFormDataContent
         using var content = new MultipartFormDataContent();
@@ -103,50 +124,9 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
-
-    public async Task<T> Login<T>(string username, string password)
+    public async Task<string> Create(T obj)
     {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/login";
-
-        // Cria um objeto com os dados de login
-        var loginData = new { Username = username, Password = password };
-
-        // Converte o objeto para JSON
-        var json = JsonConvert.SerializeObject(loginData);
-
-        // Cria um novo StringContent que contém os dados de login como JSON
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        HttpResponseMessage response = await _client.PostAsync(url, content);
-        if (response.IsSuccessStatusCode)
-        {
-            var data = await response.Content.ReadAsAsync<T>();
-            return data;
-        }
-        else
-        {
-            // Handle the error
-            throw new Exception($"Error retrieving {typeof(T).Name.ToLower()}");
-        }
-    }
-
-    public async Task<List<Player>> GetPlayersByTeamId(int teamId)
-    {
-        var response = await _client.GetAsync($"{urlApi}player/getbyidteam/{teamId}");
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception($"Erro ao obter jogadores: {response.ReasonPhrase}");
-        }
-
-        var json = await response.Content.ReadAsStringAsync();
-        var players = JsonConvert.DeserializeObject<List<Player>>(json);
-        return players;
-    }
-
-    public async Task<string> Insert<T>(T obj)
-    {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/insert";
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/insert";
         HttpResponseMessage response = await _client.PostAsJsonAsync(url, obj);
 
         if (response.IsSuccessStatusCode)
@@ -163,55 +143,11 @@ public class ApiService<T> : IApiService<T>
         return await response.Content.ReadAsStringAsync();
     }
 
-    public async Task<T> Update<T>(int id, string name, string city, string country, int? idteam = null, DateTime? birth = null, string height = null, string position = null)
+ 
+
+    public async Task<List<T>> GetAll(string endpoint)
     {
-        // Verifique se os argumentos são válidos
-        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
-        {
-            throw new ArgumentException("Name, city and country must not be null or empty.");
-        }
-
-        // Constrói a URL
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/update?id={id}&name={name}&city={city}&country={country}";
-
-        if (idteam.HasValue)
-        {
-            url += $"&idteam={idteam.Value}";
-        }
-
-        if (birth.HasValue)
-        {
-            url += $"&birth={birth.Value.ToString("dd/MM/yyyy")}";
-        }
-
-        if (!string.IsNullOrEmpty(height))
-        {
-            url += $"&height={height}";
-        }
-
-        if (!string.IsNullOrEmpty(position))
-        {
-            url += $"&position={position}";
-        }
-
-        // Envia a solicitação PUT
-        HttpResponseMessage response = await _client.PutAsync(url, null);
-        if (response.IsSuccessStatusCode)
-        {
-            var result = await response.Content.ReadAsAsync<T>();
-            return result;
-        }
-        else
-        {
-            // Handle the error
-            var error = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
-        }
-    }
-
-    public async Task<List<T>> GetAll<T>(string endpoint)
-    {
-        string url = $"{urlApi}{typeof(T).Name.ToLower()}/{endpoint}";
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/{endpoint}";
         HttpResponseMessage response = await _client.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {
@@ -225,6 +161,29 @@ public class ApiService<T> : IApiService<T>
         }
     }
 
+    public async Task<T> Update(T entity)
+    {
+        // Build the URL
+        string url = $"{ApiServiceConstants.urlApi}{typeof(T).Name.ToLower()}/update";
+
+        // Convert the entity to a JSON string
+        var jsonContent = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+
+        // Send the PUT request
+        HttpResponseMessage response = await _client.PutAsync(url, jsonContent);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadAsAsync<T>();
+            return result;
+        }
+        else
+        {
+            // Handle the error
+            var error = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"Error updating entity: {response.StatusCode} - {error}");
+        }
+    }
+
     internal async Task<Live> UpdateLive(Live match)
     {
         // Verifique se os argumentos são válidos
@@ -234,7 +193,7 @@ public class ApiService<T> : IApiService<T>
         }
 
         // Constrói a URL
-        string url = $"{urlApi}live/update?id={match.Id}&homeTeam={match.HomeTeam}&visitingTeam={match.VisitingTeam}&championship={match.Championship}&dateMatch={match.DateMatch.ToString("dd/MM/yyyy")}&stadium={match.Stadium}&statusMatch={match.StatusMatch}&gameTime={match.GameTime}&teamPoints1={match.TeamPoints1}&teamPoints2={match.TeamPoints2}&homeTeamWins={match.HomeTeamWins}&visitingTeamWins={match.VisitingTeamWins}&draws={match.Draws}&homeTeamRecentPerformance={match.HomeTeamRecentPerformance}&visitingTeamRecentPerformance={match.VisitingTeamRecentPerformance}&homeTeamOdds={match.HomeTeamOdds}&visitingTeamOdds={match.VisitingTeamOdds}&drawOdds={match.DrawOdds}";
+        string url = $"{ApiServiceConstants.urlApi}live/update?id={match.Id}&homeTeam={match.HomeTeam}&visitingTeam={match.VisitingTeam}&championship={match.Championship}&dateMatch={match.DateMatch.ToString("dd/MM/yyyy")}&stadium={match.Stadium}&statusMatch={match.StatusMatch}&gameTime={match.GameTime}&teamPoints1={match.TeamPoints1}&teamPoints2={match.TeamPoints2}&homeTeamWins={match.HomeTeamWins}&visitingTeamWins={match.VisitingTeamWins}&draws={match.Draws}&homeTeamRecentPerformance={match.HomeTeamRecentPerformance}&visitingTeamRecentPerformance={match.VisitingTeamRecentPerformance}&homeTeamOdds={match.HomeTeamOdds}&visitingTeamOdds={match.VisitingTeamOdds}&drawOdds={match.DrawOdds}";
 
         // Envia a solicitação PUT
         HttpResponseMessage response = await _client.PutAsync(url, null);

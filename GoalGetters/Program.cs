@@ -1,4 +1,5 @@
 using GoalGetters.Models;
+using GoalGetters.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace GoalGetters
@@ -12,13 +13,24 @@ namespace GoalGetters
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+            builder.Services.AddHttpClient<PlayerService>();
+            builder.Services.AddHttpClient<TeamService>();
+            builder.Services.AddHttpClient<UserService>();
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<ApiService<Player>>();
-            builder.Services.AddScoped<ApiService<Team>>();
             builder.Services.AddScoped<ApiService<Live>>();
             builder.Services.AddScoped<ApiService<User>>();
             builder.Services.AddScoped<ApiService<Bet>>();
+            builder.Services.AddScoped<ApiService<Team>>();
+            builder.Services.AddScoped<ApiService<Championship>>();
+
+            builder.Services.AddScoped<IApiService<Player>, ApiService<Player>>();
+            builder.Services.AddScoped<IApiService<Team>, ApiService<Team>>();
+
+            builder.Services.AddScoped<IPlayerService, PlayerService>();
+            builder.Services.AddScoped<ITeamService, TeamService>();
+
 
             builder.Services.AddSession(options =>
             {

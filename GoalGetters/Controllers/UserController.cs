@@ -7,20 +7,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Policy;
+using GoalGetters.Service;
 
 namespace GoalGetters.Controllers
 {
-    public class LoginController : Controller
+    public class UserController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly ApiService<User> _apiServiceUser;
+        private readonly UserService _apiServiceUser;
 
-        // GET: LoginController
+        // GET: UserController
 
-        public LoginController(IHttpClientFactory clientFactory, ApiService<User> apiServiceUser)
+        public UserController(IHttpClientFactory clientFactory, UserService serviceUser)
         {
             _clientFactory = clientFactory;
-            _apiServiceUser = apiServiceUser;
+            _apiServiceUser = serviceUser;
         }
 
         public ActionResult Index()
@@ -32,9 +33,9 @@ namespace GoalGetters.Controllers
         public async Task<IActionResult> Login(User user)
         {
             // Busque o usuário no banco de dados através da API
-            var userInDb = await _apiServiceUser.Login<User>(user.Username, user.Password);
+            var userInDb = await _apiServiceUser.Login(user.Username, user.Password);
 
-            if (userInDb != null)
+            if (!string.IsNullOrEmpty(userInDb.Token))
             {
                 // Se as credenciais estiverem corretas, crie uma ClaimsIdentity
                 var claims = new List<Claim>
@@ -60,10 +61,9 @@ namespace GoalGetters.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Se chegarmos até aqui, algo falhou, redisplay form
-            return View(user);
+            // Se chegamos até aqui, o login falhou
+            return RedirectToAction("Index", "User");
         }
-
 
         public async Task<IActionResult> Logout()
         {
@@ -72,13 +72,13 @@ namespace GoalGetters.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: LoginController/Details/5
+        // GET: UserController/Details/5
         public ActionResult Details(int? id)
         {
             return View();
         }
 
-        // GET: LoginController/Create
+        // GET: UserController/Create
         public ActionResult Register()
         {
             return View();
@@ -118,13 +118,13 @@ namespace GoalGetters.Controllers
         }
 
 
-        // GET: LoginController/Edit/5
+        // GET: UserController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: LoginController/Edit/5
+        // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -139,13 +139,13 @@ namespace GoalGetters.Controllers
             }
         }
 
-        // GET: LoginController/Delete/5
+        // GET: UserController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: LoginController/Delete/5
+        // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

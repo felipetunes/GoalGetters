@@ -28,7 +28,7 @@ namespace GoalGetters.Controllers
         {
             try
             {
-                var lives = await _apiServiceLive.GetAll<Live>("getalltoday");
+                var lives = await _apiServiceLive.GetAll("getalltoday");
                 if (lives == null)
                 {
                     return View(new List<Live>());
@@ -127,7 +127,7 @@ namespace GoalGetters.Controllers
                     TeamPoints2 = int.Parse(collection["teampoints2"])
                 };
 
-                await _apiServiceLive.Insert(live);
+                await _apiServiceLive.Create(live);
 
                 return RedirectToAction(nameof(Index));
             }

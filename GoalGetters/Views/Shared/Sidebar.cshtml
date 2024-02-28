@@ -121,7 +121,7 @@
                         @{
                             var userPhotoBase64 = HttpContextAccessor.HttpContext.Session.GetString("UserPhoto");
                             var imgSrc = "";
-                            if (userPhotoBase64 != null)
+                            if (userPhotoBase64 != "")
                             {
                                 imgSrc = String.Format("data:image/gif;base64,{0}", userPhotoBase64);
                             }
@@ -137,7 +137,7 @@
                     <li><a class="dropdown-item" style="color:azure !important" href="#">Settings</a></li>
                     <li><a class="dropdown-item" style="color:azure !important" href="#">Profile</a></li>
                     <li><hr class="dropdown-divider" style="color:azure !important"></li>
-                    <li><a asp-controller="Login" asp-action="Logout"><button type="button" class="btn btn-link" style="text-decoration:none; color:azure"><i class="fas fa-sign-out-alt"></i> SAIR</button></a></li>
+                    <li><a asp-controller="User" asp-action="Logout"><button type="button" class="btn btn-link" style="text-decoration:none; color:azure"><i class="fas fa-sign-out-alt"></i> SAIR</button></a></li>
                 </ul>
             </div>
         }

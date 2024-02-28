@@ -10,16 +10,17 @@ using X.PagedList.Mvc.Core;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using GoalGetters.Service;
 
 namespace GoalGetters.Controllers
 {
     public class ProfileController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
-        private readonly ApiService<Player> _apiServicePlayer;
-        private readonly ApiService<Team> _apiServiceTeam;
+        private readonly PlayerService _apiServicePlayer;
+        private readonly TeamService _apiServiceTeam;
 
-        public ProfileController(IHttpClientFactory clientFactory, ApiService<Player> apiServicePlayer, ApiService<Team> apiServiceTeam)
+        public ProfileController(IHttpClientFactory clientFactory, PlayerService apiServicePlayer, TeamService apiServiceTeam)
         {
             _clientFactory = clientFactory;
             _apiServicePlayer = apiServicePlayer;
@@ -36,7 +37,7 @@ namespace GoalGetters.Controllers
                 return View(profile);
             }
 
-            return View(new PlayerTeamViewModel());
+            return View(new SearchViewModel());
         }
 
         // GET: PlayerController/Details/5
@@ -52,7 +53,7 @@ namespace GoalGetters.Controllers
         public async Task<ActionResult> DetailsTeam(int id, int page=1)
         {
             var team = await _apiServiceTeam.GetById(id);
-            var pl = await _apiServiceTeam.GetPlayersByTeamId(id);
+            var pl = await _apiServicePlayer.GetPlayersByTeamId(id);
 
             if (pl != null && pl.Count != 0)
             {
@@ -216,7 +217,12 @@ namespace GoalGetters.Controllers
                 {
                     if (!int.TryParse(collection["idteam"], out int idteam))
                     {
-                        throw new ArgumentException("Invalid team ID.", nameof(idteam));
+                        throw new ArgumentException("Invalid player ID.", nameof(idteam));
+                    }
+
+                    if (!int.TryParse(collection["shirtnumber"], out int shirtnumber))
+                    {
+                        throw new ArgumentException("Invalid shirt number.", nameof(shirtnumber));
                     }
 
                     if (!DateTime.TryParse(collection["birth"], out DateTime birth))
@@ -224,25 +230,26 @@ namespace GoalGetters.Controllers
                         throw new ArgumentException("Invalid birth date.", nameof(birth));
                     }
 
+                    string imagepath = collection["imagepath"];
+
                     string height = collection["height"];
                     if (string.IsNullOrEmpty(height))
                     {
                         throw new ArgumentException("Height cannot be null or empty.", nameof(height));
                     }
 
-                    string position = collection["position"];
-                    if (string.IsNullOrEmpty(position))
+                    if (!Enum.TryParse(collection["position"], out Helper.Enums.Position position))
                     {
-                        throw new ArgumentException("Position cannot be null or empty.", nameof(position));
+                        throw new ArgumentException("Invalid position.", nameof(position));
                     }
 
                     // Atualiza o jogador
-                    Player updatedPlayer = await _apiServicePlayer.Update<Player>(id, name, city, country, idteam, birth, height, position);
+                    Player updatedPlayer = await _apiServicePlayer.UpdatePlayer(id, name, city, country, idteam, birth, height, (int)position, imagepath, shirtnumber);
                 }
                 else if (entity == "team")
                 {
                     // Atualiza o time
-                    Team updatedTeam = await _apiServiceTeam.Update<Team>(id, name, city, country);
+                    Team updatedTeam = await _apiServiceTeam.UpdateTeam(id, name, city, country);
                 }
                 else
                 {
@@ -257,7 +264,6 @@ namespace GoalGetters.Controllers
                 ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
-
         }
 
         // GET: PlayerController/Delete/5
@@ -284,7 +290,7 @@ namespace GoalGetters.Controllers
         {
             try
             {
-                await _apiServicePlayer.Delete(id, "player");
+                await _apiServicePlayer.Delete(id);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -294,9 +300,9 @@ namespace GoalGetters.Controllers
             }
         }
 
-        public async Task<PlayerTeamViewModel> SearchProfile(string searchName)
+        public async Task<SearchViewModel> SearchProfile(string searchName)
         {
-            PlayerTeamViewModel viewModel = new PlayerTeamViewModel();
+            SearchViewModel viewModel = new SearchViewModel();
 
             // Fetch players and teams in parallel
             Task<List<Player>> getPlayersListTask = _apiServicePlayer.GetByName(searchName);
