@@ -1,49 +1,49 @@
 # GoalGetters
 
-Bem-vindo ao **GoalGetters**, sua plataforma de referência para **insights de apostas esportivas** e informações sobre partidas. Projetamos nossa plataforma para proporcionar uma experiência única e personalizada para entusiastas de futebol em todo o mundo. Seja você um apostador experiente ou alguém que está começando, incorporamos recursos inovadores para aprimorar sua jornada de apostas.
+Welcome to **GoalGetters**, your go-to platform for **sports betting insights** and match information. We've designed our platform to provide a unique and tailored experience for football enthusiasts worldwide. Whether you're an experienced bettor or just starting out, we've incorporated innovative features to enhance your betting journey.
 
-## Principais Recursos
+## Key Features
 
-1. **Autenticação e Autorização de Usuários**:
-   - Os usuários podem fazer apostas após fazer login.
-   - Os administradores têm privilégios adicionais para criar novas partidas, atualizar placares ao vivo, atribuir cartões aos jogadores e gerenciar equipes.
+1. **User Authentication and Authorization**:
+   - Users can place bets after logging in.
+   - Admins have additional privileges to create new matches, update live scores, assign cards to players, and manage teams.
 
-2. **Partidas Futuras**:
-   - Explore partidas agendadas em vários esportes.
-   - Obtenha detalhes sobre datas, horários e equipes participantes.
+2. **Upcoming Matches**:
+   - Explore scheduled matches across various sports.
+   - Get details on match dates, times, and participating teams.
 
-3. **Partidas ao Vivo e Insights em Tempo Real**:
-   - Nosso algoritmo de ponta analisa dados de partidas em tempo real.
-   - Fornece probabilidades e insights com base em estatísticas do jogo.
-   - Aposte com confiança usando informações atualizadas a cada minuto.
+3. **Live Matches and Real-Time Insights**:
+   - Our cutting-edge algorithm analyzes match data in real time.
+   - Provides live odds and probabilities based on in-game statistics.
+   - Bet confidently using up-to-the-minute insights.
 
-4. **Busca de Equipes e Jogadores**:
-   - Pesquise equipes ou jogadores específicos.
-   - Acesse informações abrangentes, incluindo histórico de desempenho.
+4. **Team and Player Search**:
+   - Look up specific teams or players.
+   - Access comprehensive information, including performance history.
 
-5. **Informações sobre Ligas**:
-   - Descubra ligas de todo o mundo.
-   - Confira classificações, artilheiros e rankings de equipes.
+5. **League Insights**:
+   - Discover leagues from around the world.
+   - Check out standings, top scorers, and team rankings.
 
-## Tecnologias Utilizadas
+## Technology Stack
 
 - **Backend**:
-  - Desenvolvido usando **ASP.NET Core MVC**.
-  - Conecta-se diretamente a um banco de dados **MySQL**.
+  - Developed using **ASP.NET Core MVC**.
+  - Connects directly to a **MySQL** database.
 - **Frontend**:
-  - Utiliza tecnologias web modernas.
-- **Autenticação de Usuários**:
-  - Implementa login seguro e gerenciamento de sessões.
-- **Algoritmo de Apostas**:
-  - Atualizações em tempo real com base em estatísticas de partidas.
+  - Utilizes modern web technologies.
+- **User Authentication**:
+  - Implements secure login and session management.
+- **Bet Algorithm**:
+  - Real-time updates based on match statistics.
 
-## Como Usar
+## How to Use
 
-1. Clone este repositório em sua máquina local.
-2. Configure as variáveis de ambiente necessárias (strings de conexão com o banco de dados, endpoints da API etc.).
-3. Execute a aplicação localmente com o comando `dotnet run`.
-4. Acesse o site por meio do seu navegador preferido.
+1. Clone this repository to your local machine.
+2. Set up the required environment variables (database connection strings, API endpoints, etc.).
+3. Run the application locally using `dotnet run`.
+4. Access the website via your preferred web browser.
 
-## Junte-se a Nós
+## Join Us
 
-Venha fazer parte da comunidade GoalGetters! Junte-se a nós para explorar insights, fazer apostas inteligentes e compartilhar sua paixão pelo futebol. 🚀
+Come be part of the GoalGetters community! Join us to explore insights, make smart bets, and share your passion for football. 🚀
