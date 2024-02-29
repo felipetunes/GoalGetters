@@ -5,6 +5,19 @@
     ViewData["Title"] = "Edição de Jogador";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" style="z-index:500">
+        @TempData["Success"]
+    </div>
+}
+
 <h4 class="text-white" style="font-weight: bold !important;">Player</h4>
 <hr />
 <div class="row bgdetails text-white">

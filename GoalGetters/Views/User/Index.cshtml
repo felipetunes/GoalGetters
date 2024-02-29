@@ -4,6 +4,13 @@
     ViewData["Title"] = "Faça o Login";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top:-100px;">
     <div class="card text-white bgdetails w-25 p-4" style="min-width:300px">
         <div class="card-header text-center">

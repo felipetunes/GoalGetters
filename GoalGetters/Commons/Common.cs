@@ -1,6 +1,7 @@
 ﻿using GoalGetters.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Reflection;
 
 namespace GoalGetters.Commons
@@ -70,6 +71,15 @@ namespace GoalGetters.Commons
                         .First()
                         .GetCustomAttribute<DisplayAttribute>()
                         ?.GetName();
+        }
+
+        public static IEnumerable<string> GetCountryNames()
+        {
+            var countries = ISO3166.Country.List.Select(c => c.TwoLetterCode);
+            var translatedCountries = countries.Select(country => IsoNames.CountryNames.GetName(new CultureInfo("pt"), country))
+                                               .Where(name => !string.IsNullOrEmpty(name))
+                                               .OrderBy(name => name);
+            return translatedCountries;
         }
     }
 }

@@ -2,6 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" style="z-index:500">
+        @TempData["Success"]
+    </div>
+}
+
 <div class="text-center">
     <form asp-controller="Profile" asp-action="Index" class="d-flex">
         <input type="text" class="form-control searchBar mr-sm-2 flex-grow-1" typeof="search" value="@Context.Session.GetString("SearchName")" name="searchName" placeholder="Procurar jogador, clube..." aria-label="Procurar jogador ou clube" aria-describedby="basic-addon2">

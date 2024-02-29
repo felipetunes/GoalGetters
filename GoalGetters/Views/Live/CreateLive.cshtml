@@ -5,6 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" style="z-index:500">
+        @TempData["Success"]
+    </div>
+}
+
 <h5 class="text-white">Create</h5>
 
 <h4 class="text-white">Live</h4>

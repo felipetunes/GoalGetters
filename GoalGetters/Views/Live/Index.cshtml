@@ -8,6 +8,13 @@
     var refreshRate = 60; // Refresh rate for the page in seconds
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+
 <style>
  
     #floatingWindow {

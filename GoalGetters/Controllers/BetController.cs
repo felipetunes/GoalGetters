@@ -62,12 +62,16 @@ namespace GoalGetters.Controllers
                 };
 
                 await _apiServiceBet.Create(bet);
+                TempData["Error"] = null;
+                TempData["Success"] = "Registro de Bet bem-sucedido.";
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 // If something goes wrong, return to the same View for the user to correct the data
+                TempData["Success"] = null;
+                TempData["Error"] = "Falha no registro. Por favor, tente novamente.";
                 return View();
             }
         }

@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" style="z-index:500">
+        @TempData["Error"]
+    </div>
+}
+
 <h4 class="text-white">Registre-se</h4>
 <hr />
 <div class="row text-white bgdetails p-3" style="border-radius:1rem">

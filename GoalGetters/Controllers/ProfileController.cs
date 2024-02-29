@@ -37,7 +37,7 @@ namespace GoalGetters.Controllers
                 return View(profile);
             }
 
-            return View(new SearchViewModel());
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: PlayerController/Details/5
@@ -76,7 +76,7 @@ namespace GoalGetters.Controllers
         public ActionResult CreateTeam()
         {
 
-            ViewBag.CountryList = new SelectList(GetCountryNames());
+            ViewBag.CountryList = new SelectList(Commons.Common.GetCountryNames());
 
             return View();
         }
@@ -99,7 +99,7 @@ namespace GoalGetters.Controllers
         // GET: PlayerController/Create
         public ActionResult CreatePlayer()
         {
-            ViewBag.CountryList = new SelectList(GetCountryNames());
+            ViewBag.CountryList = new SelectList(Commons.Common.GetCountryNames());
 
             return View();
         }
@@ -127,7 +127,7 @@ namespace GoalGetters.Controllers
 
             var selectedCountry = string.IsNullOrEmpty(player.Country) ? "" : player.Country;
 
-            ViewBag.CountryList = new SelectList(GetCountryNames(), selectedCountry);
+            ViewBag.CountryList = new SelectList(Commons.Common.GetCountryNames(), selectedCountry);
 
             return View(player);
         }
@@ -140,19 +140,12 @@ namespace GoalGetters.Controllers
 
             var selectedCountry = string.IsNullOrEmpty(team.Country) ? "" : team.Country;
 
-            ViewBag.CountryList = new SelectList(GetCountryNames(), selectedCountry);
+            ViewBag.CountryList = new SelectList(Commons.Common.GetCountryNames(), selectedCountry);
 
             return View(team);
         }
 
-        private IEnumerable<string> GetCountryNames()
-        {
-            var countries = ISO3166.Country.List.Select(c => c.TwoLetterCode);
-            var translatedCountries = countries.Select(country => IsoNames.CountryNames.GetName(new CultureInfo("pt"), country))
-                                               .Where(name => !string.IsNullOrEmpty(name))
-                                               .OrderBy(name => name);
-            return translatedCountries;
-        }
+
 
 
         // POST: EntityController/Edit/5

@@ -27,8 +27,14 @@
 
             </tr>
         </table>
-
-    <button type="submit" value="PlaceBet" class="btn btn-block mt-3 loginbutton border-button"><span>Apostar</span></button>
+        @if (User.Identity.IsAuthenticated)
+    {
+        <button type="submit" value="PlaceBet" class="btn btn-block mt-3 loginbutton border-button"><span>Apostar</span></button>
+    }
+    else
+    {
+        <a asp-controller="User" asp-action="Index"><button type="button" class="btn btn-block mt-3 loginbutton border-button"><span>Iniciar Sessão</span></button></a>
+    }
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -58,10 +58,13 @@ namespace GoalGetters.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                 HttpContext.Session.SetString("User", user.Username);
 
+                TempData["Error"] = null;
                 return RedirectToAction("Index", "Home");
             }
 
             // Se chegamos até aqui, o login falhou
+            TempData["Success"] = null;
+            TempData["Error"] = "Falha no login. Por favor, tente novamente.";
             return RedirectToAction("Index", "User");
         }
 
@@ -109,10 +112,14 @@ namespace GoalGetters.Controllers
                 // Chama o método na sua service
                 await _apiServiceUser.Register(username, password, photoBytes);
 
+               TempData["Error"] = null;
+               TempData["Success"] = "Usuário registrado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                TempData["Success"] = null;
+                TempData["Error"] = "Falha no registro. Por favor, tente novamente.";
                 return View();
             }
         }
@@ -152,10 +159,14 @@ namespace GoalGetters.Controllers
         {
             try
             {
+                TempData["Error"] = null;
+                TempData["Success"] = "Usuário deletado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                TempData["Success"] = null;
+                TempData["Error"] = "Falha ao deletar o usuário. Por favor, tente novamente.";
                 return View();
             }
         }
